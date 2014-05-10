@@ -1,0 +1,94 @@
+{
+    "ratings": 98, 
+    "links": [
+        {
+            "url": "http://www.url.com", 
+            "lang": "en", 
+            "host": "exashare", 
+            "id": 0, 
+            "subtitles_lang": "fr"
+        }, 
+        {
+            "url": "http://www.url.com", 
+            "lang": "en", 
+            "host": "exashare", 
+            "id": 1, 
+            "subtitles_lang": "en"
+        }, 
+        {
+            "url": "http://www.url.com", 
+            "lang": "fr", 
+            "host": "exashare", 
+            "id": 2, 
+            "subtitles_lang": "fr"
+        }, 
+        {
+            "url": "http://www.url.com", 
+            "lang": "en", 
+            "host": "exashare", 
+            "id": 3, 
+            "subtitles_lang": "en"
+        }
+    ], 
+    "locale_data": {
+        "synopsis": "Officia pariatur dolor elit duis magna nisi voluptate aliqua exercitation sint dolor. Deserunt consequat id ad pariatur quis esse duis commodo commodo. Est consectetur officia reprehenderit ex sit adipisicing nisi laborum ut exercitation. Sunt incididunt laboris do tempor aliquip ipsum non anim. Incididunt eu consectetur excepteur consequat mollit. Velit duis enim incididunt commodo quis tempor eu enim nisi eu mollit aute. Nostrud laborum esse proident est officia occaecat eiusmod labore anim in adipisicing nisi Lorem.\r\n", 
+        "title": "Snow consequat dolore"
+    }, 
+    "views": 6225, 
+    "poster": "http://placehold.it/320x180", 
+    "suggestions": [
+        {
+            "poster": "http://placehold.it/160x90", 
+            "id": 19, 
+            "title": "Kari excepteur voluptate amet pariatur"
+        }, 
+        {
+            "poster": "http://placehold.it/160x90", 
+            "id": 17, 
+            "title": "Kaitlin aliquip ea aliqua velit"
+        }, 
+        {
+            "poster": "http://placehold.it/160x90", 
+            "id": 23, 
+            "title": "Frances anim do reprehenderit elit"
+        }, 
+        {
+            "poster": "http://placehold.it/160x90", 
+            "id": 24, 
+            "title": "Mccullough minim reprehenderit ullamco consectetur"
+        }
+    ], 
+    "originalTitle": "Desiree in laborum eu tempor", 
+    "genre": {
+        "code": 25, 
+        "name": "Vazquez"
+    }, 
+    "productionYear": 2006, 
+    "country": {
+        "code": 15, 
+        "name": "Anguilla"
+    }, 
+    "duration": 22, 
+    "data_member": {
+        "watched": true, 
+        "lists": [
+            {
+                "id": 26, 
+                "present": true, 
+                "name": "ullamco incididunt excepteur"
+            }, 
+            {
+                "id": 7, 
+                "present": true, 
+                "name": "irure dolore irure"
+            }, 
+            {
+                "id": 14, 
+                "present": false, 
+                "name": "sit culpa magna"
+            }
+        ]
+    }, 
+    "id": 0, 
+    "locale_lang": "fr"
+}

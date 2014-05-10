@@ -1,29 +1,27 @@
-[
-    {
-        "yearStart": 2005, 
-        "prod_status": true, 
-        "locale_data": {
-            "synopsis": "In non culpa ad eiusmod. Ullamco culpa anim velit in incididunt labore officia consequat velit. Magna duis deserunt consequat deserunt sunt cupidatat irure do dolor non. Quis eiusmod sit velit ea dolore adipisicing incididunt dolor ex dolore veniam exercitation sit. In officia dolor ex aliqua magna duis mollit et. Velit aute est in do dolor non ea non exercitation sunt sint in qui. Laboris sunt minim proident cupidatat tempor aliquip.\r\n", 
-            "title": "Simpson culpa ex"
-        }, 
-        "views": 1077, 
-        "poster": "http://placehold.it/320x180", 
-        "yearStop": 2008, 
-        "seasons_count": 5, 
-        "originalTitle": "Wiggins sint excepteur commodo culpa ex", 
-        "genre": {
-            "code": 17, 
-            "name": "Burch"
-        }, 
-        "country": {
-            "code": 2, 
-            "name": "Nepal"
-        }, 
-        "duration": 52, 
-        "data_member": {
-            "follow": true, 
-            "lastEpisodeWatched": 19
-        }, 
-        "id": 0
-    }
-]
+{
+    "yearStart": 2005, 
+    "prod_status": true, 
+    "locale_data": {
+        "synopsis": "In non culpa ad eiusmod. Ullamco culpa anim velit in incididunt labore officia consequat velit. Magna duis deserunt consequat deserunt sunt cupidatat irure do dolor non. Quis eiusmod sit velit ea dolore adipisicing incididunt dolor ex dolore veniam exercitation sit. In officia dolor ex aliqua magna duis mollit et. Velit aute est in do dolor non ea non exercitation sunt sint in qui. Laboris sunt minim proident cupidatat tempor aliquip.\r\n", 
+        "title": "Simpson culpa ex"
+    }, 
+    "views": 1077, 
+    "poster": "http://placehold.it/320x180", 
+    "yearStop": 2008, 
+    "seasons_count": 5, 
+    "originalTitle": "Wiggins sint excepteur commodo culpa ex", 
+    "genre": {
+        "code": 17, 
+        "name": "Burch"
+    }, 
+    "country": {
+        "code": 2, 
+        "name": "Nepal"
+    }, 
+    "duration": 52, 
+    "data_member": {
+        "follow": true, 
+        "lastEpisodeWatched": 19
+    }, 
+    "id": 0
+}
