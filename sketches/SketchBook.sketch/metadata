@@ -40,9 +40,18 @@
 		<string>Helvetica</string>
 		<string>Helvetica</string>
 		<string>MyriadPro-Regular</string>
+		<string>Helvetica</string>
+		<string>Helvetica</string>
+		<string>Helvetica</string>
+		<string>Helvetica</string>
+		<string>Helvetica</string>
+		<string>Helvetica</string>
+		<string>MyriadPro-Regular</string>
+		<string>Helvetica</string>
+		<string>Helvetica</string>
 	</array>
 	<key>length</key>
-	<integer>201680</integer>
+	<integer>335818</integer>
 	<key>version</key>
 	<integer>18</integer>
 </dict>
