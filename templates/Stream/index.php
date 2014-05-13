@@ -55,6 +55,12 @@
 			</div><!-- /.container-fluid -->
 		</nav>
 		<div class="container">
+			<div class="alert alert-warning alert-dismissable">
+			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			  <strong>To Do:</strong><ul><li>Make the navbar responsive.</li><li>Redesign the icon and logo.</li></ul>
+			</div>
+		</div>
+		<div class="container">
 			<a href="#" class="page-header-link">
 				<h3 class="page-header">
 					Mainstream
