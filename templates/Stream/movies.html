@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>
+			Stream
+		</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">
+							Toggle navigation
+						</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html"><img src="img/logo.png"></img></a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="movies.html">Movies</a></li>
+						<li><a href="#">Shows</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<form class="navbar-form " role="search">
+								<div class="form-group">
+									<input type="text" class="form-control lens" placeholder="Skyfall, Mentalist, @xiamix, ...">
+								</div>
+							</form>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/1144_big.jpg" class="img-rounded img-small"> Xiamix <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Settings</a></li>
+								<li><a href="#">Messages<span class="badge pull-right">1</span></a></li>
+								<li><a href="#">Contribute<span class="badge pull-right">7</span></a></li>
+								<li><a href="#">Moderate<span class="badge pull-right">2</span></a></li>
+								<li class="divider"></li>
+								<li><a href="#">Log out</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+		<div class="container">
+			<div class="alert alert-success alert-dismissable">
+			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			  <strong>Well done!</strong> This page is finished.
+			</div>
+		</div>
+		<div class="container">
+			<a href="#" class="page-header-link">
+				<h3 class="page-header">
+					Filters<!--First available selected movies, Second movies user coulld like-->
+				</h3>
+			</a>
+		</div>
+		<div class="container">
+			<div class="col-xs-12">
+				<p>Find
+					<select>
+						<option selected>10</option>
+						<option>20</option>
+						<option>30</option>
+						<option>40</option>
+						<option>50</option>
+						<option>all</option>
+					</select>
+					<select>
+						<option selected>English</option>
+						<option>French</option>
+						<option>Spanish</option>
+						<option>Dutch</option>
+						<option>German</option>
+					</select>
+				movies
+					<select>
+						<option selected>with</option>
+						<option>without</option>
+					</select>
+				subtitles in
+					<select>
+						<option selected>any language</option>
+						<option>English</option>
+						<option>French</option>
+						<option>Spanish</option>
+						<option>Dutch</option>
+						<option>German</option>
+					</select>
+				and made
+					<select>
+						<option>after</option>
+						<option>before</option>
+						<option selected>around</option>
+						<option>in</option>
+					</select>
+					<select>
+						<option selected>2014</option>
+						<option>2013</option>
+						<option>2012</option>
+						<option>2011</option>
+						<option>2010</option>
+						<option>2009</option>
+						<option>2008</option>
+						<option>2007</option>
+						<option>2006</option>
+						<option>2005</option>
+						<option>2004</option>
+						<option>2003</option>
+						<option>2002</option>
+						<option>2001</option>
+						<option>2000</option>
+						<option>1999</option>
+						<option>1998</option>
+						<option>1997</option>
+						<option>1996</option>
+						<option>1995</option>
+						<option>1994</option>
+						<option>1993</option>
+						<option>1992</option>
+						<option>1991</option>
+						<option>1990</option>
+					</select>
+					<select>
+						<option selected>with</option>
+						<option>without</option>
+					</select>
+					<select>
+						<option>nothing special</option>
+						<option>romantic</option>
+						<option selected>action</option>
+						<option>humor</option>
+						<option>spys</option>
+					</select>
+				and
+					<select>
+						<option>that's it</option>
+						<option>romantic</option>
+						<option>action</option>
+						<option>humor</option>
+						<option selected>spys</option>
+					</select>
+					<a href="#"><img src="img/lens.png"></img></a>
+				</p>
+			</div>
+		</div>
+		<br />
+		<div class="container">
+			<a href="#" class="page-header-link">
+				<h3 class="page-header">
+					Relevant<!--First available selected movies, Second movies user coulld like-->
+				</h3>
+			</a>
+		</div>
+		<div class="container">
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+		</div>
+		<br />
+		<div class="container">
+			<a href="#" class="page-header-link">
+				<h3 class="page-header">
+					Box-Office
+				</h3>
+			</a>
+		</div>
+		<div class="container">
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
+		</div>
+		<br />
+		<div class="container">
+			<a href="#" class="page-header-link">
+				<h3 class="page-header">
+					Shortlists
+				</h3>
+			</a>
+		</div>
+		<div class="container">
+			<a href="#">
+				<div class="col-xs-2">
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<div class="col-xs-12 list-titleframe">
+						<div class="list-title">Marvel's Heroes</div>
+					</div>
+				</div>
+			</a>
+			<a href="#">
+				<div class="col-xs-2">
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<div class="col-xs-12 list-titleframe">
+						<div class="list-title">Blockbusters</div>
+					</div>
+				</div>
+			</a>
+			<a href="#">
+				<div class="col-xs-2">
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<div class="col-xs-12 list-titleframe">
+						<div class="list-title">American Pies</div>
+					</div>
+				</div>
+			</a>
+			<a href="#">
+				<div class="col-xs-2">
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<div class="col-xs-12 list-titleframe">
+						<div class="list-title">Jason Statham</div>
+					</div>
+				</div>
+			</a>
+			<a href="#">
+				<div class="col-xs-2">
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<div class="col-xs-12 list-titleframe">
+						<div class="list-title">Love Stories</div>
+					</div>
+				</div>
+			</a>
+			<a href="#">
+				<div class="col-xs-2">
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
+					<div class="col-xs-12 list-titleframe">
+						<div class="list-title">Our Favourites</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<br />
+	</body>
+</html>
