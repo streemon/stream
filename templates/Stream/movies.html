@@ -2,8 +2,10 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/bootstrap-tags.css">
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-tags.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>
@@ -23,7 +25,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.html"><img src="img/logo.png"></img></a>
+					<a class="navbar-brand" href="index.html"> <img src="img/logo.png"></img></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -68,231 +70,128 @@
 			</a>
 		</div>
 		<div class="container">
-			<div class="col-xs-12">
-				<p>Find
-					<select>
-						<option selected>10</option>
-						<option>20</option>
-						<option>30</option>
-						<option>40</option>
-						<option>50</option>
-						<option>all</option>
-					</select>
-					<select>
-						<option selected>English</option>
-						<option>French</option>
-						<option>Spanish</option>
-						<option>Dutch</option>
-						<option>German</option>
-					</select>
-				movies
-					<select>
-						<option selected>with</option>
-						<option>without</option>
-					</select>
-				subtitles in
-					<select>
-						<option selected>any language</option>
-						<option>English</option>
-						<option>French</option>
-						<option>Spanish</option>
-						<option>Dutch</option>
-						<option>German</option>
-					</select>
-				and made
-					<select>
-						<option>after</option>
-						<option>before</option>
-						<option selected>around</option>
-						<option>in</option>
-					</select>
-					<select>
-						<option selected>2014</option>
-						<option>2013</option>
-						<option>2012</option>
-						<option>2011</option>
-						<option>2010</option>
-						<option>2009</option>
-						<option>2008</option>
-						<option>2007</option>
-						<option>2006</option>
-						<option>2005</option>
-						<option>2004</option>
-						<option>2003</option>
-						<option>2002</option>
-						<option>2001</option>
-						<option>2000</option>
-						<option>1999</option>
-						<option>1998</option>
-						<option>1997</option>
-						<option>1996</option>
-						<option>1995</option>
-						<option>1994</option>
-						<option>1993</option>
-						<option>1992</option>
-						<option>1991</option>
-						<option>1990</option>
-					</select>
-					<select>
-						<option selected>with</option>
-						<option>without</option>
-					</select>
-					<select>
-						<option>nothing special</option>
-						<option>romantic</option>
-						<option selected>action</option>
-						<option>humor</option>
-						<option>spys</option>
-					</select>
-				and
-					<select>
-						<option>that's it</option>
-						<option>romantic</option>
-						<option>action</option>
-						<option>humor</option>
-						<option selected>spys</option>
-					</select>
-					<a href="#"><img src="img/lens.png"></img></a>
-				</p>
+			<div class="panel panel-default col-xs-12">
+			  <div class="panel-heading">
+				<h3 class="panel-title">Genres <span class="caret"></span></h3>
+			  </div>
+			  <div class="panel-body">
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Action" checked> Action</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Animation" checked> Animation</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Arts Martiaux" checked> Arts Martiaux</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Aventure" checked> Aventure</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Biopic" checked> Biopic</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Classique" checked> Classique</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Comédie" checked> Comédie</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre dramatique" value="Comédie dramatique" checked> Comédie dramatique</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Comédie musicale" checked> Comédie musicale</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Dessin animé" checked> Dessin animé</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Divers" checked> Divers</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Documentaire" checked> Documentaire</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Drame" checked> Drame</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Émission Télé" checked> Émission Télé</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Epouvante-horreur" checked> Epouvante-horreur</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Erotique" checked> Erotique</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Espionnage" checked> Espionnage</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Famille" checked> Famille</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Fantastique" checked> Fantastique</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Guerre" checked> Guerre</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Historique" checked> Historique</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Judiciaire" checked> Judiciaire</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Manga" checked> Manga</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Médical" checked> Médical</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Musical" checked> Musical</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Péplum" checked> Péplum</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Policier" checked> Policier</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Romance" checked> Romance</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Science fiction" checked> Science fiction</p>
+				<p class="col-xs-2"><input type="checkbox" name="Genre" value="Soap" checked> Soap</p>
+			  </div>
+			</div>
+			<div class="panel panel-default col-xs-12">
+			  <div class="panel-heading">
+				<h3 class="panel-title">Languages <span class="caret"></span></h3>
+			  </div>
+			  <div class="panel-body">
+			    <p class="col-xs-12"><strong>Main</strong></p>
+				<p class="col-xs-2"><input type="checkbox" name="Main" value="Nl" checked> Dutch</p>
+				<p class="col-xs-2"><input type="checkbox" name="Main" value="En" checked> English</p>
+				<p class="col-xs-2"><input type="checkbox" name="Main" value="Fr" checked> French</p>
+				<p class="col-xs-2"><input type="checkbox" name="Main" value="Es" checked> Spanish</p>
+				<p class="col-xs-12"><strong>Subtitles</strong></p>
+				<p class="col-xs-2"><input type="checkbox" name="Sub" value="Nl" checked> Dutch</p>
+				<p class="col-xs-2"><input type="checkbox" name="Sub" value="En" checked> English</p>
+				<p class="col-xs-2"><input type="checkbox" name="Sub" value="Fr" checked> French</p>
+				<p class="col-xs-2"><input type="checkbox" name="Sub" value="Es" checked> Spanish</p>
+			  </div>
+			</div>
+			<div class="panel panel-default col-xs-12">
+			  <div class="panel-heading">
+				<h3 class="panel-title">Order <span class="caret"></span></h3>
+			  </div>
+			  <div class="panel-body">
+				<p class="col-xs-3"><input type="radio" name="Order" value="AZ"> From A to Z</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="relevance" checked> Most relevant</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="popularity"> Most popular</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="vieuws"> Most viewed</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="ZA"> From Z to A</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="young"> Youngest</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="old"> Oldest</p>
+				<p class="col-xs-3"><input type="radio" name="Order" value="2014"> Around <select><option>2014</option></select></p>
+			  </div>
+			</div>
+			<div class="panel panel-default col-xs-12">
+			  <div class="panel-heading">
+				<h3 class="panel-title">Keywords <span class="caret"></span></h3>
+			  </div>
+			  <div class="panel-body">
+				<div class="input-group col-xs-12">
+				  <input type="text" class="form-control col-xs-12" placeholder="Enter keywords (actors, titles, ...)">
+				</div>
+			  </div>
 			</div>
 		</div>
 		<br />
 		<div class="container">
 			<a href="#" class="page-header-link">
 				<h3 class="page-header">
-					Relevant<!--First available selected movies, Second movies user coulld like-->
+					Movies
 				</h3>
 			</a>
 		</div>
 		<div class="container">
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-		</div>
-		<br />
-		<div class="container">
-			<a href="#" class="page-header-link">
-				<h3 class="page-header">
-					Box-Office
-				</h3>
-			</a>
-		</div>
-		<div class="container">
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-			<a href="#"><img class="col-xs-2" src="img/Movie.jpg"></img></a>
-		</div>
-		<br />
-		<div class="container">
-			<a href="#" class="page-header-link">
-				<h3 class="page-header">
-					Shortlists
-				</h3>
-			</a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
+			<a href="#"><img class="col-xs-2 cover-bottom-margin" src="img/Movie.jpg"></img></a>
 		</div>
 		<div class="container">
-			<a href="#">
-				<div class="col-xs-2">
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<div class="col-xs-12 list-titleframe">
-						<div class="list-title">Marvel's Heroes</div>
-					</div>
+			<center>
+				<div class="col-xs-12">
+					<ul class="pagination">
+					  <li class="disabled"><a href="#">&laquo;</a></li>
+					  <li class="active"><a href="#">1</a></li>
+					  <li><a href="#">2</a></li>
+					  <li><a href="#">3</a></li>
+					  <li><a href="#">4</a></li>
+					  <li><a href="#">5</a></li>
+					  <li><a href="#">&raquo;</a></li>
+					</ul>
 				</div>
-			</a>
-			<a href="#">
-				<div class="col-xs-2">
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<div class="col-xs-12 list-titleframe">
-						<div class="list-title">Blockbusters</div>
-					</div>
-				</div>
-			</a>
-			<a href="#">
-				<div class="col-xs-2">
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<div class="col-xs-12 list-titleframe">
-						<div class="list-title">American Pies</div>
-					</div>
-				</div>
-			</a>
-			<a href="#">
-				<div class="col-xs-2">
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<div class="col-xs-12 list-titleframe">
-						<div class="list-title">Jason Statham</div>
-					</div>
-				</div>
-			</a>
-			<a href="#">
-				<div class="col-xs-2">
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<div class="col-xs-12 list-titleframe">
-						<div class="list-title">Love Stories</div>
-					</div>
-				</div>
-			</a>
-			<a href="#">
-				<div class="col-xs-2">
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<img class="col-xs-4 no-padding" src="img/Movie.jpg"></img>
-					<div class="col-xs-12 list-titleframe">
-						<div class="list-title">Our Favourites</div>
-					</div>
-				</div>
-			</a>
+			</center>
 		</div>
 		<br />
 	</body>
