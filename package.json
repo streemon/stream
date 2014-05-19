@@ -1,0 +1,14 @@
+{
+  "name": "sho_network",
+  "version": "0.0.1",
+  "description": "A minimalistic platform for streaming links",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "~1.2.0",
+    "express": "~4.2.0",
+    "serve-favicon": "~2.0.0",
+    "morgan": "~1.1.0",
+    "ejs": "~1.0.0",
+    "cookie-parser": "~1.1.0"
+  }
+}
