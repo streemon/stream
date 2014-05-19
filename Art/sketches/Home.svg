@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="726px" height="744px" viewBox="0 0 726 744" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>Slice 1</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <rect id="Rectangle-1" stroke="#26639B" fill-opacity="0.873506434" fill="#0998AC" sketch:type="MSShapeGroup" x="0" y="0" width="726" height="35"></rect>
+        <text id="ShoStream" fill="#FFFFFF" sketch:type="MSTextLayer" font-family="Helvetica" font-size="18" font-weight="normal">
+            <tspan x="89" y="25">ShoStream</tspan>
+        </text>
+        <rect id="Rectangle-2" stroke="#979797" fill="#F1F1F1" sketch:type="MSShapeGroup" x="213" y="7" width="389" height="23"></rect>
+        <text id="Log-In" fill="#FFFFFF" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal">
+            <tspan x="662" y="23">Log In</tspan>
+        </text>
+        <text id="Movies" fill="#6A6A6A" sketch:type="MSTextLayer" font-family="Helvetica" font-size="16" font-weight="normal">
+            <tspan x="89" y="86">Movies</tspan>
+        </text>
+        <text id="TV" fill="#868686" sketch:type="MSTextLayer" font-family="Helvetica" font-size="16" font-weight="normal">
+            <tspan x="177" y="87">TV</tspan>
+        </text>
+        <text id="Comedy" fill="#868686" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal">
+            <tspan x="253" y="87">Comedy</tspan>
+        </text>
+        <text id="Sort-By" fill="#868686" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="normal">
+            <tspan x="337" y="87">Sort By</tspan>
+        </text>
+        <path d="M89.5,93 L111.5182,93 L140.5,93" id="Line" stroke-opacity="0.8" stroke="#26639B" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        <path d="M242,79 L248,79 L245,86 L242,79 Z" id="Triangle-1" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup"></path>
+        <path d="M326,79 L332,79 L329,86 L326,79 Z" id="Triangle-1-copy" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup"></path>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="88" y="320" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="240" y="320" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="392" y="319" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="544" y="320" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="88" y="133" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="240" y="133" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="392" y="132" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="544" y="133" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="88" y="584" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="240" y="584" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="544" y="584" width="120" height="160"></rect>
+        <rect id="Rectangle-3" stroke="#979797" fill="#D8D8D8" sketch:type="MSShapeGroup" x="392" y="584" width="120" height="160"></rect>
+        <path d="M314.5,522.5 L443.5,522.5" id="Line" stroke="#979797" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        <text id="Featured" fill="#4A4A4A" sketch:type="MSTextLayer" font-family="Lucida Sans" font-size="16" font-weight="normal">
+            <tspan x="89" y="562">Featured</tspan>
+        </text>
+        <path d="M173.5,550.5 L173.5,562.5" id="Line" stroke-opacity="0.79698989" stroke="#26639B" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        <path d="M179.5,556.5 L167.5,556.5" id="Line" stroke-opacity="0.8" stroke="#26639B" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>
