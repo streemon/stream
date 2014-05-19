@@ -3770,7 +3770,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  padding: 5px 5px;
+  padding: 10px 10px;
   font-size: 18px;
   line-height: 20px;
   height: 50px;
@@ -3972,7 +3972,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default {
   background-color: #0Ca7d1;
-  border-color: 0px;
 }
 .navbar-default .navbar-brand {
   color: #ffffff;
@@ -5839,4 +5838,7 @@ button.close {
 	text-align: center;
 	top: 30%;
 	width: 6px;
+}
+.brand-logo {
+ height: 30px;
 }
