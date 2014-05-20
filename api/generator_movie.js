@@ -18,16 +18,6 @@
 		code: '{{integer(1,29)}}',
 		name: '{{firstName()}}'
 	},
-	links: [
-		'{{repeat(1,5)}}',
-		{
-			id: '{{index()}}',
-			url: 'http://www.url.com',
-			host: 'exashare',
-			lang: '{{random("fr", "en")}}',
-			subtitles_lang: '{{random("fr", "", "en")}}'
-		}
-	],
 	data_member: {
 		watched: '{{bool()}}',
 		lists:
