@@ -3,7 +3,8 @@
  */
 
 exports.index = function(req, res){
-  res.render('index');
+	if (req.params.page) res.render(req.params.page);
+	else res.render('index');
 };
 
 exports.partials = function(req, res) {
