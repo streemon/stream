@@ -28,7 +28,6 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(app.router);
 
 // development only
 if (app.get('env') === 'development') {
@@ -50,11 +49,9 @@ if (app.get('env') === 'production') {
  * Routes
  */
 
-// serve index and view partials
 app.get('/', routes.index);
-
-// redirect all others to the index (HTML5 history)
-app.get('/:page', routes.index);
+app.get('/partials/:name', routes.partials);
+app.get('*', routes.index);
 
 
 /**

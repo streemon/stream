@@ -15,8 +15,8 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="movies">Movies</a></li>
-				<li><a href="shows">Shows</a></li>
+				<li ng-class="{active: $route.current.media == 'movies'}"><a href="movies">Movies</a></li>
+				<li ng-class="{active: $route.current.media == 'shows'}"><a href="shows">Shows</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
