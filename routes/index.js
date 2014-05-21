@@ -10,3 +10,8 @@ exports.partials = function(req, res) {
   var name = req.params.name;
   res.render('partials/' + name);
 };
+
+//API Routing
+exports.users = require('./users');
+exports.comments = require('./comments');
+exports.links = require('./links');
