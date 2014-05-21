@@ -8,16 +8,17 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	routes = require('./routes'),
+	mongoose = require('mongoose'),
+	models = require('./models'),
 	http = require('http'),
 	path = require('path');
 
 var app = module.exports = express();
 
-/**
- * Configuration
- */
+//Connect to db
+mongoose.connect('mongodb://root:root@localhost:27017/stream');
 
-// all environments
+// Configure all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -28,7 +29,6 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(app.router);
 
 // development only
 if (app.get('env') === 'development') {
@@ -50,10 +50,8 @@ if (app.get('env') === 'production') {
  * Routes
  */
 
-// serve index and view partials
 app.get('/', routes.index);
-
-// redirect all others to the index (HTML5 history)
+app.get('/partials/:name', routes.partials);
 app.get('*', routes.index);
 
 
