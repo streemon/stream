@@ -8,16 +8,17 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	routes = require('./routes'),
+	mongoose = require('mongoose'),
+	models = require('./models'),
 	http = require('http'),
 	path = require('path');
 
 var app = module.exports = express();
 
-/**
- * Configuration
- */
+//Connect to db
+mongoose.connect('mongodb://root:root@localhost:27017/stream');
 
-// all environments
+// Configure all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
