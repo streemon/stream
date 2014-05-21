@@ -8,16 +8,14 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	routes = require('./routes'),
+	mongoose = require('mongoose'),
+	models = require('./models'),
 	http = require('http'),
 	path = require('path');
 
 var app = module.exports = express();
 
-/**
- * Configuration
- */
-
-// all environments
+// Configure all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -28,7 +26,6 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(app.router);
 
 // development only
 if (app.get('env') === 'development') {
@@ -41,20 +38,57 @@ if (app.get('env') === 'development') {
 	});
 }
 
-// production only
-if (app.get('env') === 'production') {
-	// TODO
-};
+//Connect to db
+var dbUrl = 'mongodb://root:root@localhost:27017/stream';
+var connection = mongoose.createConnection(dbUrl);
+connection.on('error', console.error.bind(console, 'connection error:'));
+connection.once('open', function () {
+  console.info('connected to database')
+});
+
+function db (req, res, next) {
+  req.db = {
+    User: connection.model('User', models.User, 'users'),
+    Link: connection.model('Link', models.Link, 'links'),
+    Comment: connection.model('Comment', models.Comment, 'comments')
+  };
+  return next();
+}
 
 /**
  * Routes
  */
 
-// serve index and view partials
+//Serve App
 app.get('/', routes.index);
+app.get('/partials/:name', routes.partials);
 
-// redirect all others to the index (HTML5 history)
-app.get('/:page', routes.index);
+//Serve API
+
+//USERS
+app.get('/api/users', db, routes.users.getUsers);
+app.get('/api/users/:id', db,routes.users.getUser);
+app.post('/api/users', db, routes.users.add);
+//app.put('/api/users/:id', db, routes.users.update);
+//app.del('/api/users/:id', db, routes.users.del);
+
+//COMMENTS
+app.get('/api/:media(movie|show)s/:id/comments', db, routes.comments.getComments);
+app.get('/api/comments/:id', db,routes.comments.getComment);
+app.post('/api/comments', db, routes.comments.add);
+app.put('/api/comments/:id', db, routes.comments.update);
+app.delete('/api/comments/:id', db, routes.comments.del);
+
+//LINKS
+app.get('/api/:media(movie|show)s/:id/links', db, routes.links.getLinks);
+app.post('/api/links', db, routes.links.add);
+app.put('/api/links/:id', db, routes.links.update);
+app.delete('/api/links/:id', db, routes.links.del);
+
+//Return 404 for wrong api call
+app.get('/api/*', function (req, res) { res.send(404) });
+//Redirect lost user to homepage
+app.get('*', routes.index);
 
 
 /**

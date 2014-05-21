@@ -3,11 +3,15 @@
  */
 
 exports.index = function(req, res){
-	if (req.params.page) res.render(req.params.page);
-	else res.render('index');
+	res.render('index');
 };
 
 exports.partials = function(req, res) {
   var name = req.params.name;
   res.render('partials/' + name);
 };
+
+//API Routing
+exports.users = require('./users');
+exports.comments = require('./comments');
+exports.links = require('./links');
