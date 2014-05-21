@@ -785,9 +785,13 @@ pre code {
   padding-left: 0px;
   padding-right: 0px;
 }
-.margin {
+.margin-horizontal {
   margin-left: 10px;
   margin-right: 10px;
+}
+.margin-vertical {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .cover-bottom-margin {
   margin-bottom: 20px;
@@ -3063,7 +3067,7 @@ input[type="button"].btn-block {
   height: 1px;
   margin: 9px 0;
   overflow: hidden;
-  background-color: #e5e5e5;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .dropdown-menu > li > a {
   display: block;
@@ -3675,6 +3679,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   min-height: 50px;
   height: 50px;
   margin-bottom: 10px;
+  z-index: 1000;
 }
 @media (min-width: 768px) {
   .navbar {
@@ -3696,7 +3701,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   -webkit-overflow-scrolling: touch;
 }
 .navbar-collapse.in {
-  overflow-y: auto;
+  /*overflow-y: auto; */
 }
 @media (min-width: 768px) {
   .navbar-collapse {
@@ -3724,8 +3729,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .container-fluid > .navbar-header,
 .container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
-  margin-right: -5px;
-  margin-left: -5px;
+  margin-right: 0px;
+  margin-left: 0px;
 }
 @media (min-width: 768px) {
   .container > .navbar-header,
@@ -3786,7 +3791,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-toggle {
   position: relative;
   float: right;
-  margin-right: 5px;
+  margin-right: 10px;
   padding: 9px 10px;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -3827,7 +3832,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: none;
     width: auto;
     margin-top: 0;
-    background-color: transparent;
+    background-color: #0Ca7d1;
     border: 0;
     box-shadow: none;
   }
@@ -3868,8 +3873,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-form {
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding: 10px 5px;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
@@ -4007,18 +4012,19 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #dddddd;
+  border-color: #ffffff;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #ffffff;
+  background-color: transparent;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #888888;
+  background-color: #ffffff;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: transparent;
+  background-color: #0Ca7d1;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
