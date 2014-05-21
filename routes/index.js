@@ -12,6 +12,7 @@ exports.partials = function(req, res) {
 };
 
 //API Routing
+exports.main = require('./main');
 exports.users = require('./users');
 exports.comments = require('./comments');
 exports.links = require('./links');

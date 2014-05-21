@@ -66,6 +66,9 @@ app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
 
 //Serve API
+//MAIN
+app.post('/api/login', db, routes.main.login);
+app.get('/api/logout', routes.main.logout);
 
 //USERS
 app.get('/api/users', db, routes.users.getUsers);
@@ -77,14 +80,14 @@ app.post('/api/users', db, routes.users.add);
 //COMMENTS
 app.get('/api/:media(movie|show)s/:id/comments', db, routes.comments.getComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);
-app.post('/api/comments', db, routes.comments.add);
-app.put('/api/comments/:id', db, routes.comments.update);
+app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);
+app.put('/api/comments/:id', routes.main.hasRights(3), db, routes.comments.update);
 app.delete('/api/comments/:id', db, routes.comments.del);
 
 //LINKS
 app.get('/api/:media(movie|show)s/:id/links', db, routes.links.getLinks);
 app.post('/api/links', db, routes.links.add);
-app.put('/api/links/:id', db, routes.links.update);
+app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);
 
 //Return 404 for wrong api call

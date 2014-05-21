@@ -5,6 +5,8 @@ var UserSchema = new Schema ({
 	boardId: Number,
 	username: String,
 	avatar: String,
+	token: String,
+	lastLogin: {type: Date, default: Date.now},
 	rights: Number
 });
 
