@@ -41,3 +41,7 @@ exports.logout = function(req, res) {
     }
   });
 };
+
+exports.home = function (req, res, next) {
+	//TO DO, varies if logged in
+}

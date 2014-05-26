@@ -69,6 +69,7 @@ app.get('/partials/:name', routes.partials);
 //MAIN
 app.post('/api/login', db, routes.main.login);
 app.get('/api/logout', routes.main.logout);
+app.get('/api/home', db, routes.main.home);
 
 //USERS
 app.get('/api/users', db, routes.users.getUsers);
@@ -79,6 +80,7 @@ app.post('/api/users', db, routes.users.add);
 
 //COMMENTS
 app.get('/api/:media(movie|show)s/:id/comments', db, routes.comments.getComments);
+app.get('/api/comments', db,routes.comments.getAllComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);
 app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);
 app.put('/api/comments/:id', routes.main.hasRights(3), db, routes.comments.update);

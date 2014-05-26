@@ -1,8 +1,32 @@
+var LIMIT = 10;
+var SKIP = 0;
+
 exports.getComments = function(req, res, next) {
-	req.db.Comment.find({media: req.params.media, mediaId: req.params.id}, function(err, list){
-		if (err) next(err);
-		res.json(200, list);
-	})
+	var limit = req.query.limit || LIMIT;
+	var skip = req.query.skip || SKIP;
+	
+	req.db.Comment.find(
+		{media: req.params.media, mediaId: req.params.id},
+		{limit: limit, skip: skip,sort: {'_id': -1}},
+		function(err, list){
+			if (err) next(err);
+			res.json(200, list);
+		}
+	)
+}
+
+exports.getAllComments = function(req, res, next) {
+	var limit = req.query.limit || LIMIT;
+	var skip = req.query.skip || SKIP;
+	
+	req.db.Comment.find(
+		{}, 
+		{limit: limit, skip: skip,sort: {'_id': -1}},
+		function(err, list){
+			if (err) next(err);
+			res.json(200, list);
+		}
+	)
 }
 
 exports.getComment = function(req, res, next) {
