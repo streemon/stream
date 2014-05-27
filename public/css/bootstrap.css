@@ -793,6 +793,9 @@ pre code {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.margin-top {
+  margin-top: 10px;
+}
 .cover-bottom-margin {
   margin-bottom: 20px;
 }
@@ -1436,7 +1439,8 @@ pre code {
 }
 table {
   max-width: 100%;
-  background-color: transparent;
+  background-color: #fdfdfd;
+  border-radius: 3px;
 }
 th {
   text-align: left;
@@ -5708,6 +5712,11 @@ button.close {
   margin-right: auto;
   float:none
 }
+.center-block-min {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .pull-right {
   float: right !important;
 }
@@ -5869,5 +5878,8 @@ button.close {
 	margin-top: 5px;
 }
 .brand-logo {
- height: 30px;
+	height: 30px;
+}
+.btn-tight {
+ padding: 2px 2px;
 }
