@@ -2547,6 +2547,30 @@ input[type="button"].btn-block {
 .glyphicon-flag:before {
   content: "\e034";
 }
+.glyphicon-error {
+  opacity: 0.5;
+    margin-top: 7px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.glyphicon-error:hover,
+.glyphicon-error:active {
+  opacity: 1;
+  color: #f8261f;
+  cursor: pointer;
+}
+.glyphicon-info {
+  opacity: 0.5;
+    margin-top: 7px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.glyphicon-info:hover,
+.glyphicon-info:active {
+  opacity: 1;
+  color: #39b3d7;
+  cursor: pointer;
+}
 .glyphicon-headphones:before {
   content: "\e035";
 }
@@ -3890,7 +3914,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-username {
   float: left;
-  display: block,
+  display: block;
 }
 .navbar-form {
   margin-left: 10px;
@@ -5880,16 +5904,6 @@ button.close {
 .brand-logo {
 	height: 30px;
 }
-.btn-tight {
- padding: 2px 2px;
- min-width: 60px;
- width: 60px;
- display: inline;
-}
-.btn-holder {
-	width: 130px;
-	height: auto;
-}
 .btn-play {
 	position: absolute;
 	width: 30%;
@@ -5918,4 +5932,21 @@ button.close {
 .player {
 	position: relative;
 	overflow: hidden;
+}
+.player-path {
+	padding: 8px 8px;
+	background-color: #f5f5f5;
+	border-radius: 3px;
+	overflow: show;
+}
+.player-path-hostname {
+	color: #8d8d8d;
+	display: inline;
+	font-weight: bold;
+}
+.inline {
+	display: inline;
+}
+.player-path-glyphicon {
+	color: #000000;
 }
