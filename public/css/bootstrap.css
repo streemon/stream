@@ -5882,4 +5882,40 @@ button.close {
 }
 .btn-tight {
  padding: 2px 2px;
+ min-width: 60px;
+ width: 60px;
+ display: inline;
+}
+.btn-holder {
+	width: 130px;
+	height: auto;
+}
+.btn-play {
+	position: absolute;
+	width: 30%;
+	left: 35%;
+	top: 13.5%;
+	opacity: 0.5;
+}
+.btn-play:hover,
+.btn-play:active {
+	opacity: 0.8;
+}
+.container-player {
+	position: relative;
+	overflow: hidden;
+}
+.nowrap {
+	white-space: nowrap
+}
+.player-loading {
+	position: absolute;
+	width: 40%;
+	left: 30%;
+	top: 45%;
+	z-index: -1;
+}
+.player {
+	position: relative;
+	overflow: hidden;
 }
