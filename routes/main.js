@@ -43,5 +43,14 @@ exports.logout = function(req, res) {
 };
 
 exports.home = function (req, res, next) {
-	//TO DO, varies if logged in
+	//TO DO, varies if logged in, can be mediaOnly-ed
+	if (req.session.auth) {
+		//gets last watched tv shows
+		//recommended movies
+	}
+
+	//Get featured movies/tv shows from Stream
+
+	//Get random lists from Board
+
 }

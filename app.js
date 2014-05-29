@@ -25,7 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('1<1v2v1e@v1v221vv:ù^*K33'));
-app.use(session({ secret: 'kaplantoeflibtfourthedition', name: 'sid', cookie: { secure: true }}))
+app.use(session({ secret: 'kaplantoeflibtfourthedition', name: 'sid', cookie: { secure: true }}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
