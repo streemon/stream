@@ -322,6 +322,12 @@ img {
 .img-rounded {
   border-radius: 3px;
 }
+.img-extra-small {
+  height: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  vertical-align: -22.5%;
+}
 .img-small {
   height: 30px;
   margin-right: 5px;
@@ -5937,7 +5943,7 @@ button.close {
 	padding: 8px 8px;
 	background-color: #f5f5f5;
 	border-radius: 3px;
-	overflow: show;
+	overflow: visible;
 }
 .player-path-hostname {
 	color: #8d8d8d;
@@ -5949,4 +5955,15 @@ button.close {
 }
 .player-path-glyphicon {
 	color: #000000;
+}
+.player-path-hostinfo {
+	margin-left: 5px;
+	font-size: 18px;
+	color: #8d8d8d;
+}
+.opacity-8 {
+  opacity: 0.8;
+}
+.opacity-6 {
+  opacity: 0.6;
 }
