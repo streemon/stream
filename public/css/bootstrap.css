@@ -335,6 +335,7 @@ img {
 .img-xsmall {
   height: 20px;
   margin-right: 5px;
+  margin-bottom: 3.5px;
 }
 .img-thumbnail {
   padding: 4px;
