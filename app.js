@@ -6,7 +6,7 @@ var express = require('express'),
 	favicon = require('serve-favicon'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
-	session = require('express-session'),
+	session = require('cookie-session'),
 	bodyParser = require('body-parser'),
 	routes = require('./routes'),
 	mongoose = require('mongoose'),
@@ -25,7 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('1<1v2v1e@v1v221vv:ù^*K33'));
-app.use(session({ secret: 'kaplantoeflibtfourthedition', name: 'sid', cookie: { secure: true }}))
+app.use(session({ secret: 'kaplantoeflibtthirdedition', name: 'sid'}))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
@@ -68,6 +68,7 @@ app.get('/partials/:name', routes.partials);
 //Serve API
 //MAIN
 app.post('/api/login', db, routes.main.login);
+app.get('/api/home', routes.main.home);
 app.get('/api/logout', routes.main.logout);
 
 //USERS

@@ -18,6 +18,11 @@ app.config(function ($routeProvider, $locationProvider) {
 	        media: 'shows',
 	        title: 'TV Shows'
 	    })
+	    .when('/login', {
+	        templateUrl: '/partials/login',
+	        controller: 'LoginController',
+	        title: 'Log In'
+	    })
 	    .when('/movies/:id', {
 	        templateUrl: '/partials/movie',
 	        controller: 'MovieController',
