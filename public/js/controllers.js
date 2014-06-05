@@ -1,14 +1,23 @@
 var controllers = angular.module('myapp.controllers', []);
 
-controllers.controller('MainController', ['$scope','$route', '$localStorage', function($scope, $route, $localStorage) {
+controllers.controller('MainController', ['$scope','$route', '$location', '$localStorage', function($scope, $route, $location, $localStorage) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
+
+	$scope.search = function () {
+		var query = this.q;
+		if (!$route.current.media) $route.current.media = 'movies';
+
+		$location.path('/search/' + $route.current.media + '/' + query);
+	}
 }]);
 
-controllers.controller('IndexController', ['$scope', '$route', '$localStorage', function($scope, $route, $localStorage) {
+controllers.controller('IndexController', ['$scope', '$route', '$http', function($scope, $route, $http) {
+	/*
 	$http.get('/api/lists', {media: $route.current.media}).success(function(data) {
 		$scope.lists = data;
 	});
+	*/
 }]);
 
 controllers.controller('LoginController', ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {

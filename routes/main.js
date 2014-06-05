@@ -96,30 +96,6 @@ exports.search = function (req, res, next) {
 
 exports.logout = function(req, res) {
   console.info('Logout USER: ' + req.session.user._id);
-<<<<<<< HEAD
-  req.session.destroy(function(error) {
-    if (!error) {
-      res.send({
-        msg: 'Logged out'
-      });
-    }
-  });
-};
-
-exports.home = function (req, res, next) {
-	//TO DO, varies if logged in, can be mediaOnly-ed
-	if (req.session.auth) {
-		//gets last watched tv shows
-		//recommended movies
-	}
-
-	//Get featured movies/tv shows from Stream
-
-	//Get random lists from Board
-
-}
-=======
   req.session = null;
   res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
 };
->>>>>>> feature/templates

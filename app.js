@@ -25,11 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('1<1v2v1e@v1v221vv:ù^*K33'));
-<<<<<<< HEAD
-app.use(session({ secret: 'kaplantoeflibtfourthedition', name: 'sid', cookie: { secure: true }}));
-=======
 app.use(session({ secret: 'kaplantoeflibtthirdedition', name: 'sid'}))
->>>>>>> feature/templates
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
@@ -74,11 +70,7 @@ app.get('/partials/:name', routes.partials);
 app.post('/api/login', db, routes.main.login);
 app.get('/api/home', routes.main.home);
 app.get('/api/logout', routes.main.logout);
-<<<<<<< HEAD
-app.get('/api/home', db, routes.main.home);
-=======
 app.get('/api/search/:media(movies|shows)/:q', routes.main.search);
->>>>>>> feature/templates
 
 //USERS
 app.get('/api/users', db, routes.users.getUsers);
@@ -88,12 +80,7 @@ app.post('/api/users', db, routes.users.add);
 //app.del('/api/users/:id', db, routes.users.del);
 
 //COMMENTS
-<<<<<<< HEAD
-app.get('/api/:media(movie|show)s/:id/comments', db, routes.comments.getComments);
-app.get('/api/comments', db,routes.comments.getAllComments);
-=======
 app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
->>>>>>> feature/templates
 app.get('/api/comments/:id', db,routes.comments.getComment);
 app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);
 app.put('/api/comments/:id', routes.main.hasRights(3), db, routes.comments.update);

@@ -2,11 +2,11 @@
 <div id="apple-status-bar-margin" style="display:none"></div>
 <script>
 if (window.navigator.standalone == true) {
-			var e = document.getElementById('apple-status-bar-style');
-			e.style.display = 'block';
-			var e = document.getElementById('apple-status-bar-margin');
-			e.style.display = 'block';
-		}
+	var e = document.getElementById('apple-status-bar-style');
+	e.style.display = 'block';
+	var e = document.getElementById('apple-status-bar-margin');
+	e.style.display = 'block';
+}
 </script>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -25,14 +25,14 @@ if (window.navigator.standalone == true) {
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li ng-class="{active: $route.current.media == 'movies'}"><a href="/movies">Movies</a></li>
-				<li ng-class="{active: $route.current.media == 'shows'}"><a href="/shows">Shows</a></li>
+				<li ng-class="{active: $route.current.media == 'movies'}"><a href="/movies" ng-href="{{$route.current.moviesLink}}">Movies</a></li>
+				<li ng-class="{active: $route.current.media == 'shows'}"><a href="/shows" ng-href="{{$route.current.showsLink}}">Shows</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<form class="navbar-form " role="search">
+					<form class="navbar-form " ng-submit="search()" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control lens" placeholder="Skyfall, Mentalist, @xiamix, ...">
+							<input type="text" name="q" ng-model="q" class="form-control lens" placeholder="Skyfall, Mentalist, @xiamix, ...">
 						</div>
 					</form>
 				</li>
