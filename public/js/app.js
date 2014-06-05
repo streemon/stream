@@ -1,4 +1,4 @@
-var app = angular.module('myapp', ['ngRoute', 'myapp.controllers', 'myapp.directives']);
+var app = angular.module('myapp', ['ngRoute', 'ngStorage', 'myapp.controllers', 'myapp.directives']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -17,6 +17,28 @@ app.config(function ($routeProvider, $locationProvider) {
 	        controller: 'IndexController',
 	        media: 'shows',
 	        title: 'TV Shows'
+	    })
+	    .when('/search/movies/:q', {
+	    	templateUrl: '/partials/search',
+	    	controller: 'SearchController',
+	        media: 'movies',
+	    	title: 'Search Movies'
+	    })
+	    .when('/search/shows/:q', {
+	    	templateUrl: '/partials/search',
+	    	controller: 'SearchController',
+	        media: 'shows',
+	    	title: 'Search TV Shows'
+	    })
+	    .when('/login', {
+	        templateUrl: '/partials/login',
+	        controller: 'LoginController',
+	        title: 'Log In'
+	    })
+	    .when('/logout', {
+	        templateUrl: '/partials/message',
+	        controller: 'LogoutController',
+	        title: 'Log Out'
 	    })
 	    .when('/movies/:id', {
 	        templateUrl: '/partials/movie',

@@ -1,3 +1,13 @@
+<div id="apple-status-bar-style" style="display:none"></div>
+<div id="apple-status-bar-margin" style="display:none"></div>
+<script>
+if (window.navigator.standalone == true) {
+			var e = document.getElementById('apple-status-bar-style');
+			e.style.display = 'block';
+			var e = document.getElementById('apple-status-bar-margin');
+			e.style.display = 'block';
+		}
+</script>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
 	<!-- Brand and toggle get grouped for better mobile display -->
@@ -26,16 +36,19 @@
 						</div>
 					</form>
 				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" class="img-rounded img-small"> Xiamix <b class="navbar-new"></b> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+				<li class="dropdown" ng-show="$storage.user.auth">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
+					<ul class="dropdown-menu hidden-xs hidden-sm">
 						<li><a href="#">Settings</a></li>
 						<li><a href="#">Messages<span class="badge pull-right">1</span></a></li>
 						<li><a href="#">Contribute<span class="badge pull-right">7</span></a></li>
 						<li><a href="#">Moderate<span class="badge pull-right">2</span></a></li>
 						<li class="divider"></li>
-						<li><a href="#">Log out</a></li>
+						<li><a href="/logout">Log out</a></li>
 					</ul>
+				</li>
+				<li>
+					<a href="/login" ng-hide="$storage.user.auth">Log In</a>
 				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
