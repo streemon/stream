@@ -70,6 +70,7 @@ app.get('/partials/:name', routes.partials);
 app.post('/api/login', db, routes.main.login);
 app.get('/api/home', routes.main.home);
 app.get('/api/logout', routes.main.logout);
+app.get('/api/search/:media(movies|shows)/:q', routes.main.search);
 
 //USERS
 app.get('/api/users', db, routes.users.getUsers);
@@ -79,14 +80,14 @@ app.post('/api/users', db, routes.users.add);
 //app.del('/api/users/:id', db, routes.users.del);
 
 //COMMENTS
-app.get('/api/:media(movie|show)s/:id/comments', db, routes.comments.getComments);
+app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);
 app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);
 app.put('/api/comments/:id', routes.main.hasRights(3), db, routes.comments.update);
 app.delete('/api/comments/:id', db, routes.comments.del);
 
 //LINKS
-app.get('/api/:media(movie|show)s/:id/links', db, routes.links.getLinks);
+app.get('/api/:media(movies|shows)/:id/links', db, routes.links.getLinks);
 app.post('/api/links', db, routes.links.add);
 app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);
