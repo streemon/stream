@@ -1,6 +1,56 @@
 <div>{{data.msg}}</div>
-<form ng-submit="login()">
-	<input type="text" name="username" ng-model="username" />
-	<input type="password" name="password" ng-model="password" />
-	<input type="submit" /> 
-</form>
+<div class="container">
+	<div class="col-xs-12 col-md-5">
+		<p class="page-header-link">
+			<h3 class="page-header">
+				Log In
+			</h3>
+		</p>
+		<br />
+		<form ng-submit="login()">
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="email" class="form-control" id="usernam" placeholder="Enter username" name="username" ng-model="username">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" name="password" ng-model="password">
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-sm btn-primary">Sign in</button>
+			</div>
+		</form>
+		<br />
+	</div>
+	<div class="col-md-2 hidden-xs hidden-sm">
+		<!-- empty space -->
+	</div>
+	<div class="col-sm-12 hidden-md hidden-lg hidden-xl">
+		<hr class="col-xs-10 center-block">
+	</div>
+		<div class="col-xs-12 col-md-5">
+		<p class="page-header-link">
+			<h3 class="page-header">
+				Sign In
+			</h3>
+		</p>
+		<br />
+		<form ng-submit="login()">
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="email" class="form-control" id="usernam" placeholder="Enter username" name="username" ng-model="username">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" name="password" ng-model="password">
+			</div>
+			<div class="form-group">
+				<label for="password">Retype password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" name="password" ng-model="password">
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-sm btn-primary">Sign in</button>
+			</div>
+		</form>
+	</div>
+</div>
