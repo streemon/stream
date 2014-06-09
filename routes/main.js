@@ -94,6 +94,24 @@ exports.search = function (req, res, next) {
 	})
 }
 
+exports.getMediaById = function (req, res, next) {
+	var spoilzrClient = new spoilzr();
+
+	var form = {};
+	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+
+	if ((req.params.media == 'movies' || req.params.media == 'shows') && req.params.id ) {
+		spoilzrClient.get(req.params.media + '/' + req.params.id, form, function (err, data) {
+			if (err) throw err;
+
+			if (data) {
+				var media = JSON.parse(data.body);
+				res.json(200, media);
+			}
+		})
+	}
+}
+
 exports.logout = function(req, res) {
   console.info('Logout USER: ' + req.session.user._id);
   req.session = null;
