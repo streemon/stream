@@ -791,6 +791,7 @@ pre code {
   min-height: 1px;
   padding-left: 10px;
   padding-right: 10px;
+  overflow: hidden;  
 }
 .no-padding {
   padding-left: 0px;
@@ -5991,5 +5992,37 @@ button.close {
 	background-color: #0Ca7d1;
 	width: 100%;
 	height: 20px;
+	position: relative;
+}
+@media (max-width: 768px) {
+	.frame {
+		height: 33.9041096vw;
+	}
+}
+@media (min-width: 769px) and (max-width: 992px) {
+	.frame {
+		height: 299px;
+	}
+ }
+@media (min-width: 993px) and (max-width: 1200px) {
+	.frame {
+		height: 186px;
+	}
+ }
+@media (min-width: 1201px) {
+	.frame {
+		height: 231px;
+	}
+ }
+.poster {
+	width: 100%;
+	height: 100%;
+}
+.frame {
+	overflow: hidden;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 	position: relative;
 }
