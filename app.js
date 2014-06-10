@@ -71,6 +71,7 @@ app.post('/api/login', db, routes.main.login);
 app.get('/api/home', routes.main.home);
 app.get('/api/logout', routes.main.logout);
 app.get('/api/search/:media(movies|shows)/:q', routes.main.search);
+app.get('/api/:media(movies|shows)/:id', routes.main.getMediaById);
 
 //USERS
 app.get('/api/users', db, routes.users.getUsers);

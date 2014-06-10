@@ -46,6 +46,8 @@ controllers.controller('LogoutController', ['$scope', '$http', '$localStorage', 
 }]);
 
 controllers.controller('SearchController', ['$scope', '$route', '$http', function($scope, $route, $http) {
+	$scope.$route = $route;
+
 	if ($route.current.media == 'shows' || $route.current.media == 'movies') {
 		$http.get('/api/search/' + $route.current.media + '/' + $route.current.params.q).success(function(data) {
 			$scope.search = data;
@@ -53,10 +55,18 @@ controllers.controller('SearchController', ['$scope', '$route', '$http', functio
 	}
 }]);
 
-controllers.controller('MovieController', ['$scope', function($scope) {
-	
+controllers.controller('MovieController', ['$scope', '$route', '$http', function($scope, $route, $http) {
+	$scope.$route = $route;
+
+	$http.get('/api/movies/' + $route.params.id).success(function(data) {
+		$scope.movie = data;
+	})
 }]);
 
-controllers.controller('ShowController', ['$scope', function($scope) {
-	
+controllers.controller('ShowController', ['$scope', '$http', function($scope) {
+	$scope.$route = $route;
+
+	$http.get('/api/shows/' + $route.params.id).success(function(data) {
+		$scope.show = data;
+	})
 }]);
