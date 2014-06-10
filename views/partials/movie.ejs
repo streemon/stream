@@ -73,4 +73,10 @@
 		</ul>
 	</div>
 </div>
-<br />
+<pre>{{movie}}</pre>
+<pre>{{links}}</pre>
+<div ng-show="form.msg">{{form.msg}}</div>
+<form ng-submit="submitLinks(formLinks)">
+	<div ng-repeat="link in formLinks"><input ng-focus="addLinkRow()" type="text" placeholder="link" name="url" ng-model="link.url" /></div>
+	<input type="submit" />
+</form>

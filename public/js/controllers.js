@@ -58,15 +58,51 @@ controllers.controller('SearchController', ['$scope', '$route', '$http', functio
 controllers.controller('MovieController', ['$scope', '$route', '$http', function($scope, $route, $http) {
 	$scope.$route = $route;
 
-	$http.get('/api/movies/' + $route.params.id).success(function(data) {
-		$scope.movie = data;
-	})
+	$scope.addLinkRow = function () {
+		function linkModel(id) {
+			this.url = '';
+			this.media = 'movies';
+			this.mediaId = id;
+		}
+
+		$scope.formLinks.push(new linkModel($scope.$route.current.params.id));
+	}
+
+	$scope.submitLinks = function(links) {
+		$http.post('/api/links', links)
+			.success(function(data) {
+				$scope.form = {msg: data.length + " links have been added"};
+				$scope.links.push(data);
+			})
+			.error(function (err) {
+				$scope.form = err;
+			});
+	}
+
+	$scope.formLinks = [];
+	$scope.addLinkRow();
+
+	$http.get('/api/movies/' + $route.current.params.id)
+		.success(function(data) {
+			$scope.movie = data;
+		})
+		.error(function(err) {
+			$scope.movie = err;
+		});
+
+	$http.get('/api/movies/' + $route.current.params.id + '/links')
+		.success(function (data) {
+			$scope.links = data;
+		})
+		.error(function (err) {
+			$scope.links = err;
+		});
 }]);
 
-controllers.controller('ShowController', ['$scope', '$http', function($scope) {
+controllers.controller('ShowController', ['$scope', '$route', '$http', function($scope, $route, $http) {
 	$scope.$route = $route;
 
-	$http.get('/api/shows/' + $route.params.id).success(function(data) {
+	$http.get('/api/shows/' + $route.current.params.id).success(function(data) {
 		$scope.show = data;
 	})
 }]);

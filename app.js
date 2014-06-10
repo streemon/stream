@@ -63,6 +63,7 @@ function db (req, res, next) {
 
 //Serve App
 app.get('/', routes.index);
+app.get('/moderate', routes.main.hasRights(2), routes.moderate);
 app.get('/partials/:name', routes.partials);
 
 //Serve API
@@ -71,7 +72,8 @@ app.post('/api/login', db, routes.main.login);
 app.get('/api/home', routes.main.home);
 app.get('/api/logout', routes.main.logout);
 app.get('/api/search/:media(movies|shows)/:q', routes.main.search);
-app.get('/api/:media(movies|shows)/:id', routes.main.getMediaById);
+app.get('/api/:media(movies)/:id', db, routes.main.getMovieById);
+app.get('/api/:media(shows)/:hashtag', db, routes.main.getShowByHashtag);
 
 //USERS
 app.get('/api/users', db, routes.users.getUsers);
@@ -88,7 +90,7 @@ app.put('/api/comments/:id', routes.main.hasRights(3), db, routes.comments.updat
 app.delete('/api/comments/:id', db, routes.comments.del);
 
 //LINKS
-app.get('/api/:media(movies|shows)/:id/links', db, routes.links.getLinks);
+app.get('/api/:media(movies|episodes)/:id/links', db, routes.links.getLinks);
 app.post('/api/links', db, routes.links.add);
 app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);

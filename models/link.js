@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var LinkSchema = new Schema ({
-	media: String,
+	media: {type: String, enum: ['movies', 'episodes']},
 	mediaId: Number,
-	url: String,
+	url: {type: String, validate: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ },
 	lang: String,
 	subtitles: String,
 	_uploaderId: Schema.Types.ObjectId

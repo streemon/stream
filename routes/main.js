@@ -5,20 +5,28 @@ exports.hasRights = function (rights) {
         if(req.session && req.session.auth && req.session.user && req.session.user.rights >= rights)
             next();
         else
-            next("User doesn't have sufficient rights");
+            next("User ("+ req.session.user.rights +") doesn't have sufficient rights ("+ rights +")");
     }
 }
 
 exports.login = function (req, res, next) {
+	function authorizeUser (session) {
+		var menu = [{href: '/settings', title: 'Settings'}, {href: '/links', title: 'My Links'}];
+		if (req.session.user.rights >= 2) menu.push({href: '/moderate', title: 'Moderate'});
+
+		var userPublic = {auth: session.auth, username: session.user.username, avatar: session.user.avatar, menu: menu};
+
+		return res.json(200, {msg: "Authorized", user: userPublic});
+	}
 
 	if (req.body.username) {
 		var spoilzrClient = new spoilzr();
 
 		if (req.body.password) {
 			spoilzrClient.post('login', {form: {username: req.body.username, password: req.body.password}}, function (err, data, response) {
-				if (err) res.json(400, {msg: "Spoilzr error"});
+				if (err || data.statusCode != 200) return res.json(400, {msg: "Spoilzr error"});
 
-				var userData = JSON.parse(data.body).user;
+				var userData = JSON.parse(response).user;
 
 				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastLogin: new Date()}, function (err, doc) {
 					if (err) throw err;
@@ -27,9 +35,7 @@ exports.login = function (req, res, next) {
 						req.session.auth = true;
 						req.session.user = doc;
 
-						var userPublic = {auth: req.session.auth, username: req.session.user.username, avatar: req.session.user.avatar};
-
-						res.json(200, {msg: "Authorized", user: userPublic});
+						authorizeUser(req.session);
 					}
 					else {
 						req.db.User.create(userData, function(err, doc) {
@@ -38,9 +44,7 @@ exports.login = function (req, res, next) {
 							req.session.auth = true;
 							req.session.user = doc;
 
-							var userPublic = {auth: req.session.auth, username: req.session.user.username, avatar: req.session.user.avatar};
-
-							res.json(200, {msg: "Authorized", user: userPublic});
+							authorizeUser(req.session);
 						});
 					}
 				})
@@ -48,10 +52,10 @@ exports.login = function (req, res, next) {
 			});
 		}
 		else {
-			res.json(400, {msg: "Password not provided"});
+			return res.json(400, {msg: "Password not provided"});
 		}
 	}
-	else res.json(400, {msg: "Username not provided"});
+	else return res.json(400, {msg: "Username not provided"});
 };
 
 exports.home = function (req, res, next) {
@@ -61,7 +65,7 @@ exports.home = function (req, res, next) {
 	else {
 		var userPublic = {auth: false};
 	}
-	res.json(200, userPublic);
+	return res.json(200, userPublic);
 }
 
 exports.lists = function (req, res, next) {
@@ -74,7 +78,7 @@ exports.lists = function (req, res, next) {
 	spoilzrClient.get('lists', form, function (err, doc) {
 		if (err) throw err;
 
-		res.json(200, doc);
+		return res.json(200, doc);
 	})
 }
 
@@ -94,26 +98,43 @@ exports.search = function (req, res, next) {
 	})
 }
 
-exports.getMediaById = function (req, res, next) {
+exports.getMovieById = function (req, res, next) {
 	var spoilzrClient = new spoilzr();
 
 	var form = {};
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
 
-	if ((req.params.media == 'movies' || req.params.media == 'shows') && req.params.id ) {
-		spoilzrClient.get(req.params.media + '/' + req.params.id, form, function (err, data) {
-			if (err) throw err;
+	spoilzrClient.get('movies/' + req.params.id, form, function (err, data) {
+		if (err) throw err;
 
-			if (data) {
-				var media = JSON.parse(data.body);
-				res.json(200, media);
-			}
-		})
-	}
+		if (data) {
+			var media = JSON.parse(data.body);
+			res.json(200, media);
+		}
+	})
+}
+
+exports.getShowByHashtag = function (req, res, next) {
+	var spoilzrClient = new spoilzr();
+
+	var form = {};
+	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+
+	spoilzrClient.get('shows/!' + req.params.hashtag, form, function (err, data) {
+		if (err) throw err;
+
+		if (data) {
+			var media = JSON.parse(data.body);
+			res.json(200, media);
+		}
+	})
 }
 
 exports.logout = function(req, res) {
-  console.info('Logout USER: ' + req.session.user._id);
-  req.session = null;
-  res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
+	if (req.session && req.session.user) {
+		console.info('Logout USER: ' + req.session.user._id);
+		req.session = null;
+		return res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
+	}
+	else res.json(400, {msg: 'Already logged out'});
 };
