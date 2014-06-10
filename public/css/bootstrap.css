@@ -811,14 +811,6 @@ pre code {
 .cover-bottom-margin {
   margin-bottom: 20px;
 }
-.list-title {
-  position: absolute;
-  background-color: rgba(204, 204, 204, 0.9);
-  color: #fff;
-  font-size: 18px;
-  text-align: center;
-  width: 100%;
-}
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
 }
@@ -3839,6 +3831,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-brand:hover,
 .navbar-brand:focus {
   text-decoration: none;
+  background-color: #0Ca7d1;
 }
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
@@ -4043,8 +4036,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: fff;
-  background-color: #0084aa;
+  color: #ffffff;
+  background-color: #0Ca7d1;
 }
 .navbar-default .navbar-text {
   color: #ffffff;
@@ -5996,33 +5989,52 @@ button.close {
 }
 @media (max-width: 768px) {
 	.frame {
-		height: 33.9041096vw;
+		height: 49.999999vw;
 	}
 }
 @media (min-width: 769px) and (max-width: 992px) {
 	.frame {
-		height: 299px;
+		height: 345px;
 	}
  }
 @media (min-width: 993px) and (max-width: 1200px) {
 	.frame {
-		height: 186px;
+		height: 220.5px;
 	}
  }
 @media (min-width: 1201px) {
 	.frame {
-		height: 231px;
+		height: 270px;
 	}
  }
+.list-cover {
+	height: 50%;
+	padding: 0px 0px 0px 0px;
+}
 .poster {
 	width: 100%;
 	height: 100%;
 }
 .frame {
+	display: block;
 	overflow: hidden;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
 	position: relative;
+}
+.list-title {
+  background-color: rgba(204, 204, 204, 0.9);
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  padding: 0px 0px 0px 0px;
+}
+.list-head {
+  position: absolute;
+  width: 100%;
+  padding-right: 10px;
+  height: auto;
+  overflow-y: hidden;
 }
