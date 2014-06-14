@@ -10,6 +10,11 @@ exports.moderate = function(req, res){
 	res.render('moderate', {session: req.session});
 };
 
+exports.userpartials = function(req, res) {
+  var name = req.params.name;
+  res.render('userpartials/' + name);
+};
+
 exports.partials = function(req, res) {
   var name = req.params.name;
   res.render('partials/' + name);

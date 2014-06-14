@@ -5,20 +5,34 @@ exports.getUsers = function(req, res, next) {
 	})
 }
 
-exports.getUser = function(req, res, next) {
-	req.db.User.findById(req.params.id, function (err, obj) {
+exports.getUserById = function(req, res, next) {
+	req.db.User.findById(req.params.id, 'username avatar spoilzrId', function (err, obj) {
 		if (err) next(err);
-		if (!obj) next(new Error('User is not found'));
+		if (!obj) return res.json(404, {msg: 'User not found'});
 
 		res.json(200, obj);
 	})
 }
 
-exports.add = function(req, res, next) {
-	var user = new req.db.User(req.body);
-	console.log(req.body);
-	user.save(function(err) {
+exports.getUserByUsername = function(req, res, next) {
+	req.db.User.findOne({username: req.params.username}, 'username avatar spoilzrId', function (err, obj) {
 		if (err) next(err);
-		res.json(user);
+		if (!obj) return res.json(404, {msg: 'User not found'});
+
+		res.json(200, obj);
 	})
+}
+
+exports.updateSettings = function(req, res, next) {
+	var settings = req.body;
+	if (!settings) res.json(400, {msg: 'No settings given'});
+
+	if (req.session.user && req.session.auth) {
+		req.db.User.update({_id: req.session.user._id}, {$set: {settings: settings}}, function (err, numberAffected) {
+			res.json(200, {msg: 'Settings updated !'})
+		})
+	}
+	else {
+		res.json(400, {msg: 'Not connected'})
+	}
 }

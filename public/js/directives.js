@@ -1,7 +1,9 @@
 var directives = angular.module('myapp.directives', []);
-directives.directive('hello', function () {
+
+directives.directive('comments', function () {
     return {
         restrict: 'E',
-        template: '<p>Hello from directive</p>'
+        controller: 'CommentsController',
+        templateUrl: '/partials/comments'
     };
 });

@@ -1,4 +1,22 @@
-<h3>Game Of Thrones</h3>
+<h3>{{show.title}}</h3>
 <p>Template show à créer ici</p>
 
-{{show}}
+<pre>{{show}}</pre>
+
+<comments></comments>
+
+<pre>{{links}}</pre>
+<div ng-show="form.msg">{{form.msg}}</div>
+
+<form ng-submit="submitLinks(formLinks)">
+	<div ng-repeat="link in formLinks">
+		<input ng-focus="addLinkRow()" type="text" placeholder="link" name="url" ng-model="link.url" />
+		<select ng-model="link.seasonNb">
+			<option ng-repeat="season in show.seasons" ng-value="season.number">{{season.number}}</option>
+		</select>
+		<select ng-repeat="season in show.seasons" ng-if="season.number == link.seasonNb" ng-model="link.episodeId">
+			<option ng-repeat="episode in season.episodes" ng-value="episode.ID">{{episode.number}}</option>
+		</select>
+	</div>
+	<input type="submit" />
+</form>

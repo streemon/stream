@@ -1,4 +1,6 @@
 var async = require('async');
+var LIMIT = 50;
+var SKIP = 0;
 
 exports.getLinks = function(req, res, next) {
 	req.db.Link.find({media: req.params.media, mediaId: req.params.id}, function(err, list){
@@ -7,11 +9,29 @@ exports.getLinks = function(req, res, next) {
 	})
 }
 
+exports.getUserLinks = function(req, res, next) {
+	if(req.session.user.rights >= 2) {
+		var _uploaderId = req.params.id || req.session.user._id;
+	}
+	else  {
+		var _uploaderId = req.session.user._id;
+	}
+
+	var skip = req.query.skip || SKIP;
+
+	req.db.Link.find({_uploaderId: _uploaderId}, null, {skip: skip, limit: LIMIT}, function(err, links){
+		if (err) next(err);
+		res.json(200, links);
+	})
+}
+
 exports.add = function(req, res, next) {
 	var links = req.body;
 	var savedLinks = [];
 
 	async.each(links, function(link, next) {
+		link._uploaderId = req.session.user._id;
+
 		saveLink(link, function (err, link) {
 			if (err && err.name == 'ValidationError') {
 				return next();

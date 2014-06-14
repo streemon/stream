@@ -45,27 +45,30 @@ app.config(function ($routeProvider, $locationProvider) {
 			controller: 'MovieController',
 			media: 'movies'
 		})
-		.when('/shows/:hashtag', {
+		.when('/shows/:id', {
 			templateUrl: '/partials/show',
 			controller: 'ShowController',
 			media: 'shows'
 		})
-		.when('/shows/:hashtag/season/:season/episode/:episode', {
+		.when('/shows/:id/season/:season/episode/:episode', {
 			templateUrl: '/partials/show',
 			controller: 'ShowController',
 			media: 'shows'
+		})
+		.when('/users/@:username', {
+			templateUrl: '/partials/profile',
+			controller: 'ProfileController'
 		})
 		.when('/links', {
-			templateUrl: '/partials/links',
+			templateUrl: '/userpartials/links',
 			controller: 'LinksController'
 		})
 		.when('/settings', {
-			templateUrl: '/partials/settings',
+			templateUrl: '/userpartials/settings',
 			controller: 'SettingsController'
 		})
-		.when('/settings', {
-			templateUrl: '/moderate',
-			controller: 'ModerateController'
+		.when('/moderate', {
+			templateUrl: '/protected/moderate'
 		})
 		.otherwise({
 			redirectTo: '/'

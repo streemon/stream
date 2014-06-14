@@ -1,0 +1,9 @@
+<pre>{{links}}</pre>
+<table class="table table-striped">
+	<th> <td>URL</td> <td>Views</td> <td>DELETE</td> </th>
+	<tr ng-repeat="link in links">
+		<td><input type="text" ng-model="link.url" /></td>
+		<td>{{link.views}}</td>
+		<td><a ng-click="deleteLink(link)" href="">DELETE</a></td>
+	</tr>
+</table>

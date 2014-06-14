@@ -7,6 +7,7 @@ var LinkSchema = new Schema ({
 	url: {type: String, validate: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ },
 	lang: String,
 	subtitles: String,
+	views: {type: Number, required: true, default: 1},
 	_uploaderId: Schema.Types.ObjectId
 });
 

@@ -1,11 +1,15 @@
 var spoilzr = require('spoilzr');
+var querystring = require('querystring');
 
 exports.hasRights = function (rights) {
     return function(req, res, next) {
-        if(req.session && req.session.auth && req.session.user && req.session.user.rights >= rights)
-            next();
-        else
-            next("User ("+ req.session.user.rights +") doesn't have sufficient rights ("+ rights +")");
+        if(req.session && req.session.auth && req.session.user) {
+        	if (req.session.user.rights >= rights) next();
+        	else next("User ("+ req.session.user.rights +") doesn't have sufficient rights ("+ rights +")");
+        }
+        else {
+        	next ("Forbidden - You must be logged in");
+        }
     }
 }
 
@@ -105,6 +109,25 @@ exports.getMovieById = function (req, res, next) {
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
 
 	spoilzrClient.get('movies/' + req.params.id, form, function (err, data) {
+		if (err) throw err;
+
+		if (data) {
+			var media = JSON.parse(data.body);
+			res.json(200, media);
+		}
+	})
+}
+
+exports.getShowById = function (req, res, next) {
+	var spoilzrClient = new spoilzr();
+	var url = 'shows/' + req.params.id;
+	var form = {};
+
+	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+
+	if (req.query) url += '?' + querystring.stringify(req.query);
+
+	spoilzrClient.get(url, form, function (err, data) {
 		if (err) throw err;
 
 		if (data) {
