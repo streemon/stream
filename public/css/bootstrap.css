@@ -1738,7 +1738,7 @@ output {
   font-size: 14px;
   line-height: 1.42857143;
   color: #555555;
-  background-color: #fafafa;
+  background-color: #ffffff;
   background-image: none;
   border: 1px solid #cccccc;
   border-radius: 3px;
@@ -5943,9 +5943,6 @@ button.close {
 	position: relative;
 	overflow: hidden;
 }
-.player-border {
-	border: 1px solid #8d8d8d;
-}
 .player-path {
 	padding: 8px 8px;
 	background-color: transparent;
@@ -6037,4 +6034,14 @@ button.close {
   padding-right: 10px;
   height: auto;
   overflow-y: hidden;
+}
+.login-glyphicon{
+	opacity: 0.3;
+	color: #428bca;
+}
+.login-glyphicon:hover,
+.login-glyphicon:active{
+	opacity: 1;
+	color: #39b3d7;
+	cursor: pointer;
 }
