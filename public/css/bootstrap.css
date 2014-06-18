@@ -6114,7 +6114,7 @@ button.close {
 	height: 30px;
 	padding-top: 4px;
 }
-.comments > li > .content > .title > .fa {
+.comments > li > .content > .title > .glyphicon {
 	margin-top: 4px;
 }
 .comments > li > .content > .text {
@@ -6127,4 +6127,7 @@ button.close {
 }
 .comments > li > .content > .title > .username > small {
 	margin-left: 10px;
+}
+.vertical-middle {
+	vertical-align: 15%;
 }
