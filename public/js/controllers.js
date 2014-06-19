@@ -1,6 +1,6 @@
 var controllers = angular.module('myapp.controllers', []);
 
-controllers.controller('MainController', ['$scope','$route', '$location', '$localStorage', function($scope, $route, $location, $localStorage) {
+controllers.controller('MainController', ['$scope','$route', '$http', '$location', '$localStorage', function($scope, $route, $http, $location, $localStorage) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
 
@@ -9,6 +9,13 @@ controllers.controller('MainController', ['$scope','$route', '$location', '$loca
 		if (!$route.current.media) $route.current.media = 'movies';
 
 		$location.path('/search/' + $route.current.media + '/' + query);
+	}
+
+	if ($scope.$storage.user.auth) {
+		$http.get('/api/account/notifications')
+			.success(function (data) {
+				$scope.notifications = data;
+			})
 	}
 }]);
 

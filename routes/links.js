@@ -1,4 +1,5 @@
 var async = require('async');
+var main = require('./main');
 var LIMIT = 50;
 var SKIP = 0;
 
@@ -28,31 +29,55 @@ exports.getUserLinks = function(req, res, next) {
 exports.add = function(req, res, next) {
 	var links = req.body;
 	var savedLinks = [];
+	var errors = [];
 
 	async.each(links, function(link, next) {
 		link._uploaderId = req.session.user._id;
 
 		saveLink(link, function (err, link) {
-			if (err && err.name == 'ValidationError') {
+			if (err) {
+				errors.push({link: link, err: err});
+
 				return next();
 			}
 			else {
 				savedLinks.push(link);
-				next();
+				return next();
 			}
 		});
 	}, function (err) {
 		if (err) next(err);
 
-		if (savedLinks.length) res.json(200, savedLinks);
-		else res.json(400, {msg: 'Error during Validation'});
+		if (savedLinks.length > 0) {
+			main.notifyFollowers(req, savedLinks[0].mediaId, savedLinks[0].media);
+			res.json(200, savedLinks);
+		}
+		else res.json(400, {msg: 'Error during insertion', errors: errors});
 	})
 
 	function saveLink (link, next) {
-		link = new req.db.Link(link);
+		//check if link is ok first
+		checkLink(link, function (err) {
+			if (err) return next(err, link);
 
-		link.save(function(err) {
-			next(err, link);
+			link = new req.db.Link(link);
+
+			link.save(function(err) {
+				return next(err, link);
+			})
+		})
+	}
+
+	function checkLink (link, next) {
+		//check if link is empty
+		if (link.url == '') return next(new Error('Empty link'));
+
+		//check if link exists (TODO: make changes to url w/ regex)
+		req.db.Link.findOne({url: link.url}, function (err, doc) {
+			if (err) return next (err);
+
+			if (doc) return next(new Error('Link already in DB'));
+			else return next(null);
 		})
 	}
 }

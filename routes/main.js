@@ -1,4 +1,5 @@
 var spoilzr = require('spoilzr');
+var async = require('async');
 var querystring = require('querystring');
 
 exports.hasRights = function (rights) {
@@ -161,3 +162,31 @@ exports.logout = function(req, res) {
 	}
 	else res.json(400, {msg: 'Already logged out'});
 };
+
+exports.notifyFollowers = function (req, mediaId, media) {
+	req.db.Notification.findOne({mediaId: mediaId, media: media}, function (err, results) {
+		if (err) return false;
+
+		//if a notification already exists, the media has already been activated
+		if (results) {
+			return false;
+		}
+		else {
+			req.db.User.find({subscriptions: {$elemMatch: {media: media, mediaId: mediaId}}}, function (err, subscribers) {
+				if (err) return false;
+
+				async.each(subscribers, function(subscriber, callback) {
+					var notif = new req.db.Notification({media: media, mediaId: mediaId, _receiverId: subscriber._id});
+					notif.save();
+					callback();
+				}, function (err) {
+					if (err) return false;
+
+					//record notification with empty _receiverId as proof of past activation
+					var notif = new req.db.Notification({media: media, mediaId: mediaId});
+					return notif.save();
+				})
+			})
+		}
+	})
+}

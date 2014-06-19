@@ -86,6 +86,10 @@ app.put('/api/account', routes.main.hasRights(0), db, routes.users.updateSetting
 //app.put('/api/users/:id', db, routes.users.update);
 //app.del('/api/users/:id', db, routes.users.del);
 
+//NOTIFICATIONS
+app.get('/api/account/notifications', routes.main.hasRights(0), db, routes.notifications.getNotifications);
+app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.notifications.viewedNotification);
+
 //COMMENTS
 app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);

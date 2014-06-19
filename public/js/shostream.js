@@ -6,14 +6,3 @@ $(function() {
         }
     });
 });
-/* Apple web app handler */
-$(function() {
-	window.on('load', function(){
-		if(window.navigator.standalone == true) {
-			var e = document.getElementById('apple-status-bar-style');
-			e.style.display = 'block';
-			var e = document.getElementById('apple-status-bar-margin');
-			e.style.display = 'block';
-		}
-	});
-});

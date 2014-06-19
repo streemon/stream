@@ -10,10 +10,12 @@ var UserSchema = new Schema ({
 		lang: String,
 		subtitles: [String]
 	},
-	subscriptions: {
-		movies: [Number],
-		shows: [Number]
-	}
+	subscriptions: [
+		{
+			media: String,
+			mediaId: Number
+		}
+	],
 	lastActivity: {type: Date, default: Date.now},
 	rights: Number
 });

@@ -1,4 +1,4 @@
-var app = angular.module('myapp', ['ngRoute', 'ngStorage', 'myapp.controllers', 'myapp.directives']);
+var app = angular.module('myapp', ['ngRoute', 'ngStorage', 'myapp.controllers', 'myapp.directives', 'mgcrea.ngStrap']);
 
 app.config(function ($routeProvider, $locationProvider) {
 	$routeProvider
