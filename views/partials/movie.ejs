@@ -27,27 +27,18 @@
 			</dd>
 			<br />
 			<dt>
-				Advanced
+				<span class="hidden-xs">Advanced</span>
 			</dt>
 			<dd>
-				<a href="/genres/action" class="nowrap">Action</a> and <a href="/genres/adventure" class="nowrap">Advanture</a> | 143 Min | <a href="/countries/us" class="nowrap">United States</a> | <a href="spoilzr">Spoilzr</a> | <a href="/edit" class="alert-danger-link">Edit</a>
+				<span class="visible-xs"><b>Genres</b></span><a href="/genres/action" class="nowrap">Action</a> and <a href="/genres/adventure" class="nowrap">Advanture</a> <span class="hidden-xs">|</span><span class="visible-xs"><b>Lenght</b></span> 143 Min <span class="hidden-xs">|</span><span class="visible-xs"><b>Country</b></span> <a href="/countries/us" class="nowrap">United States</a> <span class="hidden-xs">|</span><span class="visible-xs"><b>Advanced</b></span> <a href="spoilzr">Spoilzr</a> | <a href="/edit" class="alert-danger-link">Edit</a>
 			</dd>
 		</dl>
 	</div>
 </div>
-<div class="container">
-	<div class="col-xs-10 center-block">
-		<br />
-	</div>
-</div>
+<br />
+<br />
 <div class="container player">
-	<div class="col-xs-9 col-sm-9 col-md-7 col-lg-6 center-block player-path">
-		<a href="#" class="player-path-glyphicon"><i class="glyphicon-info fa fa-list fa-sm"></i></a>
-		<img src="/img/Purevid.png" class="img-rounded img-xsmall"></img>
-		<div class="player-path-hostname">Purevid</div>
-		<a href="#" class="player-path-glyphicon"><i class="fa fa-warning glyphicon-error fa-sm"></i></a>
-	</div>
-	<div class="center-block hidden-xs hidden-sm" style="width:560px;height:315px;">
+	<div class="center-block hidden-xs" style="width:560px;height:315px;">
 		<iframe id="playerFrame" width="100%" height="100%" src="http://www.exashare.com/embed-j8wwzy2cf9a0-560x315.html" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
 		<div  class="player-loading">
 			<div class="alert alert-warning">
@@ -55,23 +46,115 @@
 			</div>
 		</div>
 	</div>
-	<div class="hidden-md hidden-lg col-xs-9 no-padding center-block container-player">
+	<div class="visible-xs col-xs-12 no-padding center-block container-player">
 		<img class="col-xs-12 no-padding" src="../img/18951_screen.jpg"></img>
 		<a href="#"><img class="btn-play" src="../img/Play - Inverse.png"></img></a>
 	</div>
-</div>
-<div class="container">
-	<div class="col-xs-10 center-block">
-		<br /><br />
+	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path">
+		<div class="col-xs-4" style="padding-left:0px;">
+			<a href="#" class="player-path-glyphicon glyphicon-info" title="Show all 12 links"><i class="fa fa-caret-down fa-sm"></i> Links</a>
+		</div>
+		<div class="col-xs-4">
+			<center>
+				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
+				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">Purevid</div>
+			</center>
+		</div>
+		<div class="col-xs-4" style="padding-right:0px;">
+			<div class="pull-right">
+				<a href="#" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> Report</a>
+			</div>
+		</div>
 	</div>
 </div>
+<br />
 <div class="container">
-	<div class="col-xs-12 col-md-10 center-block">
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#">Comments</a></li>
-			<li><a href="#">More</a></li>
-		</ul>
+	<div class="col-xs-12 col-sm-10 center-block">
+		<hr />
 	</div>
+</div>
+<br />
+<div class="container">
+	<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
+		<li>
+			<a href="/users/@xiamix" class="avatar">
+				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+			</a>
+			<div class="content">
+				<form ng-submit="comment()">
+					<textarea type="text" placeholder="Comment" maxlength="250"></textarea>
+					<button type="submit" class="btn btn-sm btn-primary no-padding pull-right">Comment</button>
+				</form>
+			</div>
+		</li>
+		<li>
+			<a href="/users/@xiamix" class="avatar">
+				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+			</a>
+			<div class="content">
+				<div class="title">
+					<a href="/users/@xiamix" class="username">
+							xiamix
+					</a>
+					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
+					<a href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-edit glyphicon-info pull-right"></i></a><!--For author -->
+				</div>
+				<div class="text">
+					<p>
+						You'll see this comment as if it was yours! Iscing elit. Nullam vel ornare orci. Sed aliquet id dolor quis dignissim. Praesent faucibus, orci sit amet mattis varius, quam ligula ornare mi, id sodales tellus eros vel augue. Mauris mollis nulla ut sed.
+					</p>
+				</div>
+				<div class="sub">
+					<small><nowrap>Posted recently</nowrap></small> 
+				</div>
+			</div>
+		</li>
+		<li>
+			<a href="/users/@xiamix" class="avatar">
+				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+			</a>
+			<div class="content">
+				<div class="title">
+					<a href="/users/@xiamix" class="username">
+							xiamix<small><span class="label label-danger vertical-middle">Mod</span></small>
+					</a>
+					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-flag glyphicon-error pull-right"></i></a><!--For other members non-mod-->
+					<a href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-reply glyphicon-info pull-right"></i></a><!--For non-author -->
+				</div>
+				<div class="text">
+					<p>
+						You'll see this comment as if it was another user's comment and you're not a moderator! Isat vestibulum est commodo sit amet. Pellentesque at magna augue. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam egestas imperdiet nullam.
+					</p>
+				</div>
+				<div class="sub">
+					<p><small><nowrap>Posted 4 hours ago</nowrap> - <nowrap>Moderated 2 hours ago</nowrap></small></p>
+				</div>
+			</div>
+		</li>
+		<li>
+			<a href="/users/@xiamix" class="avatar">
+				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+			</a>
+			<div class="content">
+				<div class="title">
+					<a href="/users/@xiamix" class="username">
+							xiamix<small><span class="label label-info vertical-middle">Admin</span></small>
+					</a>
+					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
+					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-edit glyphicon-error pull-right"></i></a><!--For non-author mod -->
+					<a href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-reply glyphicon-info pull-right"></i></a><!--For non-author -->
+				</div>
+				<div class="text">
+					<p>
+						You'll see this comment as if it was posted by another user and you were a moderator! Stibulumi Sed pharetra mattis erat nec accumsan. Suspendisse massa magna, lobortis et ante ut, rhoncus malesuada purus. Fusce rhoncus nibh ut lacus rutrum amet.
+					</p>
+				</div>
+				<div class="sub">
+					<small><nowrap>Posted on June 18th</nowrap> - <nowrap>Edited on June 21st</nowrap></small> 
+				</div>
+			</div>
+		</li>
+	</ul>
 </div>
 <pre>{{movie}}</pre>
 
