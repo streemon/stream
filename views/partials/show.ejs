@@ -1,7 +1,6 @@
-<pre>{{show}}</pre>
 <div class="container">
 		<h3 class="page-header">
-			 Mixology <small class="nowrap"><i></i></small>
+			{{show.title}} <small class="nowrap"><i></i></small>
 		</h3>
 	<div class="col-md-2 hidden-xs hidden-sm frame">
 		<img class="poster margin-vertical" src="../img/Show.jpg"></img>
@@ -81,3 +80,23 @@
 	
 </div>
 <br />
+
+<pre>{{show}}</pre>
+
+<comments></comments>
+
+<pre>{{links}}</pre>
+<div ng-show="form.msg">{{form.msg}}</div>
+
+<form ng-submit="submitLinks(formLinks)">
+	<div ng-repeat="link in formLinks">
+		<input ng-focus="addLinkRow()" type="text" placeholder="link" name="url" ng-model="link.url" />
+		<select ng-model="link.seasonNb">
+			<option ng-repeat="season in show.seasons" ng-value="season.number">{{season.number}}</option>
+		</select>
+		<select ng-repeat="season in show.seasons" ng-if="season.number == link.seasonNb" ng-model="link.episodeId">
+			<option ng-repeat="episode in season.episodes" ng-value="episode.ID">{{episode.number}}</option>
+		</select>
+	</div>
+	<input type="submit" />
+</form>

@@ -1,11 +1,16 @@
 var spoilzr = require('spoilzr');
+var async = require('async');
+var querystring = require('querystring');
 
 exports.hasRights = function (rights) {
     return function(req, res, next) {
-        if(req.session && req.session.auth && req.session.user && req.session.user.rights >= rights)
-            next();
-        else
-            next("User ("+ req.session.user.rights +") doesn't have sufficient rights ("+ rights +")");
+        if(req.session && req.session.auth && req.session.user) {
+        	if (req.session.user.rights >= rights) next();
+        	else next("User ("+ req.session.user.rights +") doesn't have sufficient rights ("+ rights +")");
+        }
+        else {
+        	next ("Forbidden - You must be logged in");
+        }
     }
 }
 
@@ -114,6 +119,25 @@ exports.getMovieById = function (req, res, next) {
 	})
 }
 
+exports.getShowById = function (req, res, next) {
+	var spoilzrClient = new spoilzr();
+	var url = 'shows/' + req.params.id;
+	var form = {};
+
+	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+
+	if (req.query) url += '?' + querystring.stringify(req.query);
+
+	spoilzrClient.get(url, form, function (err, data) {
+		if (err) throw err;
+
+		if (data) {
+			var media = JSON.parse(data.body);
+			res.json(200, media);
+		}
+	})
+}
+
 exports.getShowByHashtag = function (req, res, next) {
 	var spoilzrClient = new spoilzr();
 
@@ -138,3 +162,31 @@ exports.logout = function(req, res) {
 	}
 	else res.json(400, {msg: 'Already logged out'});
 };
+
+exports.notifyFollowers = function (req, mediaId, media) {
+	req.db.Notification.findOne({mediaId: mediaId, media: media}, function (err, results) {
+		if (err) return false;
+
+		//if a notification already exists, the media has already been activated
+		if (results) {
+			return false;
+		}
+		else {
+			req.db.User.find({subscriptions: {$elemMatch: {media: media, mediaId: mediaId}}}, function (err, subscribers) {
+				if (err) return false;
+
+				async.each(subscribers, function(subscriber, callback) {
+					var notif = new req.db.Notification({media: media, mediaId: mediaId, _receiverId: subscriber._id});
+					notif.save();
+					callback();
+				}, function (err) {
+					if (err) return false;
+
+					//record notification with empty _receiverId as proof of past activation
+					var notif = new req.db.Notification({media: media, mediaId: mediaId});
+					return notif.save();
+				})
+			})
+		}
+	})
+}

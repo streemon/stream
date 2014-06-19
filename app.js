@@ -52,7 +52,8 @@ function db (req, res, next) {
   req.db = {
     User: connection.model('User', models.User, 'users'),
     Link: connection.model('Link', models.Link, 'links'),
-    Comment: connection.model('Comment', models.Comment, 'comments')
+    Comment: connection.model('Comment', models.Comment, 'comments'),
+    Notification: connection.model('Notification', models.Notification, 'notifications')
   };
   return next();
 }
@@ -63,7 +64,8 @@ function db (req, res, next) {
 
 //Serve App
 app.get('/', routes.index);
-app.get('/moderate', routes.main.hasRights(2), routes.moderate);
+app.get('/protected/moderate', routes.main.hasRights(2), routes.moderate);
+app.get('/userpartials/:name', routes.main.hasRights(0), routes.userpartials);
 app.get('/partials/:name', routes.partials);
 
 //Serve API
@@ -73,14 +75,20 @@ app.get('/api/home', routes.main.home);
 app.get('/api/logout', routes.main.logout);
 app.get('/api/search/:media(movies|shows)/:q', routes.main.search);
 app.get('/api/:media(movies)/:id', db, routes.main.getMovieById);
-app.get('/api/:media(shows)/:hashtag', db, routes.main.getShowByHashtag);
+app.get('/api/:media(shows)/:id', db, routes.main.getShowById);
+app.get('/api/:media(shows)/!:hashtag', db, routes.main.getShowByHashtag);
 
 //USERS
-app.get('/api/users', db, routes.users.getUsers);
-app.get('/api/users/:id', db,routes.users.getUser);
-app.post('/api/users', db, routes.users.add);
+//app.get('/api/users', db, routes.users.getUsers);
+app.get('/api/users/@:username', db,routes.users.getUserByUsername);
+app.get('/api/users/:id', db,routes.users.getUserById);
+app.put('/api/account', routes.main.hasRights(0), db, routes.users.updateSettings);
 //app.put('/api/users/:id', db, routes.users.update);
 //app.del('/api/users/:id', db, routes.users.del);
+
+//NOTIFICATIONS
+app.get('/api/account/notifications', routes.main.hasRights(0), db, routes.notifications.getNotifications);
+app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.notifications.viewedNotification);
 
 //COMMENTS
 app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
@@ -91,6 +99,8 @@ app.delete('/api/comments/:id', db, routes.comments.del);
 
 //LINKS
 app.get('/api/:media(movies|episodes)/:id/links', db, routes.links.getLinks);
+app.get('/api/account/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
+app.get('/api/users/:id/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
 app.post('/api/links', db, routes.links.add);
 app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);
