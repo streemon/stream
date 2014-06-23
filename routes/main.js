@@ -17,9 +17,9 @@ exports.hasRights = function (rights) {
 exports.login = function (req, res, next) {
 	function authorizeUser (session) {
 		var menu = [{href: '/settings', title: 'Settings'}, {href: '/links', title: 'My Links'}];
-		if (req.session.user.rights >= 2) menu.push({href: '/moderate', title: 'Moderate'});
+		if (session.user.rights >= 2) menu.push({href: '/moderate', title: 'Moderate'});
 
-		var userPublic = {auth: session.auth, username: session.user.username, avatar: session.user.avatar, menu: menu};
+		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, menu: menu};
 
 		return res.json(200, {msg: "Authorized", user: userPublic});
 	}
@@ -39,6 +39,7 @@ exports.login = function (req, res, next) {
 					if (doc) {
 						req.session.auth = true;
 						req.session.user = doc;
+						req.session.userPublic = {_id: doc._id, username: doc.username, avatar: doc.avatar};
 
 						authorizeUser(req.session);
 					}
@@ -48,6 +49,7 @@ exports.login = function (req, res, next) {
 
 							req.session.auth = true;
 							req.session.user = doc;
+							req.session.userPublic = {_id: doc._id, username: doc.username, avatar: doc.avatar};
 
 							authorizeUser(req.session);
 						});

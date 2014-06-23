@@ -6,7 +6,7 @@ exports.getUsers = function(req, res, next) {
 }
 
 exports.getUserById = function(req, res, next) {
-	req.db.User.findById(req.params.id, 'username avatar spoilzrId', function (err, obj) {
+	req.db.User.findById(req.params.id, '_id username avatar spoilzrId', function (err, obj) {
 		if (err) next(err);
 		if (!obj) return res.json(404, {msg: 'User not found'});
 
@@ -15,7 +15,7 @@ exports.getUserById = function(req, res, next) {
 }
 
 exports.getUserByUsername = function(req, res, next) {
-	req.db.User.findOne({username: req.params.username}, 'username avatar spoilzrId', function (err, obj) {
+	req.db.User.findOne({username: req.params.username}, '_id username avatar spoilzrId', function (err, obj) {
 		if (err) next(err);
 		if (!obj) return res.json(404, {msg: 'User not found'});
 

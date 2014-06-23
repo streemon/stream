@@ -11,7 +11,7 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 		$location.path('/search/' + $route.current.media + '/' + query);
 	}
 
-	if ($scope.$storage.user.auth) {
+	if ($scope.$storage.user && $scope.$storage.user.auth) {
 		$http.get('/api/account/notifications')
 			.success(function (data) {
 				$scope.notifications = data;
@@ -62,8 +62,9 @@ controllers.controller('SearchController', ['$scope', '$route', '$http', functio
 	}
 }]);
 
-controllers.controller('CommentsController', ['$scope', '$route', '$http', function ($scope, $route, $http) {
+controllers.controller('CommentsController', ['$scope', '$route', '$http', '$localStorage', function ($scope, $route, $http, $localStorage) {
 	$scope.$route = $route;
+	$scope.$storage = $localStorage;
 
 	$http.get('/api/'+ $route.current.media +'/' + $route.current.params.id + '/comments')
 		.success(function(data) {
@@ -77,16 +78,19 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', funct
 		var comment = {
 			comment: this.comment,
 			media: $route.current.media,
-			mediaId: $scope.media.ID
+			mediaId: $route.current.params.id
 		}
 
-		console.log(comment);
-
-		$http.post('/api/comments', comment)
-			.success(function (data) {
-				$scope.comment = "";
-				$scope.comments.push(data);
-			})
+		if ($scope.$storage.user && $scope.$storage.user.auth) {
+			$http.post('/api/comments', comment)
+				.success(function (data) {
+					$scope.comment = "";
+					$scope.comments.unshift(data);
+				})
+		}
+		else {
+			alert('You must be logged in !');
+		}
 	}
 }]);
 

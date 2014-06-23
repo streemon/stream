@@ -1,5 +1,14 @@
+var async = require('async');
+var _ = require('underscore');
+
 var LIMIT = 10;
 var SKIP = 0;
+
+function getUser (req, id, next) {
+	req.db.User.findById(id, '_id username avatar spoilzrId', function (err, obj) {
+		next(err, obj);
+	})
+}
 
 exports.getComments = function(req, res, next) {
 	var limit = req.query.limit || LIMIT;
@@ -8,11 +17,27 @@ exports.getComments = function(req, res, next) {
 	req.db.Comment.find(
 		{media: req.params.media, mediaId: req.params.id},
 		null,
-		{limit: limit, skip: skip, sort: {date: -1}},
-		function(err, list){
+		{limit: limit, skip: skip, sort: {date: 1}},
+		function(err, comments){
 			if (err) next(err);
 
-			res.json(200, list);
+			var coms = [];
+
+			async.each(comments, function (comment, callback) {
+
+				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId', function (err, author) {
+					if (err) callback(err);
+
+					var com = {comment: comment, author: author};
+
+					coms.push(com);
+					callback();
+				})
+			}, function (err) {
+				if (err) next(err);
+
+				res.json(200, coms);
+			});
 		}
 	)
 }
@@ -50,7 +75,7 @@ exports.add = function(req, res, next) {
 
 	comment.save(function(err) {
 		if (err) next(err);
-		res.json(200, comment);
+		res.json(200, {comment: comment, author: req.session.userPublic});
 	})
 }
 
