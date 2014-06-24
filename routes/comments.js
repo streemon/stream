@@ -49,9 +49,25 @@ exports.getAllComments = function(req, res, next) {
 		{},
 		null,
 		{limit: limit, skip: skip, sort: {date: -1}},
-		function(err, list){
+		function(err, comments){
 			if (err) next(err);
-			res.json(200, list);
+			var coms = [];
+
+			async.each(comments, function (comment, callback) {
+
+				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId', function (err, author) {
+					if (err) callback(err);
+
+					var com = {comment: comment, author: author};
+
+					coms.push(com);
+					callback();
+				})
+			}, function (err) {
+				if (err) next(err);
+
+				res.json(200, coms);
+			});
 		}
 	)
 }
@@ -73,7 +89,11 @@ exports.add = function(req, res, next) {
 	comment = new req.db.Comment(comment);
 
 	comment.save(function(err) {
-		if (err) next(err);
+		if (err) {
+			if (err.name == 'ValidationError') res.json(500, {msg: "Invalid comment"});
+			else next(err);
+		} 
+
 		res.json(200, {comment: comment, author: req.session.userPublic});
 	})
 }
@@ -83,5 +103,20 @@ exports.update = function (req, res, next) {
 }
 
 exports.del = function (req, res, next) {
-	res.json(req.body);
+	if(req.session && req.session.auth && req.session.user && req.session.user.rights >= 2) {
+		req.db.Comment.findByIdAndRemove(req.params.id, function(err, obj) {
+			if (err) next(err);
+			
+			if(obj) res.json(200, obj);
+			else res.json(404, {msg: "No comment found"});
+		});
+	}
+	else if(req.session && req.session.auth && req.session.user) {
+		req.db.Comment.findOneAndRemove({ _id: req.params.id, _authorId: req.session.user._id}, function(err, obj) {
+			if (err) next(err);
+
+			if(obj) res.json(200, obj);
+			else res.json(404, {msg: "No comment found"});
+		});
+	}
 }

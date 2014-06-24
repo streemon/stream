@@ -16,9 +16,10 @@ exports.hasRights = function (rights) {
 
 exports.login = function (req, res, next) {
 	function authorizeUser (session) {
-		var menu = [{href: '/settings', title: 'Settings'}, {href: '/links', title: 'My Links'}];
-		if (session.user.rights >= 2) menu.push({href: '/moderate', title: 'Moderate'});
-
+		var menu = [{href: '/settings', text: 'Settings'}, {href: '/links', text: 'My Links'}];
+		if (session.user.rights >= 2) menu.push({href: '/moderate', text: 'Moderate'});
+		menu.push({"divider": true}, {"href": "/logout", "text": "Log Out"});
+		
 		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, menu: menu};
 
 		return res.json(200, {msg: "Authorized", user: userPublic});

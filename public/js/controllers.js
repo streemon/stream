@@ -12,6 +12,7 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 	}
 
 	if ($scope.$storage.user && $scope.$storage.user.auth) {
+
 		$http.get('/api/account/notifications')
 			.success(function (data) {
 				$scope.notifications = data;
@@ -74,6 +75,14 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 			$scope.err = err;
 		})
 
+	$scope.deleteComment = function (comment) {
+		if (comment) {
+			$http.delete('/api/comments/' + comment.comment._id).success(function (data) {
+				$scope.comments.splice($scope.comments.indexOf(comment),1);
+			})
+		}
+	}
+	
 	$scope.postComment = function () {
 		var comment = {
 			comment: this.comment,
@@ -82,11 +91,16 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 		}
 
 		if ($scope.$storage.user && $scope.$storage.user.auth) {
-			$http.post('/api/comments', comment)
-				.success(function (data) {
-					$scope.comment = "";
-					$scope.comments.unshift(data);
-				})
+			if (comment.comment) {
+				$http.post('/api/comments', comment)
+					.success(function (data) {
+						$scope.comment = "";
+						$scope.comments.unshift(data);
+					})
+			}
+			else {
+				alert('Comment is empty');
+			}
 		}
 		else {
 			alert('You must be logged in !');
@@ -214,7 +228,7 @@ controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '
 
 	$scope.deleteLink = function(link) {
 		$http.delete('/api/links/' + link._id).success(function (data) {
-			$scope.links.pop(link);
+			$scope.links.splice($scope.links.indexOf(link), 1);
 		});
 	}
 

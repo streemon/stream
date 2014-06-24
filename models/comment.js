@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 var CommentSchema = new Schema ({
 	media: String,
 	mediaId: Number,
-	_authorId: Schema.Types.ObjectId,
+	_authorId: {type: Schema.Types.ObjectId, required: true},
 	date: {type: Date, default: Date.now},
-	comment: String
+	comment: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);

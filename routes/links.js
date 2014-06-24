@@ -10,6 +10,21 @@ exports.getLinks = function(req, res, next) {
 	})
 }
 
+exports.getAllLinks = function(req, res, next) {
+	var limit = req.query.limit || LIMIT;
+	var skip = req.query.skip || SKIP;
+	
+	req.db.Comment.find(
+		{},
+		null,
+		{limit: limit, skip: skip, sort: {date: -1}},
+		function(err, list){
+			if (err) next(err);
+			res.json(200, list);
+		}
+	)
+}
+
 exports.getUserLinks = function(req, res, next) {
 	if(req.session.user.rights >= 2) {
 		var _uploaderId = req.params.id || req.session.user._id;
@@ -109,13 +124,17 @@ exports.del = function (req, res, next) {
 	if(req.session && req.session.auth && req.session.user && req.session.user.rights >= 2) {
 		req.db.Link.findByIdAndRemove(req.params.id, function(err, obj) {
 			if (err) next(err);
-			res.json(200, obj);
+
+			if(obj) res.json(200, obj);
+			else res.json(404, {msg: "No link found"});
 		});
 	}
 	else if(req.session && req.session.auth && req.session.user) {
 		req.db.Link.findOneAndRemove({ _id: req.params.id, _uploaderId: req.session.user._id}, function(err, obj) {
 			if (err) next(err);
-			res.json(200, obj);
+
+			if(obj) res.json(200, obj);
+			else res.json(404, {msg: "No link found"});
 		});
 	}
 }

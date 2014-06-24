@@ -1,0 +1,16 @@
+<form ng-submit="searchUser()">
+	@<input type="text" ng-model="usernameSearch" />
+</form>
+
+<div ng-show="userSearch">
+	<h1>@{{userSearch.username}}</h1>
+
+	/SELECT USER RIGHTS/<br/>
+
+	<button type="button" class="btn btn-danger btn-lg" data-toggle="dropdown">
+    	Delete All Links
+ 	</button>
+	<button type="button" class="btn btn-danger btn-lg" data-toggle="dropdown">
+    	Delete All Comments
+ 	</button>
+</div>

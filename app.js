@@ -64,7 +64,7 @@ function db (req, res, next) {
 
 //Serve App
 app.get('/', routes.index);
-app.get('/protected/moderate', routes.main.hasRights(2), routes.moderate);
+app.get('/protected/:name', routes.main.hasRights(2), routes.protected);
 app.get('/userpartials/:name', routes.main.hasRights(0), routes.userpartials);
 app.get('/partials/:name', routes.partials);
 
@@ -92,15 +92,17 @@ app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.n
 
 //COMMENTS
 app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
+app.get('/api/comments', routes.main.hasRights(2), db,routes.comments.getAllComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);
 app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);
 app.put('/api/comments/:id', routes.main.hasRights(3), db, routes.comments.update);
-app.delete('/api/comments/:id', db, routes.comments.del);
+app.delete('/api/comments/:id', routes.main.hasRights(0), db, routes.comments.del);
 
 //LINKS
 app.get('/api/:media(movies|episodes)/:id/links', db, routes.links.getLinks);
 app.get('/api/account/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
 app.get('/api/users/:id/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
+app.get('/api/links', routes.main.hasRights(2), db, routes.links.getAllLinks);
 app.post('/api/links', db, routes.links.add);
 app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);
@@ -115,6 +117,15 @@ app.get('*', routes.index);
  * Start Server
  */
 
-http.createServer(app).listen(app.get('port'), function () {
+var server = http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
+});
+
+var io = require('socket.io')(server);
+
+//fun with io
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
 });

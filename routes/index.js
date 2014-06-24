@@ -6,8 +6,9 @@ exports.index = function(req, res){
 	res.render('index');
 };
 
-exports.moderate = function(req, res){
-	res.render('moderate', {session: req.session});
+exports.protected = function(req, res){
+	var name = req.params.name;
+	res.render('protected/' + name, {session: req.session});
 };
 
 exports.userpartials = function(req, res) {

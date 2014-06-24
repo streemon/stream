@@ -33,12 +33,7 @@
 					</form>
 				</li>
 				<li class="dropdown" ng-show="$storage.user.auth">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
-					<ul class="dropdown-menu hidden-xs hidden-sm">
-						<li ng-repeat="item in $storage.user.menu"><a ng-href="{{item.href}}">{{item.title}}<span class="badge pull-right">2</span></a></li>
-						<li class="divider"></li>
-						<li><a href="/logout">Log out</a></li>
-					</ul>
+					<a href="#" bs-dropdown="$storage.user.menu"><img src="/img/1144_big.jpg" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
 				</li>
 				<li>
 					<a href="/login" ng-hide="$storage.user.auth"><i class="fa fa-sign-in"></i> Log In</a>

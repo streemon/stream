@@ -6,8 +6,7 @@
 			</a>
 			<div class="content">
 				<form ng-submit="postComment()">
-					<textarea type="text" ng-model="comment" placeholder="Comment" maxlength="250"></textarea>
-					<button ng-click="postComment" type="submit" class="btn btn-sm btn-primary no-padding pull-right">Comment</button>
+					<input type="text" ng-model="comment" placeholder="Comment" class="form-control" />
 				</form>
 			</div>
 		</li>
@@ -19,9 +18,11 @@
 				<div class="title">
 					<a href="/users/@xiamix" class="username">
 						{{comment.author.username}}
+						<small ng-if="comment.author.rights >= 2"><span class="label label-danger vertical-middle">Mod</span></small>
+						<small ng-if="comment.author.rights >= 4"><span class="label label-danger vertical-middle">Editor</span></small>
 					</a>
-					<a ng-if="comment.author._id == $storage.user._id" href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
-					<a ng-if="comment.author._id == $storage.user._id" href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-edit glyphicon-info pull-right"></i></a><!--For author -->
+					<a ng-if="comment.author._id == $storage.user._id || $storage.user.rights >= 2" ng-click="deleteComment(comment)" href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
+					<a ng-if="comment.author._id == $storage.user._id" ng-click="editComment(comment)" href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-edit glyphicon-info pull-right"></i></a><!--For author -->
 				</div>
 				<div class="text">
 					<p>
