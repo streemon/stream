@@ -5,6 +5,6 @@
 		<td>{{link.url}}</td>
 		<td>{{link.views}}</td>
 		<td><a ng-href="/{{link.media}}/{{link.mediaId}}">{{link.media}} #{{link.mediaId}}</a></td>
-		<td><a ng-click="deleteLink(link)" href="">DELETE</a></td>
+		<td><button class="btn btn-sm btn-primary" ng-click="deleteLink(link)">DELETE</button></td>
 	</tr>
 </table>

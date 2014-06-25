@@ -51,8 +51,7 @@ exports.add = function(req, res, next) {
 
 		saveLink(link, function (err, link) {
 			if (err) {
-				errors.push({link: link, err: err});
-
+				errors.push({link: link, err: err.message});
 				return next();
 			}
 			else {

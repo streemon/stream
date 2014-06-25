@@ -8,6 +8,7 @@ var LinkSchema = new Schema ({
 	lang: String,
 	subtitles: String,
 	views: {type: Number, required: true, default: 1},
+	data: {type: Date, default: Date.now},
 	_uploaderId: Schema.Types.ObjectId
 });
 

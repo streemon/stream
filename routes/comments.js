@@ -24,7 +24,7 @@ exports.getComments = function(req, res, next) {
 
 			async.each(comments, function (comment, callback) {
 
-				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId', function (err, author) {
+				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId rights', function (err, author) {
 					if (err) callback(err);
 
 					var com = {comment: comment, author: author};
@@ -55,7 +55,7 @@ exports.getAllComments = function(req, res, next) {
 
 			async.each(comments, function (comment, callback) {
 
-				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId', function (err, author) {
+				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId rights', function (err, author) {
 					if (err) callback(err);
 
 					var com = {comment: comment, author: author};

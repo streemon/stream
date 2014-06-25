@@ -82,6 +82,13 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 			})
 		}
 	}
+
+	$scope.replyTo = function (username) {
+		if (username) {
+			$scope.comment = "@" + username + " ";
+			$("#commentInput").focus();
+		}
+	}
 	
 	$scope.postComment = function () {
 		var comment = {
@@ -108,32 +115,40 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 	}
 }]);
 
-controllers.controller('MovieController', ['$scope', '$route', '$http', function ($scope, $route, $http) {
+controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', function ($scope, $route, $http, $alert) {
 	$scope.$route = $route;
 
-	$scope.addLinkRow = function () {
+	$scope.formModal = {
+	  "title": "Title",
+	  "content": "Hello Modal<br />This is a multiline message!"
+	};
+
+	$scope.addLinkRow = function (index) {
 		function linkModel(id) {
 			this.url = '';
 			this.media = 'movies';
 			this.mediaId = id;
 		}
 
-		$scope.formLinks.push(new linkModel($scope.$route.current.params.id));
+		if (index + 1 == $scope.formLinks.length) $scope.formLinks.push(new linkModel($scope.$route.current.params.id));
 	}
 
 	$scope.submitLinks = function(links) {
 		$http.post('/api/links', links)
 			.success(function(data) {
-				$scope.form = {msg: data.length + " links have been added"};
+				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#alertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
 				$scope.links.push(data);
+				$scope.formLinks = [];
+				$scope.addLinkRow(-1);
 			})
 			.error(function (err) {
+				$alert({title: err.msg, placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
 				$scope.err = err;
 			});
 	}
 
 	$scope.formLinks = [];
-	$scope.addLinkRow();
+	$scope.addLinkRow(-1);
 
 	$http.get('/api/movies/' + $route.current.params.id)
 		.success(function(data) {

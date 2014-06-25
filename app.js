@@ -103,7 +103,7 @@ app.get('/api/:media(movies|episodes)/:id/links', db, routes.links.getLinks);
 app.get('/api/account/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
 app.get('/api/users/:id/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
 app.get('/api/links', routes.main.hasRights(2), db, routes.links.getAllLinks);
-app.post('/api/links', db, routes.links.add);
+app.post('/api/links', routes.main.hasRights(0), db, routes.links.add);
 app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);
 
@@ -127,5 +127,9 @@ var io = require('socket.io')(server);
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
+  });
+  socket.on('connected', function (username) {
+  	console.log(username + " is connected");
+  	io.emit('connected', username);
   });
 });
