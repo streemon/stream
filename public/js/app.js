@@ -50,6 +50,11 @@ app.config(function ($routeProvider, $locationProvider) {
 			controller: 'ShowController',
 			media: 'shows'
 		})
+		.when('/shows/:id/season/:season', {
+			templateUrl: '/partials/show',
+			controller: 'ShowController',
+			media: 'shows'
+		})
 		.when('/shows/:id/season/:season/episode/:episode', {
 			templateUrl: '/partials/show',
 			controller: 'ShowController',

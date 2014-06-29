@@ -82,8 +82,8 @@ app.get('/api/:media(shows)/!:hashtag', db, routes.main.getShowByHashtag);
 //app.get('/api/users', db, routes.users.getUsers);
 app.get('/api/users/@:username', db,routes.users.getUserByUsername);
 app.get('/api/users/:id', db,routes.users.getUserById);
+//app.put('/api/account/sync', routes.main.hasRights(0), db, routes.users.sync);
 app.put('/api/account', routes.main.hasRights(0), db, routes.users.updateSettings);
-//app.put('/api/users/:id', db, routes.users.update);
 //app.del('/api/users/:id', db, routes.users.del);
 
 //NOTIFICATIONS
@@ -102,9 +102,11 @@ app.delete('/api/comments/:id', routes.main.hasRights(0), db, routes.comments.de
 app.get('/api/:media(movies|episodes)/:id/links', db, routes.links.getLinks);
 app.get('/api/account/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
 app.get('/api/users/:id/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
+app.get('/api/link/:id/flag', routes.main.hasRights(0), db, routes.links.flag);
+app.get('/api/links/flagged', routes.main.hasRights(2), db, routes.links.getFlaggedLinks);
 app.get('/api/links', routes.main.hasRights(2), db, routes.links.getAllLinks);
 app.post('/api/links', routes.main.hasRights(0), db, routes.links.add);
-app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
+//app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);
 
 //Return 404 for wrong api call

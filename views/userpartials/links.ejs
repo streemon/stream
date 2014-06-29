@@ -1,10 +1,11 @@
-<pre>{{links}}</pre>
 <table class="table table-striped">
 	<tr> <th>URL</th> <th>Views</th> <th>Media</th> <th>DELETE</th> </tr>
 	<tr ng-repeat="link in links">
-		<td>{{link.url}}</td>
+		<td><a ng-href="{{link.url}}" target="_blank">{{link.url}}</a></td>
 		<td>{{link.views}}</td>
 		<td><a ng-href="/{{link.media}}/{{link.mediaId}}">{{link.media}} #{{link.mediaId}}</a></td>
-		<td><button class="btn btn-sm btn-primary" ng-click="deleteLink(link)">DELETE</button></td>
+		<td><button class="btn btn-xs btn-primary" ng-click="deleteLink(link)">DELETE</button></td>
 	</tr>
 </table>
+
+<pre>{{links}}</pre>

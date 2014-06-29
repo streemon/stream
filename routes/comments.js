@@ -9,6 +9,7 @@ function getUser (req, id, next) {
 	})
 }
 
+
 exports.getComments = function(req, res, next) {
 	var limit = req.query.limit || LIMIT;
 	var skip = req.query.skip || SKIP;
@@ -16,7 +17,7 @@ exports.getComments = function(req, res, next) {
 	req.db.Comment.find(
 		{media: req.params.media, mediaId: req.params.id},
 		null,
-		{limit: limit, skip: skip, sort: {date: 1}},
+		{limit: limit, skip: skip, sort: {date: -1}},
 		function(err, comments){
 			if (err) next(err);
 

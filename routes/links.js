@@ -35,8 +35,35 @@ exports.getUserLinks = function(req, res, next) {
 
 	var skip = req.query.skip || SKIP;
 
-	req.db.Link.find({_uploaderId: _uploaderId}, null, {skip: skip, limit: LIMIT}, function(err, links){
+	req.db.Link.find({_uploaderId: _uploaderId}, null, {skip: skip, limit: LIMIT, sort: {_id: -1}}, function(err, links){
 		if (err) next(err);
+		res.json(200, links);
+	})
+}
+
+exports.flag = function (req, res, next) {
+	req.db.Link.findById(req.params.id, function (err, link) {
+		if (err) next (err);
+
+		if (link) {
+			var flag = {_flaggerId: req.session.user._id};
+
+			//checks if same flag doesn't already exist
+			if (link.flags && link.flags.indexOf(flag) == -1) {
+				link.flags.push(flag);
+				link.save();
+				res.json(200, link);
+			}
+			else res.json(403, {msg: "Already flagged"});
+		}
+		else res.json(404, {msg: "Not found"});
+	})
+}
+
+exports.getFlaggedLinks = function (req, res, next) {
+	req.db.Link.find({flags: {$not: {$size: 0}, $exists: true}}, function (err, links) {
+		if (err) next(err);
+		
 		res.json(200, links);
 	})
 }

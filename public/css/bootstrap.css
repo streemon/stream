@@ -2054,9 +2054,7 @@ select[multiple].input-lg {
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus {
-  outline: thin dotted;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
+  outline: none;
 }
 .btn:hover,
 .btn:focus {
@@ -2375,7 +2373,7 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-xs,
 .btn-group-xs > .btn {
-  padding: 10px 5px;
+  padding: 1px 5px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
@@ -6130,4 +6128,8 @@ button.close {
 }
 .vertical-middle {
 	vertical-align: 15%;
+}
+
+.dropdown-menu {
+  outline: none;
 }

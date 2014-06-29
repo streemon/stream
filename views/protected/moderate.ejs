@@ -1,5 +1,4 @@
 <div ng-controller="ModerateController">
-	MODERATORS ONLY - WELCOME <%= session.user.username %>
 	<div class="nav nav-tabs" bs-tabs="tabs">
 	</div>
 </div>
@@ -9,9 +8,15 @@
 			$scope.comments = data;
 		});
 
-		$http.get('/api/links?limit=100').success(function (data) {
+		$http.get('/api/links/flagged').success(function (data) {
 			$scope.links = data;
 		})
+
+		$scope.deleteLink = function(link) {
+			$http.delete('/api/links/' + link._id).success(function (data) {
+				$scope.links.splice($scope.links.indexOf(link), 1);
+			});
+		}
 
 		$scope.deleteComment = function (comment) {
 			if (comment) {
@@ -39,7 +44,8 @@
 				"template": "/protected/tpl.comment.ejs"
 			},
 			{
-				"title": "Links"
+				"title": "Flagged Links",
+				"template": "/userpartials/links.ejs"
 			},
 			{
 				"title": "Users",

@@ -20,7 +20,7 @@ exports.login = function (req, res, next) {
 		if (session.user.rights >= 2) menu.push({href: '/moderate', text: 'Moderate'});
 		menu.push({"divider": true}, {"href": "/logout", "text": "Log Out"});
 		
-		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, menu: menu};
+		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, settings: session.user.settings, lastActivity: session.user.lastActivity, menu: menu};
 
 		return res.json(200, {msg: "Authorized", user: userPublic});
 	}
@@ -34,7 +34,7 @@ exports.login = function (req, res, next) {
 
 				var userData = JSON.parse(response).user;
 
-				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastLogin: new Date()}, function (err, doc) {
+				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date()}, function (err, doc) {
 					if (err) throw err;
 					
 					if (doc) {

@@ -1,0 +1,15 @@
+<div class="popover" tabindex="-1">
+	<div class="arrow"></div>
+	<h3 class="popover-title">Notifications {{notifications.length}}</h3>
+	<div class="popover-content">
+		<ul>
+			<li ng-repeat="notification in notifications">
+				<a href="#">
+					<span class="glyphicon glyphicon-film"></span>
+					New movie available
+				</a>
+			</li>
+		</ul>
+		<!--<div class="popover_footer"><a href="">View all notifications</a></div>-->
+	</div>
+</div>

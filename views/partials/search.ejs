@@ -3,7 +3,9 @@
 		<h3 class="page-header">
 			{{search.count}} Results for '{{search.query}}' in {{$route.current.media}}
 		</h3>
-		<a href="/movies/1" ng-href="/movies/{{result.ID}}" class="col-xs-4 col-sm-4 col-md-2 frame" ng-repeat="result in search.results"><img class="poster" ng-src="http://www.shostream.com/images/thumbs/films/original/{{result.ID}}_original.jpg"></img></a>
+		<a href="/movies/1" ng-href="/{{$route.current.media}}/{{result.ID}}" class="col-xs-4 col-sm-4 col-md-2 frame" ng-repeat="result in search.results" data-title="{{result.title}}" data-content="There goes the synopsis huhu"data-trigger="hover" data-placement="bottom" delay="1000"  bs-popover>
+			<img class="poster" ng-src="http://www.shostream.com/images/thumbs/films/original/{{result.ID}}_original.jpg"></img>
+		</a>
 	</p>
 </div>
 

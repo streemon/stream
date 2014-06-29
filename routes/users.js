@@ -24,12 +24,13 @@ exports.getUserByUsername = function(req, res, next) {
 }
 
 exports.updateSettings = function(req, res, next) {
-	var settings = req.body;
+	var form = req.body;
+	var settings = form.settings;
 	if (!settings) res.json(400, {msg: 'No settings given'});
 
 	if (req.session.user && req.session.auth) {
 		req.db.User.update({_id: req.session.user._id}, {$set: {settings: settings}}, function (err, numberAffected) {
-			res.json(200, {msg: 'Settings updated !'})
+			res.json(200, {msg: 'Settings updated !', affected: numberAffected})
 		})
 	}
 	else {
