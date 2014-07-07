@@ -6,7 +6,7 @@
 			</a>
 			<div class="content">
 				<form ng-submit="postComment()">
-					<textarea rows="1" placeholder="Comment.." class="form-control" ng-model="comment" id="commentInput"></textarea>
+					<textarea rows="1" placeholder="{{ 'COMMENT_PLACEHOLDER' | translate }}" class="form-control" ng-model="comment" id="commentInput"></textarea>
 				</form>
 			</div>
 		</li>
@@ -19,7 +19,7 @@
 					<a ng-href="/users/@{{comment.author.username}}" class="username">
 						{{comment.author.username}}
 						<small ng-if="comment.author.rights >= 2 && comment.author.rights < 4"><span class="label label-danger vertical-middle">Mod</span></small>
-						<small ng-if="comment.author.rights >= 4"><span class="label label-info vertical-middle">Editor</span></small>
+						<small ng-if="comment.author.rights >= 4"><span class="label label-info vertical-middle" translate="EDITOR">Editor</span></small>
 					</a>
 					<a ng-if="comment.author._id == $storage.user._id || $storage.user.rights >= 2" ng-click="deleteComment(comment)" href="" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
 					<a ng-if="comment.author._id == $storage.user._id" ng-click="editComment(comment)" href="" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-edit glyphicon-info pull-right"></i></a><!--For author -->
@@ -30,7 +30,7 @@
 					</p>
 				</div>
 				<div class="sub">
-					<small><nowrap>Posted on {{comment.comment.date | date:'medium'}}</nowrap></small> 
+					<small><nowrap>{{'COMMENT_POSTEDON' | translate}} {{comment.comment.date | date:'medium'}}</nowrap></small> 
 				</div>
 			</div>
 		</li>

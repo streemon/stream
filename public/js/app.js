@@ -1,6 +1,6 @@
-var app = angular.module('myapp', ['mgcrea.ngStrap', 'ngSanitize', 'ngRoute', 'ngStorage', 'myapp.controllers', 'myapp.directives']);
+var app = angular.module('myapp', ['pascalprecht.translate', 'mgcrea.ngStrap', 'ngSanitize', 'ngRoute', 'ngStorage', 'myapp.controllers', 'myapp.directives']);
 
-app.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: '/partials/lists',
@@ -89,4 +89,38 @@ app.config(function ($routeProvider, $locationProvider) {
 		});
 
 	$locationProvider.html5Mode(true);
+
+	$translateProvider.translations('en', {
+		COMMENT_PLACEHOLDER: 'Comment..',
+		COMMENT_POSTEDON: 'Posted on',
+		MENU_SETTINGS: 'Settings',
+		MENU_LINKS: 'My Links',
+		MENU_MODERATE: 'Moderate',
+		MOVIES: 'Movies',
+		SHOWS: 'TV Shows',
+		EDITOR: 'Editor',
+		LOGIN: 'Log In',
+		LOGOUT: 'Log Out',
+		SIGNUP: 'Sign Up',
+		USERNAME: 'Username',
+		PASSWORD: 'Password',
+		SEARCH_RESULTSCOUNT: "{{count}} results for '{{query}}' in {{media | uppercase | translate}}"
+	});
+	$translateProvider.translations('fr', {
+		COMMENT_PLACEHOLDER: 'Commenter..',
+		COMMENT_POSTEDON: 'Publié le',
+		MENU_SETTINGS: 'Préférences',
+		MENU_LINKS: 'Mes Liens',
+		MENU_MODERATE: 'Modérer',
+		MOVIES: 'Films',
+		SHOWS: 'Séries TV',
+		EDITOR: 'Editeur',
+		LOGIN: 'Connexion',
+		LOGOUT: 'Déconnexion',
+		SIGNUP: 'Inscription',
+		USERNAME: "Nom d'utilisateur",
+		PASSWORD: "Mot de passe",
+		SEARCH_RESULTSCOUNT: "{{count}} résultats pour '{{query}}' dans les {{media | uppercase | translate}}"
+	});
+	$translateProvider.preferredLanguage('fr');
 });

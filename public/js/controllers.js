@@ -16,18 +16,6 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 			.success(function (data) {
 				$scope.notifications = data;
 			})
-/*
-		if ($scope.$storage.user.lastActivity) {
-			var now = new Date;
-			var diff = now - new Date($scope.$storage.user.lastActivity);
-			if (diff > 60*60) {
-				$http.get('/api/account/sync')
-					.success(function (data) {
-						$scope.$storage.user = data;
-					})
-			}
-		}
-*/
 	}
 }]);
 

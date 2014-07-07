@@ -16,12 +16,12 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li ng-class="{active: $route.current.media == 'movies'}">
-					<a href="/movies" ng-if="!$route.current.params.q">Movies</a>
-					<a href="/movies" ng-if="$route.current.params.q" ng-href="/search/movies/{{$route.current.params.q}}">Movies</a>
+					<a href="/movies" ng-if="!$route.current.params.q" translate="MOVIES">Movies</a>
+					<a href="/movies" ng-if="$route.current.params.q" ng-href="/search/movies/{{$route.current.params.q}}" translate="MOVIES">Movies</a>
 				</li>
 				<li ng-class="{active: $route.current.media == 'shows'}">
-					<a href="/shows" ng-if="!$route.current.params.q">TV Shows</a>
-					<a href="/shows" ng-if="$route.current.params.q" ng-href="/search/shows/{{$route.current.params.q}}">TV Shows</a>
+					<a href="/shows" ng-if="!$route.current.params.q" translate="SHOWS">TV Shows</a>
+					<a href="/shows" ng-if="$route.current.params.q" ng-href="/search/shows/{{$route.current.params.q}}" translate="SHOWS">TV Shows</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -34,10 +34,17 @@
 					</form>
 				</li>
 				<li class="dropdown" ng-if="$storage.user.auth">
-					<a href="#" bs-dropdown="$storage.user.menu"><img src="/img/1144_big.jpg" ng-src="{{$storage.user.avatar}}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" ng-src="{{$storage.user.avatar}}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
+					<ul class="dropdown-menu hidden-xs hidden-sm">
+						<li><a href="/settings" translate="MENU_SETTINGS">Settings</a></li>
+						<li><a href="/links" translate="MENU_LINKS">My Links</a></li>
+						<li ng-if="$storage.user.rights >= 2"><a href="/moderate" translate="MENU_MODERATE">Moderate</a></li>
+						<li class="divider"></li>
+						<li><a href="/logout" translate="LOGOUT">Log out</a></li>
+					</ul>
 				</li>
 				<li>
-					<a href="/login" ng-if="!$storage.user.auth"><i class="fa fa-sign-in"></i> Log In</a>
+					<a href="/login" ng-if="!$storage.user.auth"><i class="fa fa-sign-in"></i> <span translate="LOGIN">Log In</span></a>
 				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->

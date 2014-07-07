@@ -26,11 +26,7 @@ exports.addLog = function (req, next) {
 
 exports.login = function (req, res, next) {
 	function authorizeUser (session) {
-		var menu = [{href: '/settings', text: 'Settings'}, {href: '/links', text: 'My Links'}];
-		if (session.user.rights >= 2) menu.push({href: '/moderate', text: 'Moderate'});
-		menu.push({"divider": true}, {"href": "/logout", "text": "Log Out"});
-		
-		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, settings: session.user.settings, lastActivity: session.user.lastActivity, menu: menu};
+		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, settings: session.user.settings, rights: session.user.rights, lastActivity: session.user.lastActivity};
 
 		return res.json(200, {msg: "Authorized", user: userPublic});
 	}
