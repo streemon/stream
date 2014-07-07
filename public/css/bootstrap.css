@@ -5932,7 +5932,7 @@ button.close {
 	position: absolute;
 	width: 40%;
 	left: 30%;
-	top: 50%;
+	top: 150px;
 	z-index: -1;
 }
 .player {
