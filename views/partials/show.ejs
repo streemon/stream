@@ -1,101 +1,117 @@
 <div class="container">
-		<h3 class="page-header">
-			{{show.title}} <small class="nowrap"><i></i></small>
-		</h3>
 	<div class="col-md-2 hidden-xs hidden-sm frame">
-		<img class="poster margin-vertical" src="/img/Show.jpg"></img>
+		<img class="poster margin-vertical" src="../img/Show.jpg"></img>
 	</div>
 	<div class="col-xs-12 col-md-9 margin-top">
-		<dl class="dl-horizontal">
-			<dt>
-				Directed by
-			</dt>
-			<dd>
-				<a href="/person/1">Zack Snyder</a>
-			</dd>
-			<dt>
-				With
-			</dt>
-			<dd>
-				<a href="/person/1" class="nowrap">Henry Cavill</a>, <a href="/person/1" class="nowrap">Diane Lane</a>, <a href="/person/1" class="nowrap">Kevin Costner</a> and <a href="/person/1" class="nowrap">Amy Adams</a>
-			</dd>
-			<dt>
-				Plot
-			</dt>
-			<dd>
-				<p>Chronicles the exploits of singles, five guys and five girls, in search of love all over the course of one night.</p>
-			</dd>
-			<br />
-			<dt>
-				Advanced
-			</dt>
-			<dd>
-				<a href="/genres/comedy" class="nowrap">Comedy</a> | 1 Saison | <a href="/countries/us" class="nowrap">United States</a> | Cancelled | <a href="spoilzr">Spoilzr</a> | <a href="/edit" class="alert-danger-link">Edit</a>
-			</dd>
-		</dl>
-		<div class="center-block">
-			<button class="btn btn-primary btn-sm" style="width:80px;">Seasons</button>
-			<button class="btn btn-info btn-sm" ng-init="season.nb = show.seasons.indexOf(season)" ng-click="changeSeason(season.nb)" ng-repeat="season in show.seasons" ng-if="season" ng-class="{active: season.nb == currentEpisode.season_nb}">{{season.nb}}</button>
-			<br/>
-			<button class="btn btn-primary btn-sm" style="width:80px;">Episodes</button>
-			<span ng-repeat="season in show.seasons" ng-if="show.seasons.indexOf(season) == currentEpisode.season_nb">
-				<button class="btn btn-info btn-sm" ng-if="episode" ng-click="changeEpisode(episode)" ng-repeat="episode in season" ng-class="{active: episode.episode_nb == currentEpisode.episode_nb}">{{episode.episode_nb}}</button>
-			</span>
+		<h2>Man Of Steel</h2>
+		<h4><small>2014 <b>&middot;</b> 180 min <b>&middot;</b> <span title="Coming soon..." style="cursor:pointer;">Spoilzr</span> <b>&middot;</b> <a href="#">Add to list</a></small></h4>
+		<br />
+		<p class="plot">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son Kal-El, the first naturally born Kryptonian child in centuries, on a spacecraft to Earth after infusing his cells with a genetic codex of the entire Kryptonian race. After Zod murders Jor-El, he and his followers are captured and exiled to the Phantom Zone. However, they are indirectly freed after Krypton explodes.</p>
+		<div class="col-xs-12 col-sm-6">
+			<ul class="pagination center-block">
+				<li class="disabled"><a href="#">Saison</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li class="active"><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">&rsaquo;</a></li>
+			</ul>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<ul class="pagination center-block">
+				<li class="disabled"><a href="#">Episode</a></li>
+				<li><a href="#">&lsaquo;</a></li>
+				<li><a href="#">6</a></li>
+				<li><a href="#">7</a></li>
+				<li class="active"><a href="#">8</a></li>
+				<li><a href="#">9</a></li>
+				<li><a href="#">10</a></li>
+				<li><a href="#">&rsaquo;</a></li>
+			</ul>
 		</div>
 	</div>
 </div>
-<div class="container player">
-	<!-- à placer à gauche et droite du lecteur et placer le style dans le .CSS-->
-	<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-		<span class="glyphicon glyphicon-chevron-left" ng-click="prevEpisode()" style="font-size: 30px;"></span>
-		<span class="glyphicon glyphicon-chevron-right" ng-click="nextEpisode()" style="font-size: 30px;"></span>
-	</div>
 
-	<div class="col-xs-9 col-sm-9 col-md-7 col-lg-6 center-block player-path">
-		{{currentEpisode.title}}
+<div class="container">
+	<div class="col-xs-12 col-sm-10 center-block">
+		<hr />
 	</div>
-	<div class="center-block hidden-xs hidden-sm" style="width:560px;height:315px;">
-		<iframe id="playerFrame" width="100%" height="100%" src="http://www.exashare.com/embed-cytehz36szhk-560x315.html" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
-		<div  class="player-loading">
+</div>
+
+<div id="showAlertContainer"></div>
+
+<div class="container player">
+	<div class="center-block hidden-xs" style="width:560px;height:315px;">
+		<div class="player-loading">
 			<div class="alert alert-warning">
-			  <strong>Loading!</strong> The movie will appear in a few of seconds...
+			  <strong><i class="fa fa-spin fa-circle-o-notch"></i> Loading!</strong> The movie will appear in a few seconds...
 			</div>
 		</div>
+		<iframe id="playerFrame" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
 	</div>
-	<div class="hidden-md hidden-lg col-xs-9 no-padding center-block container-player">
-		<img class="col-xs-12 no-padding" src="/img/18951_screen.jpg"></img>
-		<a href="#"><img class="btn-play" src="/img/Play - Inverse.png"></img></a>
+	<div class="visible-xs col-xs-12 no-padding center-block container-player">
+		<img class="col-xs-12 no-padding" src="../img/18951_screen.jpg"></img>
+		<a href="#"><img class="btn-play" src="../img/Play - Inverse.png"></img></a>
 	</div>
 	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path">
-		<div class="col-xs-3" style="padding-left:0px;">
+		<div class="col-xs-2" style="padding-left:0px;">
 			<a href="#" class="player-path-glyphicon glyphicon-info" title="Show all 12 links" ng-click="showAllLinks = !showAllLinks">
 				<i class="fa fa-caret-right fa-sm" ng-hide="showAllLinks"></i> 
 				<i class="fa fa-caret-down fa-sm" ng-show="showAllLinks"></i> 
-				Links
+				<span translate="LINKS">Links</span>
 			</a>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-5">
 			<center>
 				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
-				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">Purevid</div>
+				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">{{currentLink.host}}</div>
 			</center>
 		</div>
 		<div class="col-xs-3" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="#" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> Report</a>
+				<a href="#report" class="player-path-glyphicon glyphicon-error" data-toggle="modal" data-target="#reportModal" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
 			</div>
 		</div>
-		<div class="col-xs-3" style="padding-right:0px;">
+		<div class="col-xs-2" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> Add</a>
+				<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> <span translate="ADD">Add</span></a>
 			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
+		<div ng-repeat="link in links" ng-if="showLink(link)">
+			<img class="flag flag-{{link.language}}"></img> <img class="flag flag-{{link.subtitles}}"></img> <a href="" ng-click="changeLink(link)">{{link.url}}</a>
 		</div>
 	</div>
 </div>
 
-<!-- formLink modal -->
+<div class="container">
+	<div class="col-xs-12 col-sm-10 center-block">
+		<hr />
+	</div>
+</div>
+
+<!-- Report modal -->
+<div class="modal" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="report" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Report this link</h4>
+			</div>
+			<form ng-submit="reportLink()">
+				<div class="modal-body">
+					<textarea type="text" style="width:100%;height:100px;resize:none;" placeholder=" What's wrong with this link?" maxlength="500"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-danger">Send report</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <linkform media="episodes" media-id="{{currentEpisode.ID}}"></linkform>
 
 <comments></comments>
-
-<pre>{{links}}</pre>

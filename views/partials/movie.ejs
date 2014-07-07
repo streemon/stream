@@ -1,38 +1,12 @@
 <div class="container">
-		<h3 class="page-header">
-			 Man of Steel <small class="nowrap"><i>(L'Homme de Fer)</i></small>
-		</h3>
 	<div class="col-md-2 hidden-xs hidden-sm frame">
 		<img class="poster margin-vertical" src="../img/Movie.jpg"></img>
 	</div>
 	<div class="col-xs-12 col-md-9 margin-top">
-		<dl class="dl-horizontal">
-			<dt>
-				Directed by
-			</dt>
-			<dd>
-				<a href="/person/1">Zack Snyder</a>
-			</dd>
-			<dt>
-				With
-			</dt>
-			<dd>
-				<a href="/person/1" class="nowrap">Henry Cavill</a>, <a href="/person/1" class="nowrap">Diane Lane</a>, <a href="/person/1" class="nowrap">Kevin Costner</a> and <a href="/person/1" class="nowrap">Amy Adams</a>
-			</dd>
-			<dt>
-				Plot
-			</dt>
-			<dd>
-				<p>A young itinerant worker is forced to confront his secret extrastellar origin when Earth is invaded by members of his own race.</p>
-			</dd>
-			<br />
-			<dt>
-				<span class="hidden-xs">Advanced</span>
-			</dt>
-			<dd>
-				<span class="visible-xs"><b>Genres</b></span><a href="/genres/action" class="nowrap">Action</a> and <a href="/genres/adventure" class="nowrap">Advanture</a> <span class="hidden-xs">|</span><span class="visible-xs"><b>Lenght</b></span> 143 Min <span class="hidden-xs">|</span><span class="visible-xs"><b>Country</b></span> <a href="/countries/us" class="nowrap">United States</a> <span class="hidden-xs">|</span><span class="visible-xs"><b>Advanced</b></span> <a href="spoilzr">Spoilzr</a> | <a href="/edit" class="alert-danger-link">Edit</a>
-			</dd>
-		</dl>
+		<h2>Man Of Steel</h2>
+		<h4><small>2014 <b>&middot;</b> 180 min <b>&middot;</b> <span title="Coming soon..." style="cursor:pointer;">Spoilzr</span> <b>&middot;</b> <a href="#">Add to list</a></small></h4>
+		<br />
+		<p class="plot">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son.</p>
 	</div>
 </div>
 
@@ -48,7 +22,7 @@
 	<div class="center-block hidden-xs" style="width:560px;height:315px;">
 		<div class="player-loading">
 			<div class="alert alert-warning">
-			  <strong>Loading!</strong> The movie will appear in a few seconds...
+			  <strong><i class="fa fa-spin fa-circle-o-notch"></i> Loading!</strong> The movie will appear in a few seconds...
 			</div>
 		</div>
 		<iframe id="playerFrame" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
@@ -58,7 +32,7 @@
 		<a href="#"><img class="btn-play" src="../img/Play - Inverse.png"></img></a>
 	</div>
 	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path">
-		<div class="col-xs-3" style="padding-left:0px;">
+		<div class="col-xs-2" style="padding-left:0px;">
 			<a href="#" class="player-path-glyphicon glyphicon-info" title="Show all 12 links" ng-click="showAllLinks = !showAllLinks">
 				<i class="fa fa-caret-right fa-sm" ng-hide="showAllLinks"></i> 
 				<i class="fa fa-caret-down fa-sm" ng-show="showAllLinks"></i> 
@@ -71,9 +45,9 @@
 				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">{{currentLink.host}}</div>
 			</center>
 		</div>
-		<div class="col-xs-2" style="padding-right:0px;">
+		<div class="col-xs-3" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="" ng-click="reportLink()" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
+				<a href="" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link" data-toggle="modal" data-target="#reportModal"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
 			</div>
 		</div>
 		<div class="col-xs-2" style="padding-right:0px;">
@@ -89,6 +63,26 @@
 	</div>
 </div>
 
+<!-- Report modal -->
+<div class="modal" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="report" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Report this link</h4>
+			</div>
+			<form ng-submit="reportLink()">
+				<div class="modal-body">
+					<textarea type="text" style="width:100%;height:100px;resize:none;" placeholder=" What's wrong with this link?" maxlength="500"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-danger">Send report</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <linkform media="movies" media-id="{{movie.ID}}"></linkform>
 
 <div class="container">
@@ -98,6 +92,3 @@
 </div>
 
 <comments></comments>
-
-<pre>{{movie}}</pre>
-<pre>{{links}}</pre>

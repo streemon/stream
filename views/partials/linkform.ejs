@@ -1,12 +1,10 @@
-{{mediaId}}
-<div class="modal fade" id="formlinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="formlinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 	<div class="modal-content">
 	  <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h4 class="modal-title" translate="ADDLINKS_TITLE">Add Links</h4>
 	  </div>
-	  {{formLinks}}
 	  <form ng-submit="submitLinks(formLinks)">
 		  <div class="modal-body form-inline">
 			<div id="linkAlertContainer"></div>
