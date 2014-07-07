@@ -9,17 +9,14 @@
 			<input type="radio" name="lang" ng-model="form.lang" value="{{language.code}}"/> {{language.name}}
 		</label>
 
-		<h4>Subtitles</h4>
+		<h4 translate="FORM_SUBTITLES">Subtitles</h4>
 
 		<label ng-repeat="subtitle in languages">
 			<input type="checkbox" ng-model="subtitle.selected" /> {{subtitle.name}}
 		</label>
 
 		<div class="form-group">
-			<button type="submit" class="btn btn-sm btn-primary">Save</button>
+			<button type="submit" class="btn btn-sm btn-primary" translate="FORM_SAVE">Save changes</button>
 		</div>
 	</form>
 </div>
-
-
-{{form}}

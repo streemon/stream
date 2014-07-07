@@ -7,3 +7,14 @@ directives.directive('comments', function () {
         templateUrl: '/partials/comments'
     };
 });
+directives.directive('linkform', function () {
+    return {
+        restrict: 'E',
+        scope: {
+        	media: '@',
+        	mediaId: '@'
+        },
+        controller: 'LinkFormController',
+        templateUrl: '/partials/linkform'
+    };
+});

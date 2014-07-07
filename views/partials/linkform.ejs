@@ -1,0 +1,35 @@
+{{mediaId}}
+<div class="modal fade" id="formlinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" translate="ADDLINKS_TITLE">Add Links</h4>
+	  </div>
+	  {{formLinks}}
+	  <form ng-submit="submitLinks(formLinks)">
+		  <div class="modal-body form-inline">
+			<div id="linkAlertContainer"></div>
+			<div ng-repeat="link in formLinks">
+				<div class="form-group">
+					<input ng-focus="addLinkRow(link)" size="50" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-sm btn-default" ng-model="link.language" data-html="1" ng-options="language.code as language.name for language in languages" placeholder="Audio" bs-select>
+					 	Audio <span class="caret"></span>
+					</button>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-sm btn-default" ng-model="link.subtitles" data-html="1" ng-options="language.code as language.name for language in sub_languages" placeholder="{{'FORM_SUBTITLES' | translate}}" bs-select>
+					 	Subs <span class="caret"></span>
+					</button>
+				</div>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="submit" class="btn btn-primary" translate="FORM_SAVE">Save changes</button>
+		  </div>
+	  </form>
+	</div>
+  </div>
+</div>

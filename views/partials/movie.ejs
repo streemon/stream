@@ -62,7 +62,7 @@
 			<a href="#" class="player-path-glyphicon glyphicon-info" title="Show all 12 links" ng-click="showAllLinks = !showAllLinks">
 				<i class="fa fa-caret-right fa-sm" ng-hide="showAllLinks"></i> 
 				<i class="fa fa-caret-down fa-sm" ng-show="showAllLinks"></i> 
-				Links
+				<span translate="LINKS">Links</span>
 			</a>
 		</div>
 		<div class="col-xs-5">
@@ -73,12 +73,12 @@
 		</div>
 		<div class="col-xs-2" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="" ng-click="reportLink()" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> Report</a>
+				<a href="" ng-click="reportLink()" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
 			</div>
 		</div>
 		<div class="col-xs-2" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> Add</a>
+				<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> <span translate="ADD">Add</span></a>
 			</div>
 		</div>
 	</div>
@@ -89,40 +89,7 @@
 	</div>
 </div>
 
-<!-- formLink modal -->
-<div class="modal fade" id="formlinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h4 class="modal-title" id="myModalLabel">Add Links</h4>
-	  </div>
-	  <form ng-submit="submitLinks(formLinks)">
-		  <div class="modal-body form-inline">
-			<div id="linkAlertContainer"></div>
-			<div ng-repeat="link in formLinks">
-				<div class="form-group">
-					<input ng-focus="addLinkRow(link)" size="50" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
-				</div>
-				<div class="form-group">
-					<button type="button" class="btn btn-sm btn-default" ng-model="link.language" data-html="1" ng-options="language.code as language.name for language in languages" placeholder="Audio" bs-select>
-					 	Audio <span class="caret"></span>
-					</button>
-				</div>
-				<div class="form-group">
-					<button type="button" class="btn btn-sm btn-default" ng-model="link.subtitles" data-html="1" ng-options="language.code as language.name for language in sub_languages" placeholder="Subtitles" bs-select>
-					 	Subs <span class="caret"></span>
-					</button>
-				</div>
-			</div>
-		  </div>
-		  <div class="modal-footer">
-			<button type="submit" class="btn btn-primary">Save changes</button>
-		  </div>
-	  </form>
-	</div>
-  </div>
-</div>
+<linkform media="movies" media-id="{{movie.ID}}"></linkform>
 
 <div class="container">
 	<div class="col-xs-12 col-sm-10 center-block">

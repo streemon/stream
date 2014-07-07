@@ -167,9 +167,7 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 	}
 }]);
 
-controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', '$sce', '$localStorage', function ($scope, $route, $http, $alert, $sce, $localStorage) {
-	$scope.$storage = $localStorage;
-	$scope.$route = $route;
+controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$alert', function ($scope, $http, $route, $alert) {
 	$scope.languages = [{code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
 	$scope.sub_languages = [{code: '', name: '<img class="flag"></img> None'}, {code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
 	$scope.formLinks = [];
@@ -178,7 +176,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 		function linkModel(link) {
 			if (!link) var link = {};
 			this.url = '';
-			this.media = 'movies';
+			this.media = link.media || $route.current.params.media;
 			this.mediaId = link.mediaId || $route.current.params.id;
 			this.language = link.language|| '';
 			this.subtitles = link.subtitles || '';
@@ -186,6 +184,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 		}
 
 		if (link) {
+			console.log(link);
 			var index = $scope.formLinks.indexOf(link);
 			if (index + 1 == $scope.formLinks.length) {
 				var newLink = new linkModel(link);
@@ -199,7 +198,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 		$http.post('/api/links', links)
 			.success(function(data) {
 				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#linkAlertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
-				$scope.links.push(data);
+				//$scope.links.push(data);
 				$scope.formLinks = [];
 				$scope.addLinkRow();
 			})
@@ -208,6 +207,16 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 				$scope.err = err;
 			});
 	}
+
+	$scope.$watch('mediaId', function () {
+		if ($scope.mediaId) $scope.addLinkRow({media: $scope.media, mediaId: $scope.mediaId});
+	});
+}]);
+
+controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', '$sce', '$localStorage', function ($scope, $route, $http, $alert, $sce, $localStorage) {
+	$scope.$storage = $localStorage;
+	$scope.$route = $route;
+
 
 	$scope.trustSrc = function(src) {
 		return $sce.trustAsResourceUrl(src);
@@ -249,7 +258,6 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 	$http.get('/api/movies/' + $route.current.params.id)
 		.success(function(data) {
 			$scope.movie = $scope.media = data;
-			$scope.addLinkRow();
 		})
 		.error(function(err) {
 			$scope.err = err;
@@ -270,28 +278,12 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 	$scope.currentEpisode = {}
 	$scope.currentEpisode.season_nb = $route.current.params.season || 1;
 	$scope.currentEpisode.episode_nb = $route.current.params.episode || 1;
-	$scope.formLinks = [];
 
 	//prevents reloading when changing episode
     var lastRoute = $route.current;
     $scope.$on('$locationChangeSuccess', function(event) {
-    	if ($route.current.media == 'shows' && $route.current.params.id == lastRoute.params.id) $route.current = lastRoute;
+    	if ($route.current.media == 'shows' && $route.current.params.id === lastRoute.params.id) $route.current = lastRoute;
     });
-
-	$scope.addLinkRow = function (index) {
-		function linkModel() {
-			this.url = '';
-			this.media = 'episodes';
-			this.mediaId = $scope.currentEpisode.ID;
-			this.season_nb = $scope.currentEpisode.season_nb;
-			this.episode_nb = $scope.currentEpisode.episode_nb;
-			this.language = '';
-			this.subtitles = '';
-			return this;
-		}
-
-		if (index == undefined || index + 1 == $scope.formLinks.length) $scope.formLinks.push(new linkModel());
-	}
 
 	$scope.changeSeason = function (season_nb) {
 		$scope.currentEpisode.season_nb = season_nb;
@@ -331,11 +323,11 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 
 	$scope.$watch('currentEpisode', function() {
 		if ($scope.currentEpisode.ID) {
-			$scope.formLinks = [];
-			$scope.addLinkRow();
+			
+			$scope.newLink = {media: 'episodes', mediaId: $scope.currentEpisode.ID};
 
 			//change url path
-			$location.path('/shows/' + $scope.currentEpisode.show_id + '/season/' + $scope.currentEpisode.season_nb + '/episode/' + $scope.currentEpisode.episode_nb);
+			$location.path('/shows/' + $route.current.params.id + '/season/' + $scope.currentEpisode.season_nb + '/episode/' + $scope.currentEpisode.episode_nb);
 
 			$http.get('/api/episodes/' + $scope.currentEpisode.ID + '/links')
 				.success(function (data) {
