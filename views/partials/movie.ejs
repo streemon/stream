@@ -4,7 +4,7 @@
 	</div>
 	<div class="col-xs-12 col-md-9 margin-top">
 		<h2>Man Of Steel</h2>
-		<h4><small>2014 <b>&middot;</b> 180 min</small></h4>
+		<h4><small>2014 <b>&middot;</b> 180 min <b>&middot;</b> <span title="Coming soon..." style="cursor:pointer;">Spoilzr</span> <b>&middot;</b> <a href="#">Add to list</a></small></h4>
 		<br />
 		<p class="plot">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son Kal-El, the first naturally born Kryptonian child in centuries, on a spacecraft to Earth after infusing his cells with a genetic codex of the entire Kryptonian race. After Zod murders Jor-El, he and his followers are captured and exiled to the Phantom Zone. However, they are indirectly freed after Krypton explodes.</p>
 	</div>
@@ -14,7 +14,7 @@
 	<div class="center-block hidden-xs" style="width:560px;height:315px;">
 		<div class="player-loading">
 			<div class="alert alert-warning">
-			  <strong>Loading!</strong> The movie will appear in a few seconds...
+			  <strong><i class="fa fa-spin fa-circle-o-notch"></i> Loading!</strong> The movie will appear in a few seconds...
 			</div>
 		</div>
 		<iframe id="playerFrame" width="100%" height="100%" src="http://www.exashare.com/embed-j8wwzy2cf9a0-560x315.html" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
@@ -25,9 +25,9 @@
 	</div>
 	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path">
 		<div class="col-xs-4" style="padding-left:0px;">
-			<a href="#" class="player-path-glyphicon glyphicon-info">
-				<i class="fa fa-plus fa-sm"></i>
-				More
+			<a href="#" class="player-path-glyphicon glyphicon-info" data-toggle="modal" data-target="#links">
+				<i class="fa fa-link fa-sm"></i>
+				Links
 			</a>
 		</div>
 		<div class="col-xs-4">
@@ -38,13 +38,8 @@
 		</div>
 		<div class="col-xs-4" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="#" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> Report</a>
+				<a href="#" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link" data-toggle="modal" data-target="#report"><i class="fa fa-flag fa-sm"></i> Report</a>
 			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
-		<div ng-repeat="link in links">
-			<a href="" ng-href="{{link.url}}">{{link.url}}</a>
 		</div>
 	</div>
 </div>
@@ -53,6 +48,53 @@
 		<hr />
 	</div>
 </div>
+
+<!-- Link modal -->
+<div class="modal fade" id="links" tabindex="-1" role="dialog" aria-labelledby="links" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">All links</h4>
+			</div>
+			<div class="modal-body">
+				<div id="alertContainer"></div>
+				<a href="#">Link #1</a>
+			</div>
+			<div class="modal-footer">
+				<form ng-submit="submitLinks(formLinks)">
+					<div id="alertContainer"></div>
+					<div ng-repeat="link in formLinks">
+						<div class="form-group">
+							<input ng-focus="addLinkRow(formLinks.indexOf(link))" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
+						</div>
+					</div>
+					<button type="submit" class="btn btn-sm btn-primary">Add links</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Report modal -->
+<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="report" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Report</h4>
+			</div>
+			<form ng-submit="report()">
+				<div class="modal-body">
+					<textarea type="text" style="width:100%;height:100px;resize:none;" placeholder=" What's wrong with this link?" maxlength="500"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-sm btn-danger">Send report</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <div class="container">
 	<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
 		<li>
