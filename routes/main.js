@@ -14,6 +14,16 @@ exports.hasRights = function (rights) {
     }
 }
 
+exports.addLog = function (req, next) {
+	var log = req.log;
+	if (req.session && req.session.user && req.session.auth) log._authorId = req.session.user._id;
+	log = new req.db.Log(log);
+	log.save(function (err) {
+		req.log = null;
+		next(err);
+	});
+}
+
 exports.login = function (req, res, next) {
 	function authorizeUser (session) {
 		var menu = [{href: '/settings', text: 'Settings'}, {href: '/links', text: 'My Links'}];
@@ -35,24 +45,37 @@ exports.login = function (req, res, next) {
 				var userData = JSON.parse(response).user;
 
 				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date()}, function (err, doc) {
-					if (err) throw err;
+					if (err) next(err);
 					
 					if (doc) {
 						req.session.auth = true;
 						req.session.user = doc;
 						req.session.userPublic = {_id: doc._id, username: doc.username, avatar: doc.avatar};
 
-						authorizeUser(req.session);
+						req.log = {action: 'login', media: 'self'};
+
+						exports.addLog(req, function (err) {
+							if (err) next(err);
+
+							authorizeUser(req.session);
+						});
 					}
 					else {
+						//if no account exists we create one
 						req.db.User.create(userData, function(err, doc) {
-							if (err) throw err;
+							if (err) next(err);
 
 							req.session.auth = true;
 							req.session.user = doc;
 							req.session.userPublic = {_id: doc._id, username: doc.username, avatar: doc.avatar};
 
-							authorizeUser(req.session);
+							req.log = {action: 'signup', media: 'self'};
+
+							exports.addLog(req, function (err) {
+								if (err) next(err);
+
+								authorizeUser(req.session);
+							});
 						});
 					}
 				})
@@ -65,16 +88,6 @@ exports.login = function (req, res, next) {
 	}
 	else return res.json(400, {msg: "Username not provided"});
 };
-
-exports.home = function (req, res, next) {
-	if (req.session.auth && req.session.user) {
-		var userPublic = {auth: req.session.auth, username: req.session.user.username, avatar: req.session.user.avatar};
-	}
-	else {
-		var userPublic = {auth: false};
-	}
-	return res.json(200, userPublic);
-}
 
 exports.lists = function (req, res, next) {
 	var spoilzrClient = new spoilzr();
@@ -100,46 +113,56 @@ exports.search = function (req, res, next) {
 		if (err) throw err;
 
 		if (data) {
-			var results = JSON.parse(data.body);
-			res.json(200, results);
+			req.log = {action: 'search', media: req.params.media, query: req.params.q};
+
+			exports.addLog(req, function (err) {
+				if (err) next(err);
+
+				var results = JSON.parse(data.body);
+				res.json(200, results);
+			});
 		}
 	})
 }
 
-exports.getMovieById = function (req, res, next) {
+exports.returnMediaById = function (req, next) {
 	var spoilzrClient = new spoilzr();
-
+	var mediaType = req.params.media || "movies";
+	var url = mediaType + '/' + req.params.id;
 	var form = {};
+	
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-
-	spoilzrClient.get('movies/' + req.params.id, form, function (err, data) {
-		if (err) throw err;
-
-		if (data) {
-			var media = JSON.parse(data.body);
-			res.json(200, media);
-		}
-	})
-}
-
-exports.getShowById = function (req, res, next) {
-	var spoilzrClient = new spoilzr();
-	var url = 'shows/' + req.params.id;
-	var form = {};
-
-	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-
 	if (req.query) url += '?' + querystring.stringify(req.query);
 
 	spoilzrClient.get(url, form, function (err, data) {
-		if (err) throw err;
+		if (err) next(err);
 
-		if (data) {
-			var media = JSON.parse(data.body);
-			res.json(200, media);
+		var media = JSON.parse(data.body);
+
+		if (data.statusCode == 200) {
+			req.log = {action: 'view', media: mediaType, mediaId: req.params.id};
+
+			exports.addLog(req, function (err) {
+				if (err) next(err);
+
+				next(err, media);
+			});
 		}
+		else return next(data.statusCode, media);
 	})
 }
+
+exports.getShowById = exports.getMovieById = function (req, res, next) {
+	exports.returnMediaById(req, function (err, media) {
+		if (err) {
+			if (err == 404) return res.json(404, media)
+			else next(err);
+		}
+
+		return res.json(200, media);
+	});
+}
+
 
 exports.getShowByHashtag = function (req, res, next) {
 	var spoilzrClient = new spoilzr();
@@ -159,9 +182,14 @@ exports.getShowByHashtag = function (req, res, next) {
 
 exports.logout = function(req, res) {
 	if (req.session && req.session.user) {
-		console.info('Logout USER: ' + req.session.user._id);
-		req.session = null;
-		return res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
+		req.log = {action: 'logout', media: 'self'};
+		
+		exports.addLog(req, function (err) {
+			if (err) next(err);
+
+			req.session = null;
+			return res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
+		});
 	}
 	else res.json(400, {msg: 'Already logged out'});
 };

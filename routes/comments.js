@@ -24,13 +24,12 @@ exports.getComments = function(req, res, next) {
 			var coms = [];
 
 			async.each(comments, function (comment, callback) {
-
 				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId rights', function (err, author) {
 					if (err) callback(err);
 
 					var com = {comment: comment, author: author};
 
-					coms.push(com);
+					coms[comments.indexOf(comment)] = com;
 					callback();
 				})
 			}, function (err) {
@@ -55,13 +54,12 @@ exports.getAllComments = function(req, res, next) {
 			var coms = [];
 
 			async.each(comments, function (comment, callback) {
-
 				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId rights', function (err, author) {
 					if (err) callback(err);
 
 					var com = {comment: comment, author: author};
 
-					coms.push(com);
+					coms[comments.indexOf(comment)] = com;
 					callback();
 				})
 			}, function (err) {

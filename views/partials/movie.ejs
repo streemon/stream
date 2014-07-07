@@ -36,6 +36,14 @@
 	</div>
 </div>
 
+<div class="container">
+	<div class="col-xs-12 col-sm-10 center-block">
+		<hr />
+	</div>
+</div>
+
+<div id="movieAlertContainer"></div>
+
 <div class="container player">
 	<div class="center-block hidden-xs" style="width:560px;height:315px;">
 		<div class="player-loading">
@@ -43,7 +51,7 @@
 			  <strong>Loading!</strong> The movie will appear in a few seconds...
 			</div>
 		</div>
-		<iframe id="playerFrame" width="100%" height="100%" src="http://www.exashare.com/embed-j8wwzy2cf9a0-560x315.html" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
+		<iframe id="playerFrame" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
 	</div>
 	<div class="visible-xs col-xs-12 no-padding center-block container-player">
 		<img class="col-xs-12 no-padding" src="../img/18951_screen.jpg"></img>
@@ -57,26 +65,26 @@
 				Links
 			</a>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-5">
 			<center>
 				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
-				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">Purevid</div>
+				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">{{currentLink.host}}</div>
 			</center>
 		</div>
-		<div class="col-xs-3" style="padding-right:0px;">
+		<div class="col-xs-2" style="padding-right:0px;">
 			<div class="pull-right">
-				<a href="#" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> Report</a>
+				<a href="" ng-click="reportLink()" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> Report</a>
 			</div>
 		</div>
-		<div class="col-xs-3" style="padding-right:0px;">
+		<div class="col-xs-2" style="padding-right:0px;">
 			<div class="pull-right">
 				<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> Add</a>
 			</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
-		<div ng-repeat="link in links">
-			<a href="" ng-href="{{link.url}}">{{link.url}}</a>
+		<div ng-repeat="link in links" ng-if="showLink(link)">
+			<img class="flag flag-{{link.language}}"></img> <img class="flag flag-{{link.subtitles}}"></img> <a href="" ng-click="changeLink(link)">{{link.url}}</a>
 		</div>
 	</div>
 </div>
@@ -84,25 +92,35 @@
 <!-- formLink modal -->
 <div class="modal fade" id="formlinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Add Links</h4>
-      </div>
-      <form ng-submit="submitLinks(formLinks)">
-	      <div class="modal-body">
-	      	<div id="alertContainer"></div>
-	        <div ng-repeat="link in formLinks">
-	        	<div class="form-group">
-	        		<input ng-focus="addLinkRow(formLinks.indexOf(link))" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
-	        	</div>
-	        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="submit" class="btn btn-primary">Save changes</button>
-	      </div>
-      </form>
-    </div>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="myModalLabel">Add Links</h4>
+	  </div>
+	  <form ng-submit="submitLinks(formLinks)">
+		  <div class="modal-body form-inline">
+			<div id="linkAlertContainer"></div>
+			<div ng-repeat="link in formLinks">
+				<div class="form-group">
+					<input ng-focus="addLinkRow(link)" size="50" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-sm btn-default" ng-model="link.language" data-html="1" ng-options="language.code as language.name for language in languages" placeholder="Audio" bs-select>
+					 	Audio <span class="caret"></span>
+					</button>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-sm btn-default" ng-model="link.subtitles" data-html="1" ng-options="language.code as language.name for language in sub_languages" placeholder="Subtitles" bs-select>
+					 	Subs <span class="caret"></span>
+					</button>
+				</div>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="submit" class="btn btn-primary">Save changes</button>
+		  </div>
+	  </form>
+	</div>
   </div>
 </div>
 
@@ -112,90 +130,7 @@
 	</div>
 </div>
 
-<div class="container">
-	<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
-		<li>
-			<a href="/users/@xiamix" class="avatar">
-				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
-			</a>
-			<div class="content">
-				<form ng-submit="comment()">
-					<textarea type="text" placeholder="Comment" maxlength="250"></textarea>
-					<button type="submit" class="btn btn-sm btn-primary no-padding pull-right">Comment</button>
-				</form>
-			</div>
-		</li>
-		<li>
-			<a href="/users/@xiamix" class="avatar">
-				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
-			</a>
-			<div class="content">
-				<div class="title">
-					<a href="/users/@xiamix" class="username">
-						xiamix
-					</a>
-					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
-					<a href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-edit glyphicon-info pull-right"></i></a><!--For author -->
-				</div>
-				<div class="text">
-					<p>
-						You'll see this comment as if it was yours! Iscing elit. Nullam vel ornare orci. Sed aliquet id dolor quis dignissim. Praesent faucibus, orci sit amet mattis varius, quam ligula ornare mi, id sodales tellus eros vel augue. Mauris mollis nulla ut sed.
-					</p>
-				</div>
-				<div class="sub">
-					<small><nowrap>Posted recently</nowrap></small> 
-				</div>
-			</div>
-		</li>
-		<li>
-			<a href="/users/@xiamix" class="avatar">
-				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
-			</a>
-			<div class="content">
-				<div class="title">
-					<a href="/users/@xiamix" class="username">
-							xiamix<small><span class="label label-danger vertical-middle">Mod</span></small>
-					</a>
-					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-flag glyphicon-error pull-right"></i></a><!--For other members non-mod-->
-					<a href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-reply glyphicon-info pull-right"></i></a><!--For non-author -->
-				</div>
-				<div class="text">
-					<p>
-						You'll see this comment as if it was another user's comment and you're not a moderator! Isat vestibulum est commodo sit amet. Pellentesque at magna augue. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam egestas imperdiet nullam.
-					</p>
-				</div>
-				<div class="sub">
-					<p><small><nowrap>Posted 4 hours ago</nowrap> - <nowrap>Moderated 2 hours ago</nowrap></small></p>
-				</div>
-			</div>
-		</li>
-		<li>
-			<a href="/users/@xiamix" class="avatar">
-				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
-			</a>
-			<div class="content">
-				<div class="title">
-					<a href="/users/@xiamix" class="username">
-							xiamix<small><span class="label label-info vertical-middle">Admin</span></small>
-					</a>
-					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
-					<a href="#" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-edit glyphicon-error pull-right"></i></a><!--For non-author mod -->
-					<a href="#" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-reply glyphicon-info pull-right"></i></a><!--For non-author -->
-				</div>
-				<div class="text">
-					<p>
-						You'll see this comment as if it was posted by another user and you were a moderator! Stibulumi Sed pharetra mattis erat nec accumsan. Suspendisse massa magna, lobortis et ante ut, rhoncus malesuada purus. Fusce rhoncus nibh ut lacus rutrum amet.
-					</p>
-				</div>
-				<div class="sub">
-					<small><nowrap>Posted on June 18th</nowrap> - <nowrap>Edited on June 21st</nowrap></small> 
-				</div>
-			</div>
-		</li>
-	</ul>
-</div>
-<pre>{{movie}}</pre>
-
 <comments></comments>
 
+<pre>{{movie}}</pre>
 <pre>{{links}}</pre>

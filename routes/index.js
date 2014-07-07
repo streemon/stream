@@ -1,9 +1,11 @@
 /*
- * GET home page.
+ * GET home page & partials.
  */
 
 exports.index = function(req, res){
-	res.render('index');
+	var moderator = false;
+	if (req.session && req.session.user && req.session.user.rights >= 2) moderator = true;
+	res.render('index', {moderator: moderator});
 };
 
 exports.protected = function(req, res){
@@ -27,3 +29,4 @@ exports.users = require('./users');
 exports.comments = require('./comments');
 exports.links = require('./links');
 exports.notifications = require('./notifications');
+exports.lists = require('./lists');

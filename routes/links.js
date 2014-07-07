@@ -3,26 +3,38 @@ var main = require('./main');
 var LIMIT = 50;
 var SKIP = 0;
 
+function passIframe (links, next) {
+	var hostsPatterns = {'purevid.com': /^(http:\/\/)(www\.)?purevid\.com\/v\/(\w+)\/?/, 'exashare.com': /^(http:\/\/)(www\.)?exashare\.com\/(\w+)/ };
+	var hostsReplace = {'purevid.com': "http://www.purevid.com/?m=embed&id=$3", 'exashare.com': "http://www.exashare.com/embed-$3-560x315.html"};
+
+	async.each(links, function (link, callback) {
+		var linkHost = link.url.match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+		link.host = linkHost[1];
+		link.iframe = link.url.replace(hostsPatterns[link.host], hostsReplace[link.host]);
+
+		return callback();
+	}, function (err) {
+
+		next(links);
+	})
+}
+
 exports.getLinks = function(req, res, next) {
-	req.db.Link.find({media: req.params.media, mediaId: req.params.id}, function(err, list){
+	req.db.Link.find({media: req.params.media, mediaId: req.params.id}, function(err, links){
 		if (err) next(err);
-		res.json(200, list);
+
+		passIframe(links, function (links) {
+			res.json(200, links);
+		});
 	})
 }
 
 exports.getAllLinks = function(req, res, next) {
-	var limit = req.query.limit || LIMIT;
-	var skip = req.query.skip || SKIP;
-	
-	req.db.Comment.find(
-		{},
-		null,
-		{limit: limit, skip: skip, sort: {date: -1}},
-		function(err, list){
-			if (err) next(err);
-			res.json(200, list);
-		}
-	)
+	req.db.Link.find({_id:"53b0a622fe5462000092df8d", flags: { $not: {$elemMatch: {_flaggerId: "538dd41c2e1e08fc9744543b"}}}}, function (err, link) {
+		if (err) next (err);
+
+		res.json(200, link);
+	})
 }
 
 exports.getUserLinks = function(req, res, next) {
@@ -46,24 +58,24 @@ exports.flag = function (req, res, next) {
 		if (err) next (err);
 
 		if (link) {
-			var flag = {_flaggerId: req.session.user._id};
-
-			//checks if same flag doesn't already exist
-			if (link.flags && link.flags.indexOf(flag) == -1) {
-				link.flags.push(flag);
+			async.each(link.flags, function (flag, callback) {
+				if (flag._flaggerId == req.session.user._id) return res.json(403, {msg: "Already flagged"});
+				else callback();
+			}, function (err) {
+				link.flags.push({_flaggerId: req.session.user._id});
 				link.save();
 				res.json(200, link);
-			}
-			else res.json(403, {msg: "Already flagged"});
+			})
+
 		}
-		else res.json(404, {msg: "Not found"});
+		else res.json(404, {msg: "Link Not found"});
 	})
 }
 
 exports.getFlaggedLinks = function (req, res, next) {
 	req.db.Link.find({flags: {$not: {$size: 0}, $exists: true}}, function (err, links) {
 		if (err) next(err);
-		
+
 		res.json(200, links);
 	})
 }
@@ -90,8 +102,14 @@ exports.add = function(req, res, next) {
 		if (err) next(err);
 
 		if (savedLinks.length > 0) {
-			main.notifyFollowers(req, savedLinks[0].mediaId, savedLinks[0].media);
-			res.json(200, savedLinks);
+			req.log = {action: 'addlink', mediaId: savedLinks[0].mediaId, media: savedLinks[0].media, query: savedLinks.length};
+		
+			main.addLog(req, function (err) {
+				if (err) next(err);
+
+				main.notifyFollowers(req, savedLinks[0].mediaId, savedLinks[0].media);
+				res.json(200, savedLinks);
+			});
 		}
 		else res.json(400, {msg: 'Error during insertion', errors: errors});
 	})

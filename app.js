@@ -52,6 +52,7 @@ function db (req, res, next) {
   req.db = {
     User: connection.model('User', models.User, 'users'),
     Link: connection.model('Link', models.Link, 'links'),
+    Log: connection.model('Log', models.Log, 'logs'),
     Comment: connection.model('Comment', models.Comment, 'comments'),
     Notification: connection.model('Notification', models.Notification, 'notifications')
   };
@@ -71,12 +72,13 @@ app.get('/partials/:name', routes.partials);
 //Serve API
 //MAIN
 app.post('/api/login', db, routes.main.login);
-app.get('/api/home', routes.main.home);
-app.get('/api/logout', routes.main.logout);
-app.get('/api/search/:media(movies|shows)/:q', routes.main.search);
+app.get('/api/logout', db, routes.main.logout);
+app.get('/api/search/:media(movies|shows)/:q', db, routes.main.search);
 app.get('/api/:media(movies)/:id', db, routes.main.getMovieById);
-app.get('/api/:media(shows)/:id', db, routes.main.getShowById);
 app.get('/api/:media(shows)/!:hashtag', db, routes.main.getShowByHashtag);
+app.get('/api/:media(shows)/:id', db, routes.main.getShowById);
+app.get('/api/lists/:media(movies|shows)?', db, routes.lists.getLists);
+app.get('/api/lists/:id/:media(movies|shows)?', db, routes.lists.getListById);
 
 //USERS
 //app.get('/api/users', db, routes.users.getUsers);
@@ -102,9 +104,9 @@ app.delete('/api/comments/:id', routes.main.hasRights(0), db, routes.comments.de
 app.get('/api/:media(movies|episodes)/:id/links', db, routes.links.getLinks);
 app.get('/api/account/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
 app.get('/api/users/:id/links', routes.main.hasRights(0), db, routes.links.getUserLinks);
-app.get('/api/link/:id/flag', routes.main.hasRights(0), db, routes.links.flag);
 app.get('/api/links/flagged', routes.main.hasRights(2), db, routes.links.getFlaggedLinks);
 app.get('/api/links', routes.main.hasRights(2), db, routes.links.getAllLinks);
+app.put('/api/links/:id/flag', routes.main.hasRights(0), db, routes.links.flag);
 app.post('/api/links', routes.main.hasRights(0), db, routes.links.add);
 //app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);

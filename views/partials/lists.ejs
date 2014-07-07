@@ -1,32 +1,11 @@
-{{lists}}
-
-<div class="container">
-	<a href="/movies/1" class="page-header-link">
+<div class="container" ng-repeat="list in lists">
+	<a ng-href="/lists/{{list.id}}/{{list.media}}" class="page-header-link">
 		<h3 class="page-header">
-			Mainstream Movies
+			{{list.title}}
 		</h3>
 	</a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie 2.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/shows/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Show.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
+	<a ng-href="/{{list.media}}/{{media.ID}}" ng-repeat="media in list.medias" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="http://www.shostream.com/images/thumbs/films/big/default_big.png" ng-src="{{media.posterUrl}}"></img></a>
 </div>
-<div class="container">
-	<a href="/movies/1" class="page-header-link">
-		<h3 class="page-header">
-			Top Shows
-		</h3>
-	</a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie 2.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-	<a href="/movies/1" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="img/Movie.jpg"></img></a>
-</div>
-<br />
 <div class="container">
 	<a href="/lists" class="page-header-link">
 		<h3 class="page-header">
@@ -112,3 +91,4 @@
 		</div>
 	</a>
 </div>
+<pre>{{lists}}</pre>

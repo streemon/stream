@@ -1,0 +1,9 @@
+<h3 class="page-header">
+	{{list.title}}
+</h3>
+<div class="container" ng-repeat="media in list.medias">
+	<img class="poster" src="http://www.shostream.com/images/thumbs/films/big/default_big.png" ng-src="{{media.posterUrl}}"></img>
+	<a ng-href="/{{list.media}}/{{media.ID}}" class="page-header-link">
+		<h4>{{media.title}}</h4>
+	</a>
+</div>

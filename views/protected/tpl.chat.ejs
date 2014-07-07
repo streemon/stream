@@ -2,28 +2,27 @@
 <form class="chat" action="">
   <input id="m" autocomplete="off" /><button>Send</button>
 </form>
-
 <script>
-      var socket = io();
-      var username = $('.navbar-username').text();
+	var socket = io();
+	var username = $('.navbar-username').text();
 
-      $(document).ready(function () {
-      	socket.emit('connected', username);
-      });
+	$(document).ready(function () {
+		socket.emit('connected', username);
+	});
 
-      $('form').submit(function(){
-      	var msg = {txt: $('#m').val(), username: username};
-        socket.emit('chat message', msg);
-        $('#m').val('');
-        return false;
-      });
+	$('form').submit(function(){
+		var msg = {txt: $('#m').val(), username: username};
+	socket.emit('chat message', msg);
+	$('#m').val('');
+	return false;
+	});
 
-      socket.on('connected', function(username) {
-      	$('#messages').append('<li class="newConnection"><em>' + username + ' is connected</em></li>');
-      })
-      socket.on('chat message', function(msg){
-        $('#messages').append("<li><strong>" + msg.username + "</strong>: " + msg.txt + "</li>");
-      });
+	socket.on('connected', function(username) {
+		$('#messages').append('<li class="newConnection"><em>' + username + ' is connected</em></li>');
+	})
+	socket.on('chat message', function(msg){
+	$('#messages').append("<li><strong>" + msg.username + "</strong>: " + msg.txt + "</li>");
+	});
 </script>
 <style>
   form.chat { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }

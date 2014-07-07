@@ -7,7 +7,7 @@ var UserSchema = new Schema ({
 	avatar: String,
 	token: String,
 	settings: {
-		lang: String,
+		language: String,
 		subtitles: [String]
 	},
 	subscriptions: [

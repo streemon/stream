@@ -32,11 +32,22 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 }]);
 
 controllers.controller('IndexController', ['$scope', '$route', '$http', function($scope, $route, $http) {
-	/*
-	$http.get('/api/lists', {media: $route.current.media}).success(function(data) {
+	var url = '/api/lists/';
+	if ($route.current.media) url += $route.current.media;
+
+	$http.get(url).success(function(data) {
 		$scope.lists = data;
 	});
-	*/
+}]);
+
+
+controllers.controller('ListController', ['$scope', '$route', '$http', function($scope, $route, $http) {
+	var url = '/api/lists/' + $route.current.params.id + '/' 
+	if ($route.current.params.media) url += $route.current.params.media;
+
+	$http.get(url).success(function(data) {
+		$scope.list = data;
+	});
 }]);
 
 controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '$location', '$alert', function($scope, $http, $localStorage, $location, $alert) {
@@ -72,10 +83,12 @@ controllers.controller('LogoutController', ['$scope', '$http', '$localStorage', 
 
 controllers.controller('SearchController', ['$scope', '$route', '$http', function ($scope, $route, $http) {
 	$scope.$route = $route;
-	//delay not working properly
+	//delay for popovers not working properly
 	$scope.delay = {show:1000,hide:0};
+
 	if ($route.current.media == 'shows' || $route.current.media == 'movies') {
 		$http.get('/api/search/' + $route.current.media + '/' + $route.current.params.q).success(function(data) {
+			$route.current.title = $route.current.params.q;
 			$scope.search = data;
 		})
 	}
@@ -84,6 +97,27 @@ controllers.controller('SearchController', ['$scope', '$route', '$http', functio
 controllers.controller('CommentsController', ['$scope', '$route', '$http', '$localStorage', function ($scope, $route, $http, $localStorage) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
+
+	$("#commentInput").keydown(function(e){
+	    if (e.keyCode == 13)
+		{
+			if (e.shiftKey) {
+				var text = $(this).val();
+				var rows = text.split("\n").length + 1;
+				$(this).attr("rows",  rows);
+			}
+			else {
+				e.preventDefault();
+				$(this).submit();
+				$(this).attr("rows", 1);
+			}
+	    }
+	    else if (e.keyCode == 8) {
+			var text = $(this).val();
+			var rows = text.split("\n").length;
+			$(this).attr("rows",  rows);
+	    }
+	});
 
 	$http.get('/api/'+ $route.current.media +'/' + $route.current.params.id + '/comments')
 		.success(function(data) {
@@ -94,8 +128,8 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 		})
 
 	$scope.parseComment = function (comment) {
-		var patterns = ['\#([-\.\\w]+)','\@([-\.\\w]+)', 'SPOILER ?:?(.*)'];
-		var replacements = ['<a href="/shows/!$1">#$1</a>', '<a href="/users/@$1">@$1</a>', 'SPOILER: <em class="spoiler">$1</em>'];
+		var patterns = ['(<([^>]+)>)', '\#([-\.\\w]+)','\@([-\.\\w]+)', 'SPOILER ?:?(.*)', '\n'];
+		var replacements = ['', '<a href="/shows/!$1">#$1</a>', '<a href="/users/@$1">@$1</a>', 'SPOILER: <em class="spoiler">$1</em>', '<br/>'];
 
 		for (var i = 0; i < patterns.length; i++) {
 			var pattern = new RegExp(patterns[i], "g");
@@ -145,39 +179,84 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 	}
 }]);
 
-controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', function ($scope, $route, $http, $alert) {
+controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', '$sce', '$localStorage', function ($scope, $route, $http, $alert, $sce, $localStorage) {
+	$scope.$storage = $localStorage;
 	$scope.$route = $route;
+	$scope.languages = [{code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
+	$scope.sub_languages = [{code: '', name: '<img class="flag"></img> None'}, {code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
 	$scope.formLinks = [];
 
-	$scope.formModal = {
-	  "title": "Title",
-	  "content": "Hello Modal<br />This is a multiline message!"
-	};
-
-	$scope.addLinkRow = function (index) {
-		function linkModel(id) {
+	$scope.addLinkRow = function (link) {
+		function linkModel(link) {
+			if (!link) var link = {};
 			this.url = '';
 			this.media = 'movies';
-			this.mediaId = $scope.movie.ID;
+			this.mediaId = link.mediaId || $route.current.params.id;
+			this.language = link.language|| '';
+			this.subtitles = link.subtitles || '';
+			return this;
 		}
 
-		if (index == undefined || index + 1 == $scope.formLinks.length) $scope.formLinks.push(new linkModel());
+		if (link) {
+			var index = $scope.formLinks.indexOf(link);
+			if (index + 1 == $scope.formLinks.length) {
+				var newLink = new linkModel(link);
+				$scope.formLinks.push(newLink);
+			}
+		}
+		else $scope.formLinks.push(new linkModel());
 	}
 
 	$scope.submitLinks = function(links) {
 		$http.post('/api/links', links)
 			.success(function(data) {
-				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#alertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
+				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#linkAlertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
 				$scope.links.push(data);
 				$scope.formLinks = [];
 				$scope.addLinkRow();
 			})
 			.error(function (err) {
-				$alert({title: err.msg, placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
+				$alert({title: err.msg, placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
 				$scope.err = err;
 			});
 	}
 
+	$scope.trustSrc = function(src) {
+		return $sce.trustAsResourceUrl(src);
+	}
+
+	$scope.reportLink = function () {
+		if ($scope.currentLink) {
+			$http.put('/api/links/' + $scope.currentLink._id + '/flag')
+				.success(function (data) {
+					$alert({title: "Thank you !", content: "The link has been reported", placement: 'top', duration: 5, container: '#movieAlertContainer', type: 'info', show: true});
+				})
+				.error(function (data) {
+					$alert({title: "Error !", content: data.msg, placement: 'top', duration: 5, container: '#movieAlertContainer', type: 'warning', show: true});
+				})
+		}
+	}
+	$scope.changeLink = function (link) {
+		$scope.currentLink = link;
+	}
+	$scope.showLink = function (link) {
+		if (link != $scope.currentLink) {
+			//check if user has
+			if ($scope.$storage.user && $scope.$storage.user.settings && $scope.$storage.user.settings.subtitles && link.language) {
+				//three combos authorized (original language/ original language + allowed subs / user main language)
+
+				//check original language
+
+				//check user main language
+				if ($scope.$storage.user.settings.language == link.language) return true;
+
+				//check allowed subs
+				if ($scope.$storage.user.settings.subtitles.indexOf(link.subtitles) != -1) return true;
+			}
+			else return true;
+		}
+		else return false;
+	}
 
 	$http.get('/api/movies/' + $route.current.params.id)
 		.success(function(data) {
@@ -191,6 +270,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 	$http.get('/api/movies/' + $route.current.params.id + '/links')
 		.success(function (data) {
 			$scope.links = data;
+			$scope.currentLink = $scope.links[0];
 		})
 		.error(function (err) {
 			$scope.err = err;
@@ -217,6 +297,9 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 			this.mediaId = $scope.currentEpisode.ID;
 			this.season_nb = $scope.currentEpisode.season_nb;
 			this.episode_nb = $scope.currentEpisode.episode_nb;
+			this.language = '';
+			this.subtitles = '';
+			return this;
 		}
 
 		if (index == undefined || index + 1 == $scope.formLinks.length) $scope.formLinks.push(new linkModel());
@@ -305,6 +388,7 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 controllers.controller('ProfileController', ['$scope', '$http', '$route', function ($scope, $http, $route) {
 	$scope.$route = $route;
 
+	$route.current.title = '@' + $route.current.params.username;
 	$http.get('/api/users/@' + $route.current.params.username)
 		.success(function (data) {
 			$scope.profile = data;
@@ -316,7 +400,7 @@ controllers.controller('ProfileController', ['$scope', '$http', '$route', functi
 
 controllers.controller('SettingsController', ['$scope', '$http', '$localStorage', '$location', '$alert', function ($scope, $http, $localStorage, $location, $alert) {
 	$scope.storage = $localStorage;
-	$scope.languages = [{code: 'en', name: 'English'}, {code: 'es', name: 'Spanish'}, {code: 'fr', name: 'French'}, {code: 'de', name: 'German'}, {code: 'nl', name: 'Dutch'}];
+	$scope.languages = [{code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
 	
 	//if user is not identified
 	if (!$scope.storage.user || !$scope.storage.user.auth) return $location.path('/');

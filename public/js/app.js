@@ -5,6 +5,7 @@ app.config(function ($routeProvider, $locationProvider) {
 		.when('/', {
 			templateUrl: '/partials/lists',
 			controller: 'IndexController',
+			title: 'Home'
 		})
 		.when('/movies', {
 			templateUrl: '/partials/lists',
@@ -29,6 +30,11 @@ app.config(function ($routeProvider, $locationProvider) {
 			controller: 'SearchController',
 			media: 'shows',
 			title: 'Search TV Shows'
+		})
+		.when('/lists/:id/:media?', {
+			templateUrl: '/partials/list',
+			controller: 'ListController',
+			title: 'Playlist'
 		})
 		.when('/login', {
 			templateUrl: '/partials/login',
@@ -66,14 +72,17 @@ app.config(function ($routeProvider, $locationProvider) {
 		})
 		.when('/links', {
 			templateUrl: '/userpartials/links',
-			controller: 'LinksController'
+			controller: 'LinksController',
+			title: 'Manage Links'
 		})
 		.when('/settings', {
 			templateUrl: '/userpartials/settings',
-			controller: 'SettingsController'
+			controller: 'SettingsController',
+			title: 'Settings'
 		})
 		.when('/moderate', {
-			templateUrl: '/protected/moderate'
+			templateUrl: '/protected/moderate',
+			title: 'Moderate'
 		})
 		.otherwise({
 			redirectTo: '/'

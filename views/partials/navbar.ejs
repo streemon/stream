@@ -20,8 +20,8 @@
 					<a href="/movies" ng-if="$route.current.params.q" ng-href="/search/movies/{{$route.current.params.q}}">Movies</a>
 				</li>
 				<li ng-class="{active: $route.current.media == 'shows'}">
-					<a href="/shows" ng-if="!$route.current.params.q">Shows</a>
-					<a href="/shows" ng-if="$route.current.params.q" ng-href="/search/shows/{{$route.current.params.q}}">Shows</a>
+					<a href="/shows" ng-if="!$route.current.params.q">TV Shows</a>
+					<a href="/shows" ng-if="$route.current.params.q" ng-href="/search/shows/{{$route.current.params.q}}">TV Shows</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -33,11 +33,11 @@
 						</div>
 					</form>
 				</li>
-				<li class="dropdown" ng-show="$storage.user.auth">
-					<a href="#" bs-dropdown="$storage.user.menu"><img src="/img/1144_big.jpg" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
+				<li class="dropdown" ng-if="$storage.user.auth">
+					<a href="#" bs-dropdown="$storage.user.menu"><img src="/img/1144_big.jpg" ng-src="{{$storage.user.avatar}}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
 				</li>
 				<li>
-					<a href="/login" ng-hide="$storage.user.auth"><i class="fa fa-sign-in"></i> Log In</a>
+					<a href="/login" ng-if="!$storage.user.auth"><i class="fa fa-sign-in"></i> Log In</a>
 				</li>
 			</ul>
 		</div><!-- /.navbar-collapse -->

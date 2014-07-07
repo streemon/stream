@@ -4,6 +4,7 @@
 </div>
 <script>
 	function ModerateController ($scope, $http) {
+
 		$http.get('/api/comments?limit=100').success(function (data) {
 			$scope.comments = data;
 		});
