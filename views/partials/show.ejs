@@ -1,33 +1,35 @@
 <div class="container">
 	<div class="col-md-2 hidden-xs hidden-sm frame">
-		<img class="poster margin-vertical" src="../img/Show.jpg"></img>
+		<img class="poster margin-vertical" src="/img/Show.jpg"></img>
 	</div>
-	<div class="col-xs-12 col-md-9 margin-top">
-		<h2>Man Of Steel</h2>
-		<h4><small>2014 <b>&middot;</b> 180 min <b>&middot;</b> <span title="Coming soon..." style="cursor:pointer;">Spoilzr</span> <b>&middot;</b> <a href="#">Add to list</a></small></h4>
+	<div class="col-xs-12 col-md-10 margin-top">
+		<h2>Mixology <a href="#"><button class="btn btn-sm btn-primary pull-right">Add to list</button></a></h2>
+		<h4><small>2014 <b>&middot;</b> 180 min <b>&middot;</b> <span title="Coming soon..." style="cursor:pointer;">Spoilzr</span></small></h4>
 		<br />
-		<p class="plot">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son Kal-El, the first naturally born Kryptonian child in centuries, on a spacecraft to Earth after infusing his cells with a genetic codex of the entire Kryptonian race. After Zod murders Jor-El, he and his followers are captured and exiled to the Phantom Zone. However, they are indirectly freed after Krypton explodes.</p>
-		<div class="col-xs-12 col-sm-6">
-			<ul class="pagination center-block">
-				<li class="disabled"><a href="#">Saison</a></li>
+		<p class="plot">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son Kal-El, the first naturally born Kryptonian child in centuries, on a spacecraft to Earth after infusing his cells with a genetic codex of the race.</p>
+		<div class="col-xs-12">
+			<ul class="pagination">
+				<li class="disabled"><a href="#" style="width:75px;">Saison</a></li>
 				<li><a href="#">1</a></li>
 				<li><a href="#">2</a></li>
 				<li class="active"><a href="#">3</a></li>
 				<li><a href="#">4</a></li>
 				<li><a href="#">5</a></li>
-				<li><a href="#">&rsaquo;</a></li>
 			</ul>
 		</div>
-		<div class="col-xs-12 col-sm-6">
-			<ul class="pagination center-block">
-				<li class="disabled"><a href="#">Episode</a></li>
-				<li><a href="#">&lsaquo;</a></li>
+		<div class="col-xs-12">
+			<ul class="pagination">
+				<li class="disabled"><a href="#" style="width:75px;">Episode</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
 				<li><a href="#">6</a></li>
 				<li><a href="#">7</a></li>
 				<li class="active"><a href="#">8</a></li>
 				<li><a href="#">9</a></li>
 				<li><a href="#">10</a></li>
-				<li><a href="#">&rsaquo;</a></li>
 			</ul>
 		</div>
 	</div>
@@ -43,14 +45,14 @@
 		<iframe id="playerFrame" width="100%" height="100%" src="http://www.exashare.com/embed-j8wwzy2cf9a0-560x315.html" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
 	</div>
 	<div class="visible-xs col-xs-12 no-padding center-block container-player">
-		<img class="col-xs-12 no-padding" src="../img/18951_screen.jpg"></img>
-		<a href="#"><img class="btn-play" src="../img/Play - Inverse.png"></img></a>
+		<img class="col-xs-12 no-padding" src="/img/18951_screen.jpg"></img>
+		<a href="#"><img class="btn-play" src="/img/Play - Inverse.png"></img></a>
 	</div>
 	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path">
 		<div class="col-xs-4" style="padding-left:0px;">
 			<a href="#" class="player-path-glyphicon glyphicon-info" data-toggle="modal" data-target="#links">
-				<i class="fa fa-link fa-sm"></i>
-				Links
+				<i class="fa fa-plus fa-sm"></i>
+				Add
 			</a>
 		</div>
 		<div class="col-xs-4">
@@ -78,22 +80,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">All links</h4>
+				<h4 class="modal-title" id="myModalLabel">Add links</h4>
 			</div>
 			<div class="modal-body">
 				<div id="alertContainer"></div>
-				<a href="#">Link #1</a>
+				Link form
 			</div>
 			<div class="modal-footer">
-				<form ng-submit="submitLinks(formLinks)">
-					<div id="alertContainer"></div>
-					<div ng-repeat="link in formLinks">
-						<div class="form-group">
-							<input ng-focus="addLinkRow(formLinks.indexOf(link))" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
-						</div>
-					</div>
-					<button type="submit" class="btn btn-sm btn-primary">Add links</button>
-				</form>
+				<button type="submit" class="btn btn-sm btn-primary">Add links</button>
 			</div>
 		</div>
 	</div>
