@@ -7,6 +7,8 @@
  * Copyright 2012-2014 ShoStream, Inc.
  * Licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (http://creativecommons.org/licenses/by-nc-nd/4.0)
  */
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 html {
   font-family: sans-serif;
@@ -275,7 +277,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -584,6 +586,7 @@ a.bg-danger:hover {
   padding-left: 5px;
   margin-top: 20px;
   margin-bottom: 10px;
+  font-family: "Helvetica Neue Light", Helvetica, sans-serif;
 }
 .page-header-link {
   color: #333333;
@@ -6083,8 +6086,8 @@ button.close {
 	padding-right: 30px;
 }
 .comments > li > .content > .title > .username {
-	font-weight: bold;
-	height: 30px;
+	font-weight: 500;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
 	padding-left: 2px;
 	display: block;
 	font-size: 16px;
@@ -6093,8 +6096,7 @@ button.close {
 }
 .comments > li > .content > .title {
 	display: block;
-	height: 30px;
-	padding-top: 4px;
+  height: 26px;
 }
 .comments > li > .content > .title > .glyphicon {
 	margin-top: 4px;
