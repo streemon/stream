@@ -17,7 +17,7 @@ var UserSchema = new Schema ({
 		}
 	],
 	lastActivity: {type: Date, default: Date.now},
-	rights: Number
+	rights: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('User', UserSchema);
