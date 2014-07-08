@@ -16,12 +16,10 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li ng-class="{active: $route.current.media == 'movies'}">
-					<a href="/movies" ng-if="!$route.current.params.q" translate="MOVIES">Movies</a>
-					<a href="/movies" ng-if="$route.current.params.q" ng-href="/search/movies/{{$route.current.params.q}}" translate="MOVIES">Movies</a>
+					<a href="/movies" ng-href="{{$route.current.params.q ? '/search/movies/' + $route.current.params.q : '/movies' }}" translate="MOVIES">Movies</a>
 				</li>
 				<li ng-class="{active: $route.current.media == 'shows'}">
-					<a href="/shows" ng-if="!$route.current.params.q" translate="SHOWS">TV Shows</a>
-					<a href="/shows" ng-if="$route.current.params.q" ng-href="/search/shows/{{$route.current.params.q}}" translate="SHOWS">TV Shows</a>
+					<a href="/shows" ng-href="{{$route.current.params.q ? '/search/shows/' + $route.current.params.q : '/shows' }}" translate="SHOWS">TV Shows</a>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
