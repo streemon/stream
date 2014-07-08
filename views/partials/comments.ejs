@@ -21,7 +21,7 @@
 						<small ng-if="comment.author.rights >= 2 && comment.author.rights < 4"><span class="label label-danger vertical-middle">Mod</span></small>
 						<small ng-if="comment.author.rights >= 4"><span class="label label-info vertical-middle" translate="EDITOR">Editor</span></small>
 					</a>
-					<a ng-if="comment.author._id == $storage.user._id || $storage.user.rights >= 2" ng-click="deleteComment(comment)" href="" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
+					<a ng-if="comment.author._id == $storage.user._id || $storage.user.rights >= comment.author.rights + 2" ng-click="deleteComment(comment)" href="" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a><!--For author + mod -->
 					<a ng-if="comment.author._id == $storage.user._id" ng-click="editComment(comment)" href="" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-edit glyphicon-info pull-right"></i></a><!--For author -->
 					<a ng-if="comment.author._id != $storage.user._id" ng-click="replyTo(comment.author.username)" href="" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-reply glyphicon-info pull-right"></i></a>
 				</div>
