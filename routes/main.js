@@ -40,9 +40,9 @@ exports.login = function (req, res, next) {
 
 				var userData = JSON.parse(response).user;
 
-				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date()}, function (err, doc) {
+				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date(), subscriptions: userData.subscriptions}, function (err, doc) {
 					if (err) next(err);
-					
+
 					if (doc) {
 						req.session.auth = true;
 						req.session.user = doc;
@@ -114,7 +114,13 @@ exports.search = function (req, res, next) {
 			exports.addLog(req, function (err) {
 				if (err) next(err);
 
-				var results = JSON.parse(data.body);
+				try {
+					var results = JSON.parse(data.body);
+				}
+				catch (e) {
+					next("Spoilzr error");
+				}
+
 				res.json(200, results);
 			});
 		}
@@ -133,9 +139,14 @@ exports.returnMediaById = function (req, next) {
 	spoilzrClient.get(url, form, function (err, data) {
 		if (err) next(err);
 
-		var media = JSON.parse(data.body);
+		if (data && data.statusCode == 200) {
+			try {
+				var media = JSON.parse(data.body);
+			}
+			catch (e) {
+				next("Spoilzr error")
+			}
 
-		if (data.statusCode == 200) {
 			req.log = {action: 'view', media: mediaType, mediaId: req.params.id};
 
 			exports.addLog(req, function (err) {
@@ -144,7 +155,7 @@ exports.returnMediaById = function (req, next) {
 				next(err, media);
 			});
 		}
-		else return next(data.statusCode, media);
+		else return next(404, media);
 	})
 }
 
