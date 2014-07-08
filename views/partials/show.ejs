@@ -44,8 +44,11 @@
 <div class="container player">
 	<div class="center-block hidden-xs" style="width:560px;height:315px;">
 		<div class="player-loading">
-			<div class="alert alert-warning">
-			  <strong><i class="fa fa-spin fa-circle-o-notch"></i> Loading!</strong> The movie will appear in a few seconds...
+			<div class="alert alert-warning" ng-if="currentLink">
+			  <strong>Loading!</strong> The movie will appear in a few seconds...
+			</div>
+			<div class="alert alert-warning" ng-if="!currentLink">
+			  <strong>No link!</strong> Please add one or come back later...
 			</div>
 		</div>
 		<iframe id="playerFrame" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>

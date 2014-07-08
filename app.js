@@ -107,6 +107,7 @@ app.get('/api/users/:id/links', routes.main.hasRights(0), db, routes.links.getUs
 app.get('/api/links/flagged', routes.main.hasRights(2), db, routes.links.getFlaggedLinks);
 app.get('/api/links', routes.main.hasRights(2), db, routes.links.getAllLinks);
 app.put('/api/links/:id/flag', routes.main.hasRights(0), db, routes.links.flag);
+app.put('/api/links/:id/clear', routes.main.hasRights(2), db, routes.links.clear);
 app.post('/api/links', routes.main.hasRights(0), db, routes.links.add);
 //app.put('/api/links/:id', routes.main.hasRights(2), db, routes.links.update);
 app.delete('/api/links/:id', db, routes.links.del);

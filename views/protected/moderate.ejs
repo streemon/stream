@@ -13,6 +13,11 @@
 			$scope.links = data;
 		})
 
+		$scope.clearLink = function (link) {
+			$http.put('/api/links/' + link._id + '/clear').success(function (data) {
+				$scope.links.splice($scope.links.indexOf(link), 1);
+			})
+		}
 		$scope.deleteLink = function(link) {
 			$http.delete('/api/links/' + link._id).success(function (data) {
 				$scope.links.splice($scope.links.indexOf(link), 1);
@@ -46,7 +51,7 @@
 			},
 			{
 				"title": "Flagged Links",
-				"template": "/userpartials/links.ejs"
+				"template": "/protected/tpl.links.ejs"
 			},
 			{
 				"title": "Users",

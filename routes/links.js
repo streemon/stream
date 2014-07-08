@@ -62,13 +62,22 @@ exports.flag = function (req, res, next) {
 				if (flag._flaggerId == req.session.user._id) return res.json(403, {msg: "Already flagged"});
 				else callback();
 			}, function (err) {
-				link.flags.push({_flaggerId: req.session.user._id});
+				var newLink = {_flaggerId: req.session.user._id};
+				if (req.body.reason) newLink.reason = req.body.reason;
+				link.flags.push(newLink);
 				link.save();
 				res.json(200, link);
 			})
 
 		}
 		else res.json(404, {msg: "Link Not found"});
+	})
+}
+exports.clear = function (req, res, next) {
+	req.db.Link.findByIdAndUpdate(req.params.id, {$set: {flags: []}}, function (err, link) {
+		if (err) next (err);
+
+		res.json(200, link);
 	})
 }
 
