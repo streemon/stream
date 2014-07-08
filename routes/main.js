@@ -36,13 +36,13 @@ exports.login = function (req, res, next) {
 
 		if (req.body.password) {
 			spoilzrClient.post('login', {form: {username: req.body.username, password: req.body.password}}, function (err, data, response) {
-				if (err || data.statusCode != 200) return res.json(400, {msg: "Spoilzr error"});
+				if (err) return res.json(400, {msg: "Spoilzr error"});
 
-				var userData = JSON.parse(response).user;
+				var userData = response.user;
 
-				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date()}, function (err, doc) {
+				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date(), subscriptions: userData.subscriptions}, function (err, doc) {
 					if (err) next(err);
-					
+
 					if (doc) {
 						req.session.auth = true;
 						req.session.user = doc;
@@ -85,39 +85,22 @@ exports.login = function (req, res, next) {
 	else return res.json(400, {msg: "Username not provided"});
 };
 
-exports.lists = function (req, res, next) {
-	var spoilzrClient = new spoilzr();
-	var form = {};
-
-	if (req.query.media) form.media = req.query.media
-	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-
-	spoilzrClient.get('lists', form, function (err, doc) {
-		if (err) throw err;
-
-		return res.json(200, doc);
-	})
-}
-
 exports.search = function (req, res, next) {
 	var spoilzrClient = new spoilzr();
 
 	var form = {};
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
 
-	spoilzrClient.get('search/' + req.params.media + '/' + req.params.q, form, function (err, data) {
-		if (err) throw err;
+	spoilzrClient.get('search/' + req.params.media + '/' + req.params.q, form, function (err, data, response) {
+		if (err) next(err)
 
-		if (data) {
-			req.log = {action: 'search', media: req.params.media, query: req.params.q};
+		req.log = {action: 'search', media: req.params.media, query: req.params.q};
 
-			exports.addLog(req, function (err) {
-				if (err) next(err);
+		exports.addLog(req, function (err) {
+			if (err) next(err);
 
-				var results = JSON.parse(data.body);
-				res.json(200, results);
-			});
-		}
+			res.json(200, response);
+		});
 	})
 }
 
@@ -130,30 +113,24 @@ exports.returnMediaById = function (req, next) {
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
 	if (req.query) url += '?' + querystring.stringify(req.query);
 
-	spoilzrClient.get(url, form, function (err, data) {
+	spoilzrClient.get(url, form, function (err, data, response) {
 		if (err) next(err);
 
-		var media = JSON.parse(data.body);
-
-		if (data.statusCode == 200) {
-			req.log = {action: 'view', media: mediaType, mediaId: req.params.id};
-
+		if (response && response.ID) {
+			req.log = {action: "view", media: mediaType, mediaId: response.ID};
 			exports.addLog(req, function (err) {
 				if (err) next(err);
 
-				next(err, media);
+				next(err, response);
 			});
 		}
-		else return next(data.statusCode, media);
+		else next(err, response);
 	})
 }
 
 exports.getShowById = exports.getMovieById = function (req, res, next) {
 	exports.returnMediaById(req, function (err, media) {
-		if (err) {
-			if (err == 404) return res.json(404, media)
-			else next(err);
-		}
+		if (err) next(err)
 
 		return res.json(200, media);
 	});
@@ -166,13 +143,11 @@ exports.getShowByHashtag = function (req, res, next) {
 	var form = {};
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
 
-	spoilzrClient.get('shows/!' + req.params.hashtag, form, function (err, data) {
-		if (err) throw err;
+	spoilzrClient.get('shows/!' + req.params.hashtag, form, function (err, data, response) {
+		if (err) next(err);
 
-		if (data) {
-			var media = JSON.parse(data.body);
-			res.json(200, media);
-		}
+		var media = response;
+		res.json(200, media);
 	})
 }
 
