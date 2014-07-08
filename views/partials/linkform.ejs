@@ -10,7 +10,7 @@
 			<div id="linkAlertContainer"></div>
 			<div ng-repeat="link in formLinks">
 				<div class="form-group">
-					<input ng-focus="addLinkRow(link)" size="50" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
+					<input ng-focus="addLinkRow(link)" size="40" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
 				</div>
 				<div class="form-group">
 					<button type="button" class="btn btn-sm btn-default" ng-model="link.language" data-html="1" ng-options="language.code as language.name for language in languages" placeholder="Audio" bs-select>
