@@ -11,7 +11,7 @@ var LinkSchema = new Schema ({
 	host: String,
 	views: {type: Number, required: true, default: 1},
 	data: {type: Date, default: Date.now},
-	flags: [{_flaggerId: Schema.Types.ObjectId}],
+	flags: [{_flaggerId: Schema.Types.ObjectId, reason: String}],
 	_uploaderId: Schema.Types.ObjectId
 });
 

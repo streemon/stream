@@ -61,11 +61,12 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 }]);
 
 controllers.controller('LogoutController', ['$scope', '$http', '$localStorage', function ($scope, $http, $localStorage) {
+	//deleter user session 
+	$scope.$storage.user = null;
+	
 	$http.get('/api/logout').success(function(data) {
 		$scope.$storage = $localStorage;
 		$scope.data = data;
-
-		$scope.$storage.user = data.user;
 	});
 }]);
 
@@ -222,14 +223,14 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 		return $sce.trustAsResourceUrl(src);
 	}
 
-	$scope.reportLink = function () {
+	$scope.reportLink = function (reason) {
 		if ($scope.currentLink) {
-			$http.put('/api/links/' + $scope.currentLink._id + '/flag')
+			$http.put('/api/links/' + $scope.currentLink._id + '/flag', {reason: reason})
 				.success(function (data) {
-					$alert({title: "Thank you !", content: "The link has been reported", placement: 'top', duration: 5, container: '#movieAlertContainer', type: 'info', show: true});
+					$alert({title: "Thank you !", content: "The link has been reported", placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'info', show: true});
 				})
 				.error(function (data) {
-					$alert({title: "Error !", content: data.msg, placement: 'top', duration: 5, container: '#movieAlertContainer', type: 'warning', show: true});
+					$alert({title: "Error !", content: data.msg, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
 				})
 		}
 	}
