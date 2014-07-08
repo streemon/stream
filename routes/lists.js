@@ -35,23 +35,17 @@ exports.getListById = function (req, res, next) {
 
 		if (req.query) url += '?' + querystring.stringify(req.query);
 
-		spoilzrClient.get(url, form, function (err, data) {
-			if (err) throw err;
+		spoilzrClient.get(url, form, function (err, data, response) {
+			if (err) next(err);
 
-			if (data && data.statusCode == 200) {
+			if (response) {
 				if (id) req.log = {action: 'view', media: 'lists', mediaId: id};
 				else req.log = {action: 'view', media: 'lists', query: req.params.id};
 
 				main.addLog(req, function (err) {
 					if (err) next(err);
 
-					try {
-						var list = JSON.parse(data.body);
-					} catch (e) {
-						next(e);
-					}
-
-					return res.json(200, list);
+					return res.json(200, response);
 				});
 			}
 			else return res.json(404, {msg: "List not found"})
@@ -164,13 +158,13 @@ exports.mostWatched = function (req, args, next) {
 			req.params.media = list.media;
 
 			main.returnMediaById(req, function (err, media) {
-				if (err == 404) callback();
-				else if (err) callback (err);
-				else {
+				if (err) callback (err);
+				else if (media) {
 					media.views = result.count;
 					list.medias[results.indexOf(result)] = media;
 					callback();
 				}
+				else callback();
 			})
 		}, function (err) {
 			//removes empty from list
