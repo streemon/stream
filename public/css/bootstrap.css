@@ -5937,7 +5937,7 @@ button.close {
 	position: absolute;
 	width: 40%;
 	left: 30%;
-	top: 150px;
+	top: 50px;
 	z-index: -1;
 }
 .player {
@@ -6138,4 +6138,42 @@ button.close {
 .plot {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-align: justify;
+}
+.select {
+	margin-top: 20px;
+}
+.select > div {
+	border: 1px solid #dddddd;
+	border-right: 0px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	background-color: #fafafa;
+	cursor: default;
+	position: relative;
+	padding: 6px 12px;
+	text-decoration: none;
+	width: 75px;
+	float: left;
+	line-height: 1.42857143;
+}
+.select > select {
+border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	height: 34px;
+	position: relative;
+	float: left;
+	padding-left: 6px;
+	line-height: 1.42857143;
+	text-decoration: none;
+	color: #428bca;
+	background-color: #ffffff;
+	border: 1px solid #dddddd;
+	outline: none;
+	margin-right: 20px;
+}
+.select > select > option {
+	margin-left: 20px;
+}
+.select > select > .viewed {
+	color: #073C69;
 }
