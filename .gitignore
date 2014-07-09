@@ -1,3 +1,3 @@
-!node_modules/spoilzr/*
 node_modules
+!node_modules/spoilzr/spoilzr.js
 .DS_Store
