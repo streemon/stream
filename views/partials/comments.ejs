@@ -1,8 +1,8 @@
 <div class="container">
 	<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
-		<li>
-			<a href="/users/@xiamix" class="avatar">
-				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+		<li ng-show="$storage.user.auth">
+			<a href="" class="avatar">
+				<img ng-src="{{$storage.user.avatar}}" src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
 			</a>
 			<div class="content">
 				<form ng-submit="postComment()">
@@ -10,9 +10,14 @@
 				</form>
 			</div>
 		</li>
+		<li ng-hide="$storage.user.auth">
+			<div class="alert alert-info" translate="ALERT_LOGINTOCOMMENT">
+			  <strong>Log In</strong> to send a comment !
+			</div>
+		</li>
 		<li ng-repeat="comment in comments">
-			<a href="/users/@xiamix" class="avatar">
-				<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+			<a ng-href="/users/@{{comment.author.username}}" class="avatar">
+				<img ng-src="{{comment.author.avatar}}" src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
 			</a>
 			<div class="content">
 				<div class="title">

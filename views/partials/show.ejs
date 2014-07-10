@@ -44,10 +44,10 @@
 <div class="container player">
 	<div class="center-block hidden-xs" style="width:560px;height:315px;">
 		<div class="player-loading">
-			<div class="alert alert-warning" ng-if="currentLink">
+			<div class="alert alert-warning" ng-if="currentLink" translate="ALERT_LOADING">
 			  <strong>Loading!</strong> The movie will appear in a few seconds...
 			</div>
-			<div class="alert alert-warning" ng-if="!currentLink">
+			<div class="alert alert-warning" ng-if="!currentLink" translate="ALERT_NOLINK">
 			  <strong>No link!</strong> Please add one or come back later...
 			</div>
 		</div>
@@ -68,7 +68,7 @@
 		<div class="col-xs-5">
 			<center>
 				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
-				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">{{currentLink.host}}</div>
+				<div class="player-path-hostname" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}}</div>
 			</center>
 		</div>
 		<div class="col-xs-3" style="padding-right:0px;">
