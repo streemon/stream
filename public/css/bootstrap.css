@@ -587,6 +587,7 @@ a.bg-danger:hover {
   margin-top: 20px;
   margin-bottom: 10px;
   font-family: "Helvetica Neue Light", Helvetica, sans-serif;
+  color: #4B4B4B;
 }
 .page-header-link {
   color: #333333;
@@ -6138,6 +6139,7 @@ button.close {
 .plot {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-align: justify;
+<<<<<<< HEAD
 }
 /* ajout flatui */
 .btn {
@@ -7480,4 +7482,3 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 /* easymargin */
 .marginbottom5 {margin-bottom: 5px;} .marginbottom10 {margin-bottom: 10px;} .marginbottom20 {margin-bottom: 20px;}
 .margintop5 {margin-top: 5px;} .margintop10 {margin-top: 10px;} .margintop20 {margin-top: 20px;}
->>>>>>> john

@@ -4,11 +4,13 @@
 	</div>
 	<div class="col-xs-12 col-md-9 margin-top">
 		<h2 ng-bind="movie.title">TITLE</h2>
-		<h4><small>
+		<h4 class="marginbottom5"><small>
 			<span ng-bind="movie.productionYear">2014</span> <b>&middot;</b> 
 			<span ng-bind="movie.runtime">90</span> min <b>&middot;</b> 
 			<span title="Coming soon..." style="cursor:pointer;">Spoilzr</span>
 		</small></h4>
+		<h4><small>By <a href="#">xiamix</a></small></h4>
+		<h4><small>With <a href="#">xiamix</a>, <a href="#">xiamix</a> and <a href="#">xiamix</a></small></h4>
 		<br />
 		<p class="plot" ng-bind="movie.synopsis">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son.</p>
 	</div>
@@ -101,6 +103,5 @@
 	</div>
 </div>
 
-<pre>{{movie}}</pre>
-
 <comments></comments>
+<pre>{{movie}}</pre>
