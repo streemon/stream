@@ -180,7 +180,8 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 
 controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$alert', function ($scope, $http, $route, $alert) {
 	$scope.languages = languagesAllowed;
-	$scope.sub_languages = angular.copy(languagesAllowed).unshift({code: '', name: '<img class="flag"></img> None'});
+	$scope.sub_languages = languagesAllowed.slice();
+	console.log($scope.sub_languages);
 	$scope.formLinks = [];
 
 	$scope.addLinkRow = function (link) {

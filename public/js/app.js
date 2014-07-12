@@ -65,7 +65,7 @@ var translation_fr = {
 	LOGIN: 'Connexion',
 	LOGOUT: 'Déconnexion',
 	SIGNUP: 'Inscription',
-	ALERT_NOLINK: '<strong>Aucun lien!</strong> Ajoutez-en un ou revenez plus tard…',
+	ALERT_NOLINK: '<strong>Aucun lien!</strong> <a href="#" title="Add link" data-toggle="modal" data-target="#formlinkModal">Ajoutez-en un</a> ou revenez plus tard…',
 	ALERT_LOADING: '<strong>Chargement!</strong> Votre vidéo appraîtra dans quelques secondes…',
 	FORM_USERNAME: "Nom d'utilisateur",
 	FORM_PASSWORD: "Mot de passe",

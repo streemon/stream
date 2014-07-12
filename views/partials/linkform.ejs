@@ -8,7 +8,7 @@
 	  <form ng-submit="submitLinks(formLinks)">
 		  <div class="modal-body form-inline">
 			<div id="linkAlertContainer"></div>
-			<div ng-repeat="link in formLinks">
+			<div ng-repeat="link in formLinks" class="marginbottom10">
 				<div class="form-group">
 					<input ng-focus="addLinkRow(link)" size="40" class="form-control" type="text" placeholder="http://" name="url" ng-model="link.url" />
 				</div>
@@ -25,7 +25,7 @@
 			</div>
 		  </div>
 		  <div class="modal-footer">
-			<button type="submit" class="btn btn-primary" translate="FORM_SAVE">Save changes</button>
+			<button type="submit" class="btn btn-info" translate="FORM_SAVE">Save changes</button>
 		  </div>
 	  </form>
 	</div>
