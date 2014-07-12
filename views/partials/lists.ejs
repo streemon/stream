@@ -1,94 +1,9 @@
 <div class="container" ng-repeat="list in lists">
 	<a ng-href="/lists/{{list.id}}/{{list.media}}" class="page-header-link">
-		<h3 class="page-header">
+		<h3 class="page-header" translate="{{list.title}}" translate-values="{media: list.media}">
 			{{list.title}}
 		</h3>
 	</a>
 	<a ng-href="/{{list.media}}/{{media.ID}}" ng-repeat="media in list.medias" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="http://www.shostream.com/images/thumbs/films/big/default_big.png" ng-src="{{media.posterUrl}}"></img></a>
-</div>
-<div class="container">
-	<a href="/lists" class="page-header-link">
-		<h3 class="page-header">
-			Shortlists
-		</h3>
-	</a>
-	<a href="/lists/1" class="col-xs-4 col-sm-4 col-md-2 frame">
-		<div class="poster">
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<div class="list-head">
-				<p class="list-title">
-					Marvel's Heroes
-				</p>
-			</div>
-		</div>
-	</a>
-	<a href="/lists/1" class="col-xs-4 col-sm-4 col-md-2 frame">
-		<div class="poster">
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<div class="list-head">
-				<p class="list-title">
-					Marvel's Heroes
-				</p>
-			</div>
-		</div>
-	</a>
-	<a href="/lists/1" class="col-xs-4 col-sm-4 col-md-2 frame">
-		<div class="poster">
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<div class="list-head">
-				<p class="list-title">
-					Marvel's Heroes
-				</p>
-			</div>
-		</div>
-	</a>
-	<a href="/lists/1" class="col-xs-4 col-sm-4 col-md-2 frame">
-		<div class="poster">
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<div class="list-head">
-				<p class="list-title">
-					Marvel's Heroes
-				</p>
-			</div>
-		</div>
-	</a>
-	<a href="/lists/1" class="col-xs-4 col-sm-4 col-md-2 frame">
-		<div class="poster">
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<div class="list-head">
-				<p class="list-title">
-					Marvel's Heroes
-				</p>
-			</div>
-		</div>
-	</a>
-	<a href="/lists/1" class="col-xs-4 col-sm-4 col-md-2 frame">
-		<div class="poster">
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<img class="col-xs-6 list-cover" src="img/Movie.jpg"></img>
-			<div class="list-head">
-				<p class="list-title">
-					Marvel's Heroes
-				</p>
-			</div>
-		</div>
-	</a>
 </div>
 <pre>{{lists}}</pre>

@@ -1,24 +1,25 @@
 <div class="container">
 	<div id="alertContainer"></div>
-	<h3 class="page-header">
-		Preferences
+	<h3 class="page-header" translate="MENU_SETTINGS">
+		Settings
 	</h3>
 	<form ng-submit="saveSettings()">
 		<div class="form-group">
-			<label class="control-label">Main Language</label>
-			<button type="button" class="btn btn-default" ng-model="form.settings.lang" data-html="1" ng-options="language.code as language.name for language in languages" bs-select>
+			<label class="control-label" translate="FORM_MAINLANGUAGE">Main Language</label>
+			<button type="button" class="btn btn-default" ng-model="form.settings.language" data-html="1" ng-options="language.code as language.name for language in languages" bs-select>
 			  Action <span class="caret"></span>
 			</button>
 		</div>
 		<hr>
 		<div class="form-group">
-			<label>Subtitles</label>
+			<label translate="FORM_SUBTITLES">Subtitles</label>
 			<button type="button" class="btn btn-default" ng-model="form.settings.subtitles" data-html="1" data-multiple="1" ng-options="language.code as language.name for language in languages" bs-select>
 			  Action <span class="caret"></span>
 			</button>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-lg btn-primary">Save</button>
+			<button type="submit" class="btn btn-lg btn-primary" translate="FORM_SAVE">Save changes</button>
 		</div>
 	</form>
 </div>
+{{$storage}}

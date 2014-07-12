@@ -31,6 +31,14 @@
 						</div>
 					</form>
 				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<img class="flag flag-{{$storage.language}}" ></img>
+					</a>
+					<ul class="dropdown-menu hidden-xs hidden-sm">
+						<li ng-repeat="language in languages"><a href="#" ng-click="$storage.language = language.code" ng-show="$storage.language != language.code" translate="FLAG_{{language.code}}"></a></li>
+					</ul>
+				</li>
 				<li class="dropdown" ng-if="$storage.user.auth">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" ng-src="{{$storage.user.avatar}}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
 					<ul class="dropdown-menu hidden-xs hidden-sm">

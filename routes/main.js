@@ -25,10 +25,16 @@ exports.addLog = function (req, next) {
 }
 
 exports.login = function (req, res, next) {
-	function authorizeUser (session) {
-		var userPublic = {auth: session.auth, _id: session.user._id, username: session.user.username, avatar: session.user.avatar, settings: session.user.settings, rights: session.user.rights, lastActivity: session.user.lastActivity};
+	function authorizeUser (user) {
+		exports.addLog(req, function (err) {
+			if (err) next(err);
 
-		return res.json(200, {msg: "Authorized", user: userPublic});
+			req.session.auth = true;
+			req.session.user = user;
+			req.session.userPublic = {auth: req.session.auth, _id: user._id, username: user.username, avatar: user.avatar, settings: user.settings, rights: user.rights, lastActivity: user.lastActivity};
+
+			return res.json(200, {msg: "Authorized", user: req.session.userPublic});
+		})
 	}
 
 	if (req.body.username) {
@@ -44,34 +50,18 @@ exports.login = function (req, res, next) {
 					if (err) next(err);
 
 					if (doc) {
-						req.session.auth = true;
-						req.session.user = doc;
-						req.session.userPublic = {_id: doc._id, username: doc.username, avatar: doc.avatar};
-
-						req.log = {action: 'login', media: 'self'};
-
-						exports.addLog(req, function (err) {
-							if (err) next(err);
-
-							authorizeUser(req.session);
-						});
+						req.log = {action: 'login',  mediaId: doc.spoilzrId, media: 'user'};
+						authorizeUser(doc);
 					}
-					else {
-						//if no account exists we create one
+					else { //if no account exists we create one
+						userData.settings = {};
+						userData.settings.language = req.headers["accept-language"].substring(0,2);
+						
 						req.db.User.create(userData, function(err, doc) {
 							if (err) next(err);
 
-							req.session.auth = true;
-							req.session.user = doc;
-							req.session.userPublic = {_id: doc._id, username: doc.username, avatar: doc.avatar};
-
-							req.log = {action: 'signup', media: 'self'};
-
-							exports.addLog(req, function (err) {
-								if (err) next(err);
-
-								authorizeUser(req.session);
-							});
+							req.log = {action: 'signup', mediaId: doc.spoilzrId, media: 'user'};
+							authorizeUser(doc);
 						});
 					}
 				})
@@ -153,12 +143,12 @@ exports.getShowByHashtag = function (req, res, next) {
 
 exports.logout = function(req, res) {
 	if (req.session && req.session.user) {
-		req.log = {action: 'logout', media: 'self'};
-		
+		req.log = {action: 'logout', media: 'user', mediaId: req.session._id};
+		req.session = null;
+
 		exports.addLog(req, function (err) {
 			if (err) next(err);
 
-			req.session = null;
 			return res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
 		});
 	}

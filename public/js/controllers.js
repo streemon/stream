@@ -1,8 +1,14 @@
 var controllers = angular.module('myapp.controllers', []);
 
-controllers.controller('MainController', ['$scope','$route', '$http', '$location', '$localStorage', function($scope, $route, $http, $location, $localStorage) {
+controllers.controller('MainController', ['$scope','$route', '$http', '$location', '$localStorage', '$translate', function($scope, $route, $http, $location, $localStorage, $translate) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
+	$scope.languages = languagesAllowed;
+
+	$scope.$watch("$storage.language", function () {
+		if (!$scope.$storage.language) $scope.$storage.language = window.navigator.language;
+		$translate.use($scope.$storage.language);
+	})
 
 	$scope.search = function () {
 		var query = this.q;
@@ -50,6 +56,10 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 				$scope.$storage = $localStorage;
 				$scope.data = data;
 				
+				if (data.user.settings && data.user.settings.language && data.user.settings.language != $scope.$storage.language) {
+					$scope.$storage.language = data.user.settings.language;
+				}
+
 				$scope.$storage.user = data.user;
 
 				return $location.path('/');
@@ -169,8 +179,9 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 }]);
 
 controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$alert', function ($scope, $http, $route, $alert) {
-	$scope.languages = [{code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
-	$scope.sub_languages = [{code: '', name: '<img class="flag"></img> None'}, {code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
+	$scope.languages = languagesAllowed;
+	$scope.sub_languages = languagesAllowed.slice();
+	console.log($scope.sub_languages);
 	$scope.formLinks = [];
 
 	$scope.addLinkRow = function (link) {
@@ -259,6 +270,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 	$http.get('/api/movies/' + $route.current.params.id)
 		.success(function(data) {
 			$scope.movie = $scope.media = data;
+			$route.current.title = $scope.movie.title;
 		})
 		.error(function(err) {
 			$scope.err = err;
@@ -330,6 +342,9 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 			//change url path
 			$location.path('/shows/' + $route.current.params.id + '/season/' + $scope.currentEpisode.season_nb + '/episode/' + $scope.currentEpisode.episode_nb);
 
+			//change title
+			$route.current.title = $scope.show.title + " S" + $scope.currentEpisode.season_nb + "E" + $scope.currentEpisode.episode_nb;
+
 			$http.get('/api/episodes/' + $scope.currentEpisode.ID + '/links')
 				.success(function (data) {
 					$scope.links = data;
@@ -380,20 +395,25 @@ controllers.controller('ProfileController', ['$scope', '$http', '$route', functi
 }]);
 
 controllers.controller('SettingsController', ['$scope', '$http', '$localStorage', '$location', '$alert', function ($scope, $http, $localStorage, $location, $alert) {
-	$scope.storage = $localStorage;
-	$scope.languages = [{code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
+	$scope.$storage = $localStorage;
+	$scope.languages = languagesAllowed;
 	
 	//if user is not identified
-	if (!$scope.storage.user || !$scope.storage.user.auth) return $location.path('/');
+	if (!$scope.$storage.user || !$scope.$storage.user.auth) return $location.path('/');
 
 	$scope.form = {};
-	if ($scope.storage.user.settings) $scope.form.settings = $scope.storage.user.settings;
-	else $scope.form.settings = {lang: 'en', subtitles: []};
+	if ($scope.$storage.user.settings) $scope.form.settings = $scope.$storage.user.settings;
 
 	$scope.saveSettings = function () {
 		$http.put('/api/account', $scope.form)
 			.success(function (data) {
+				$scope.$storage.language = $localStorage.user.settings.language;
+				console.log($scope.$storage);
+
 				$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
+			})
+			.error (function (data) {
+				$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'danger', show: true});
 			})
 	}
 

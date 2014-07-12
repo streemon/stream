@@ -7,11 +7,9 @@ var _ = require("underscore");
 
 var defaultLists = [{id: "mostWatched", position: 10, args: {media: "movies", count: 12, ago: "week"}}, {id: "mostWatched", position: 20, args: {media: "shows", count: 6, ago: "day"}}, {id: "newReleases", postion: 30, args: {media: "movies", count: 6}}];
 var userLists = [{id: "watchedRecently", position: 0, args: {media: "shows", count: 6}}]
-var spoilzrLists = []; //[{id: "suggested"},{id: "toWatch"}];
+var spoilzrLists = [{id: 1, position: 40}]; //[{id: "suggested"},{id: "toWatch"}];
 
 exports.getListById = function (req, res, next) {
-	var id = parseInt(req.params.id);
-
 	if (_.findWhere(defaultLists, {id: req.params.id}) && req.params.media) {
 		exports[req.params.id](req, {media: req.params.media, count: 100}, function (err, returnList) {
 			if (err) next(err);
@@ -27,59 +25,85 @@ exports.getListById = function (req, res, next) {
 		})
 	}
 	else {
-		var spoilzrClient = new spoilzr();
-		var url = 'lists/' + req.params.id + '/' + req.params.media;
-		var form = {};
-
-		if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-
-		if (req.query) url += '?' + querystring.stringify(req.query);
-
-		spoilzrClient.get(url, form, function (err, data, response) {
+		getSpoilzrList(req, req.params.id, function (err, returnList) {
 			if (err) next(err);
 
-			if (response) {
-				if (id) req.log = {action: 'view', media: 'lists', mediaId: id};
-				else req.log = {action: 'view', media: 'lists', query: req.params.id};
-
-				main.addLog(req, function (err) {
-					if (err) next(err);
-
-					return res.json(200, response);
-				});
-			}
+			if (returnList) res.json(200, returnList);
 			else return res.json(404, {msg: "List not found"})
 		})
 	}
 
 }
 
+function getSpoilzrList(req, id, next) {
+	var spoilzrClient = new spoilzr();
+	var url = 'lists/' + id;
+	//' + req.params.media;
+	var form = {};
+
+	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+
+	if (req.query) url += '?' + querystring.stringify(req.query);
+
+	spoilzrClient.get(url, form, function (err, data, response) {
+		if (err) next(err);
+
+		if (response) {
+			req.log = {action: 'view', media: 'lists', query: id};
+
+			main.addLog(req, function (err) {
+				next(err, response)
+			});
+		}
+		else next(err, response);
+	})
+}
+
 exports.getLists = function (req, res, next) {
 	var lists = [];
 	
-	if (req.session && req.session.user && req.session.auth) defaultLists = defaultLists.concat(userLists);
+	if (req.session && req.session.user && req.session.auth) processLists = defaultLists.concat(userLists);
+	else processLists = defaultLists;
 
-	async.each(defaultLists, function (list, callback) {
-		if (!req.params.media || req.params.media == list.args.media) {
-			exports[list.id](req, list.args, function(err, returnList) {
-				if (err) callback(err);
+	async.parallel([
+		function (callb) {
+			async.each(processLists, function (list, callback) {
+				if (!req.params.media || req.params.media == list.args.media) {
+					exports[list.id](req, list.args, function(err, returnList) {
+						if (err) callback(err);
 
-				returnList.id = list.id;
-				lists[list.position] = returnList;
-				callback();
-			})
+						returnList.id = list.id;
+						lists[list.position] = returnList;
+						callback();
+					})
+				}
+				else callback();
+			}, function (err) {
+				callb(err);
+			});
+		},
+		function (callb) {
+			async.each(spoilzrLists, function (list, callback) {
+				getSpoilzrList(req, list.id, function (err, returnList) {
+					if (err) callback(err);
+
+					returnList.id = list.id;
+					lists[list.position] = returnList;
+					callback();
+				});
+			}, function (err) {
+				callb(err);
+			});
 		}
-		else callback();
-	}, function (err) {
-		if (err) next(err);
+	], function (err, results) {
 		lists = lists.filter(function(e){return e}); 
 		res.json(200, lists);
-	});
+	})
 }
 
 exports.watchedRecently = function (req, args, next) {
 	var count = args.count || 6;
-	var title = args.title || "Watched Recently";
+	var title = args.title || "LIST_WATCHEDRECENTLY";
 	var list = {title: title, media: args.media, count: count, medias: []};
 
 	req.db.Log.aggregate([
@@ -109,7 +133,7 @@ exports.watchedRecently = function (req, args, next) {
 
 exports.newReleases = function (req, args, next) {
 	var count = args.count || 6;
-	var title = args.title || "New Releases";
+	var title = args.title || "LIST_NEWRELEASES";
 	var list = {title: title, count: count, media: args.media, medias: []};
 
 	req.db.Notification.aggregate([
@@ -140,7 +164,7 @@ exports.newReleases = function (req, args, next) {
 
 exports.mostWatched = function (req, args, next) {
 	var count = args.count || 6;
-	var title = args.title || "Most Watched";
+	var title = args.title || "LIST_MOSTWATCHED";
 	var ago = args.ago || "week";
 
 	var list = {title: title, count: count, ago: ago, media: args.media, medias: []};

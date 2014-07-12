@@ -45,11 +45,11 @@
 <div class="container player">
 	<div class="center-block embed-responsive embed-responsive-16by9">
 		<div class="player-loading">
-			<div class="alert alert-warning" ng-if="currentLink">
-			  <strong>Chargement!</strong> Votre &eacute;pisode sera bient&ocirc;t pr&ecirc;t...
+			<div class="alert alert-warning" ng-if="currentLink" translate="ALERT_LOADING">
+			  <strong>Loading!</strong> The movie will appear in a few seconds...
 			</div>
-			<div class="alert alert-warning" ng-if="!currentLink">
-			  <strong>Aucun lien!</strong> Veuillez en ajouter un ou revenir plus tard.
+			<div class="alert alert-warning" ng-if="!currentLink" translate="ALERT_NOLINK">
+			  <strong>No link!</strong> Please add one or come back later...
 			</div>
 		</div>
 		<iframe id="embed-responsive-item" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
@@ -62,8 +62,8 @@
 		</div>
 		<div class="col-xs-6" ng-if="!currentLink">
 			<center>
-				<img src="/img/{{currentLink.host}}.png" class="img-rounded img-xsmall hidden-xs"></img>
-				<div class="player-path-hostname" title="Added June the 2nd by @xiamix">{{currentLink.host}}</div>
+				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
+				<div class="player-path-hostname" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}}</div>
 			</center>
 		</div>
 		<div class="col-xs-3" style="padding-right:0px;" ng-if="!currentLink">
