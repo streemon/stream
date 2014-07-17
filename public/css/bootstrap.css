@@ -6130,6 +6130,9 @@ button.close {
 	box-shadow: none;
 	padding: 20px 10px;
 }
+.login .form-control:focus {
+  border: 0px solid transparent;
+}
 .login > div > form > div > button {
 	width: 100%;
 	padding: 10px;
@@ -6138,7 +6141,6 @@ button.close {
 .plot {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-align: justify;
-<<<<<<< HEAD
 }
 /* ajout flatui */
 .btn {
@@ -7492,112 +7494,112 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .margintop5 {margin-top: 5px;} .margintop10 {margin-top: 10px;} .margintop20 {margin-top: 20px;}
 
 .logo24 { background: url('img/logo24.png') no-repeat top left; width: 24px; height: 24px;  } 
-.logo24.amazon { background-position: 0px 0px;  } 
-.logo24.bitshare { background-position: -24px 0px;  } 
-.logo24.dailymotion { background-position: -48px 0px;  } 
-.logo24.depositfiles { background-position: -72px 0px;  } 
-.logo24.filefactory { background-position: -96px 0px;  } 
-.logo24.firedrive { background-position: -120px 0px;  } 
-.logo24.flashx { background-position: -144px 0px;  } 
-.logo24.freakshare { background-position: -168px 0px;  } 
-.logo24.gigaup { background-position: -192px 0px;  } 
-.logo24.jheberg { background-position: -216px 0px;  } 
-.logo24.letitbit { background-position: -240px 0px;  } 
-.logo24.mediafire { background-position: -264px 0px;  } 
-.logo24.mega { background-position: -288px 0px;  } 
-.logo24.mixture { background-position: -312px 0px;  } 
-.logo24.movreel { background-position: -336px 0px;  } 
-.logo24.movshare { background-position: -360px 0px;  } 
-.logo24.multiupload { background-position: -384px 0px;  } 
-.logo24.netload { background-position: -408px 0px;  } 
-.logo24.nowvideo { background-position: -432px 0px;  } 
-.logo24.purevid { background-position: -456px 0px;  } 
-.logo24.rapidgator { background-position: -480px 0px;  } 
-.logo24.rapidshare { background-position: -504px 0px;  } 
-.logo24.rutube { background-position: -528px 0px;  } 
-.logo24.sockshare { background-position: -552px 0px;  } 
-.logo24.stagevu { background-position: -576px 0px;  } 
-.logo24.streamcloud { background-position: -600px 0px;  } 
-.logo24.turbobit { background-position: -624px 0px;  } 
-.logo24.uploadedto { background-position: -648px 0px;  } 
-.logo24.uploadhero { background-position: -672px 0px;  } 
-.logo24.uptobox { background-position: -696px 0px;  } 
-.logo24.videobb { background-position: -720px 0px;  } 
-.logo24.viditx { background-position: -744px 0px;  } 
-.logo24.vk { background-position: -768px 0px;  } 
-.logo24.youtube { background-position: -792px 0px;  } 
-.logo24.youwatch { background-position: -816px 0px;  }
+.logo24.logo-amazon { background-position: 0px 0px;  } 
+.logo24.logo-bitshare { background-position: -24px 0px;  } 
+.logo24.logo-dailymotion { background-position: -48px 0px;  } 
+.logo24.logo-depositfiles { background-position: -72px 0px;  } 
+.logo24.logo-filefactory { background-position: -96px 0px;  } 
+.logo24.logo-firedrive { background-position: -120px 0px;  } 
+.logo24.logo-flashx { background-position: -144px 0px;  } 
+.logo24.logo-freakshare { background-position: -168px 0px;  } 
+.logo24.logo-gigaup { background-position: -192px 0px;  } 
+.logo24.logo-jheberg { background-position: -216px 0px;  } 
+.logo24.logo-letitbit { background-position: -240px 0px;  } 
+.logo24.logo-mediafire { background-position: -264px 0px;  } 
+.logo24.logo-mega { background-position: -288px 0px;  } 
+.logo24.logo-mixture { background-position: -312px 0px;  } 
+.logo24.logo-movreel { background-position: -336px 0px;  } 
+.logo24.logo-movshare { background-position: -360px 0px;  } 
+.logo24.logo-multiupload { background-position: -384px 0px;  } 
+.logo24.logo-netload { background-position: -408px 0px;  } 
+.logo24.logo-nowvideo { background-position: -432px 0px;  } 
+.logo24.logo-purevid { background-position: -456px 0px;  } 
+.logo24.logo-rapidgator { background-position: -480px 0px;  } 
+.logo24.logo-rapidshare { background-position: -504px 0px;  } 
+.logo24.logo-rutube { background-position: -528px 0px;  } 
+.logo24.logo-sockshare { background-position: -552px 0px;  } 
+.logo24.logo-stagevu { background-position: -576px 0px;  } 
+.logo24.logo-streamcloud { background-position: -600px 0px;  } 
+.logo24.logo-turbobit { background-position: -624px 0px;  } 
+.logo24.logo-uploadedto { background-position: -648px 0px;  } 
+.logo24.logo-uploadhero { background-position: -672px 0px;  } 
+.logo24.logo-uptobox { background-position: -696px 0px;  } 
+.logo24.logo-videobb { background-position: -720px 0px;  } 
+.logo24.logo-viditx { background-position: -744px 0px;  } 
+.logo24.logo-vk { background-position: -768px 0px;  } 
+.logo24.logo-youtube { background-position: -792px 0px;  } 
+.logo24.logo-youwatch { background-position: -816px 0px;  }
 
 .logo16 { background: url('img/logo16.png') no-repeat top left; width: 16px; height: 16px;  } 
-.logo16.amazon { background-position: 0px 0px;  } 
-.logo16.bitshare { background-position: -16px 0px;  } 
-.logo16.dailymotion { background-position: -32px 0px;  } 
-.logo16.depositfiles { background-position: -48px 0px;  } 
-.logo16.filefactory { background-position: -64px 0px;  } 
-.logo16.firedrive { background-position: -80px 0px;  } 
-.logo16.flashx { background-position: -96px 0px;  } 
-.logo16.freakshare { background-position: -112px 0px;  } 
-.logo16.gigaup { background-position: -128px 0px;  } 
-.logo16.jheberg { background-position: -144px 0px;  } 
-.logo16.letitbit { background-position: -160px 0px;  } 
-.logo16.mediafire { background-position: -176px 0px;  } 
-.logo16.mega { background-position: -192px 0px;  } 
-.logo16.mixture { background-position: -208px 0px;  } 
-.logo16.movreel { background-position: -224px 0px;  } 
-.logo16.movshare { background-position: -240px 0px;  } 
-.logo16.multiupload { background-position: -256px 0px;  } 
-.logo16.netload { background-position: -272px 0px;  } 
-.logo16.nowvideo { background-position: -288px 0px;  } 
-.logo16.purevid { background-position: -304px 0px;  } 
-.logo16.rapidgator { background-position: -320px 0px;  } 
-.logo16.rapidshare { background-position: -336px 0px;  } 
-.logo16.rutube { background-position: -352px 0px;  } 
-.logo16.sockshare { background-position: -368px 0px;  } 
-.logo16.stagevu { background-position: -384px 0px;  } 
-.logo16.streamcloud { background-position: -400px 0px;  } 
-.logo16.turbobit { background-position: -416px 0px;  } 
-.logo16.uploadedto { background-position: -432px 0px;  } 
-.logo16.uploadhero { background-position: -448px 0px;  } 
-.logo16.uptobox { background-position: -464px 0px;  } 
-.logo16.videobb { background-position: -480px 0px;  } 
-.logo16.viditx { background-position: -496px 0px;  } 
-.logo16.vk { background-position: -512px 0px;  } 
-.logo16.youtube { background-position: -528px 0px;  } 
-.logo16.youwatch { background-position: -544px 0px;  } 
+.logo16.logo-amazon { background-position: 0px 0px;  } 
+.logo16.logo-bitshare { background-position: -16px 0px;  } 
+.logo16.logo-dailymotion { background-position: -32px 0px;  } 
+.logo16.logo-depositfiles { background-position: -48px 0px;  } 
+.logo16.logo-filefactory { background-position: -64px 0px;  } 
+.logo16.logo-firedrive { background-position: -80px 0px;  } 
+.logo16.logo-flashx { background-position: -96px 0px;  } 
+.logo16.logo-freakshare { background-position: -112px 0px;  } 
+.logo16.logo-gigaup { background-position: -128px 0px;  } 
+.logo16.logo-jheberg { background-position: -144px 0px;  } 
+.logo16.logo-letitbit { background-position: -160px 0px;  } 
+.logo16.logo-mediafire { background-position: -176px 0px;  } 
+.logo16.logo-mega { background-position: -192px 0px;  } 
+.logo16.logo-mixture { background-position: -208px 0px;  } 
+.logo16.logo-movreel { background-position: -224px 0px;  } 
+.logo16.logo-movshare { background-position: -240px 0px;  } 
+.logo16.logo-multiupload { background-position: -256px 0px;  } 
+.logo16.logo-netload { background-position: -272px 0px;  } 
+.logo16.logo-nowvideo { background-position: -288px 0px;  } 
+.logo16.logo-purevid { background-position: -304px 0px;  } 
+.logo16.logo-rapidgator { background-position: -320px 0px;  } 
+.logo16.logo-rapidshare { background-position: -336px 0px;  } 
+.logo16.logo-rutube { background-position: -352px 0px;  } 
+.logo16.logo-sockshare { background-position: -368px 0px;  } 
+.logo16.logo-stagevu { background-position: -384px 0px;  } 
+.logo16.logo-streamcloud { background-position: -400px 0px;  } 
+.logo16.logo-turbobit { background-position: -416px 0px;  } 
+.logo16.logo-uploadedto { background-position: -432px 0px;  } 
+.logo16.logo-uploadhero { background-position: -448px 0px;  } 
+.logo16.logo-uptobox { background-position: -464px 0px;  } 
+.logo16.logo-videobb { background-position: -480px 0px;  } 
+.logo16.logo-viditx { background-position: -496px 0px;  } 
+.logo16.logo-vk { background-position: -512px 0px;  } 
+.logo16.logo-youtube { background-position: -528px 0px;  } 
+.logo16.logo-youwatch { background-position: -544px 0px;  } 
 
 .logo150 { background: url('img/logo150.png') no-repeat top left; width: 150px; height: 150px;  } 
-.logo150.amazon { background-position: 0px 0px;  } 
-.logo150.bitshare { background-position: -150px 0px;  } 
-.logo150.dailymotion { background-position: -300px 0px;  } 
-.logo150.depositfiles { background-position: -450px 0px;  } 
-.logo150.filefactory { background-position: -600px 0px;  } 
-.logo150.firedrive { background-position: -750px 0px;  } 
-.logo150.flashx { background-position: -900px 0px;  } 
-.logo150.freakshare { background-position: -1050px 0px;  } 
-.logo150.gigaup { background-position: -1200px 0px;  } 
-.logo150.jheberg { background-position: -1350px 0px;  } 
-.logo150.letitbit { background-position: -1500px 0px;  } 
-.logo150.mediafire { background-position: -1650px 0px;  } 
-.logo150.mega { background-position: -1800px 0px;  } 
-.logo150.mixture { background-position: -1950px 0px;  } 
-.logo150.movreel { background-position: -2100px 0px;  } 
-.logo150.movshare { background-position: -2250px 0px;  } 
-.logo150.multiupload { background-position: -2400px 0px;  } 
-.logo150.netload { background-position: -2550px 0px;  } 
-.logo150.nowvideo { background-position: -2700px 0px;  } 
-.logo150.purevid { background-position: -2850px 0px;  } 
-.logo150.rapidgator { background-position: -3000px 0px;  } 
-.logo150.rapidshare { background-position: -3150px 0px;  } 
-.logo150.rutube { background-position: -3300px 0px;  } 
-.logo150.sockshare { background-position: -3450px 0px;  } 
-.logo150.stagevu { background-position: -3600px 0px;  } 
-.logo150.streamcloud { background-position: -3750px 0px;  } 
-.logo150.turbobit { background-position: -3900px 0px;  } 
-.logo150.uploadedto { background-position: -4050px 0px;  } 
-.logo150.uploadhero { background-position: -4200px 0px;  } 
-.logo150.uptobox { background-position: -4350px 0px;  } 
-.logo150.videobb { background-position: -4500px 0px;  } 
-.logo150.viditx { background-position: -4650px 0px;  } 
-.logo150.vk { background-position: -4800px 0px;  } 
-.logo150.youtube { background-position: -4950px 0px;  } 
-.logo150.youwatch { background-position: -5100px 0px;  } 
+.logo150.logo-amazon { background-position: 0px 0px;  } 
+.logo150.logo-bitshare { background-position: -150px 0px;  } 
+.logo150.logo-dailymotion { background-position: -300px 0px;  } 
+.logo150.logo-depositfiles { background-position: -450px 0px;  } 
+.logo150.logo-filefactory { background-position: -600px 0px;  } 
+.logo150.logo-firedrive { background-position: -750px 0px;  } 
+.logo150.logo-flashx { background-position: -900px 0px;  } 
+.logo150.logo-freakshare { background-position: -1050px 0px;  } 
+.logo150.logo-gigaup { background-position: -1200px 0px;  } 
+.logo150.logo-jheberg { background-position: -1350px 0px;  } 
+.logo150.logo-letitbit { background-position: -1500px 0px;  } 
+.logo150.logo-mediafire { background-position: -1650px 0px;  } 
+.logo150.logo-mega { background-position: -1800px 0px;  } 
+.logo150.logo-mixture { background-position: -1950px 0px;  } 
+.logo150.logo-movreel { background-position: -2100px 0px;  } 
+.logo150.logo-movshare { background-position: -2250px 0px;  } 
+.logo150.logo-multiupload { background-position: -2400px 0px;  } 
+.logo150.logo-netload { background-position: -2550px 0px;  } 
+.logo150.logo-nowvideo { background-position: -2700px 0px;  } 
+.logo150.logo-purevid { background-position: -2850px 0px;  } 
+.logo150.logo-rapidgator { background-position: -3000px 0px;  } 
+.logo150.logo-rapidshare { background-position: -3150px 0px;  } 
+.logo150.logo-rutube { background-position: -3300px 0px;  } 
+.logo150.logo-sockshare { background-position: -3450px 0px;  } 
+.logo150.logo-stagevu { background-position: -3600px 0px;  } 
+.logo150.logo-streamcloud { background-position: -3750px 0px;  } 
+.logo150.logo-turbobit { background-position: -3900px 0px;  } 
+.logo150.logo-uploadedto { background-position: -4050px 0px;  } 
+.logo150.logo-uploadhero { background-position: -4200px 0px;  } 
+.logo150.logo-uptobox { background-position: -4350px 0px;  } 
+.logo150.logo-videobb { background-position: -4500px 0px;  } 
+.logo150.logo-viditx { background-position: -4650px 0px;  } 
+.logo150.logo-vk { background-position: -4800px 0px;  } 
+.logo150.logo-youtube { background-position: -4950px 0px;  } 
+.logo150.logo-youwatch { background-position: -5100px 0px;  } 
