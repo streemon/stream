@@ -31,17 +31,17 @@
 						</div>
 					</form>
 				</li>
-				<li class="dropdown">
+				<li class="dropdown" ng-if="!$storage.user.auth">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<img class="flag flag-{{$storage.language}}" ></img>
 					</a>
-					<ul class="dropdown-menu hidden-xs hidden-sm">
+					<ul class="dropdown-menu hidden-xs">
 						<li ng-repeat="language in languages"><a href="#" ng-click="$storage.language = language.code" ng-show="$storage.language != language.code" translate="FLAG_{{language.code}}"></a></li>
 					</ul>
 				</li>
 				<li class="dropdown" ng-if="$storage.user.auth">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" ng-src="{{$storage.user.avatar}}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
-					<ul class="dropdown-menu hidden-xs hidden-sm">
+					<ul class="dropdown-menu hidden-xs">
 						<li><a href="/settings" translate="MENU_SETTINGS">Settings</a></li>
 						<li><a href="/links" translate="MENU_LINKS">My Links</a></li>
 						<li ng-if="$storage.user.rights >= 2"><a href="/moderate" translate="MENU_MODERATE">Moderate</a></li>

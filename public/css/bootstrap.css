@@ -281,7 +281,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: #fafafa ;
+  background-color: #f8f8f8;
 }
 input,
 button,
@@ -1512,7 +1512,7 @@ th {
 }
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
 }
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
@@ -3133,7 +3133,7 @@ input[type="button"].btn-block {
 .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #0CA7D1;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -3983,7 +3983,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-form {
-    width: 304px;
+    width: 266px;
     border: 0;
     margin-left: 0;
     margin-right: 12px;
@@ -3994,6 +3994,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-form.navbar-right:last-child {
     margin-right: -5px;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-form {
+    width: 304px;
   }
 }
 .navbar-nav > li > .dropdown-menu {
@@ -4349,7 +4355,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .pager .disabled > a:focus,
 .pager .disabled > span {
   color: #999999;
-  #fafafa;
   cursor: not-allowed;
 }
 .label {
@@ -4713,7 +4718,6 @@ a.thumbnail.active {
   display: block;
   padding: 10px 15px;
   margin-bottom: -1px;
-  #fafafa;
   border: 1px solid #dddddd;
 }
 .list-group-item:first-child {
@@ -5935,8 +5939,6 @@ button.close {
 }
 .player-loading {
 	position: absolute;
-	width: 40%;
-	left: 30%;
 	top: 50px;
 	z-index: -1;
 }
@@ -5985,25 +5987,40 @@ button.close {
 	height: 20px;
 	position: relative;
 }
-@media (max-width: 768px) {
-	.frame {
-		height: 49.999999vw;
-	}
-}
 @media (min-width: 769px) and (max-width: 992px) {
-	.frame {
-		height: 345px;
+	.frameMedia, .mediacard {
+		height: 260px;
 	}
  }
 @media (min-width: 993px) and (max-width: 1200px) {
-	.frame {
-		height: 220.5px;
+	.frameMedia, .mediacard {
+		height: 330px;
 	}
  }
 @media (min-width: 1201px) {
-	.frame {
+	.frameMedia, .mediacard {
 		height: 270px;
 	}
+ }
+@media (max-width: 768px) {
+  .frame{ 
+    height: 49.999999vw;
+  }
+}
+@media (min-width: 769px) and (max-width: 992px) {
+  .frame {
+    height: 345px;
+  }
+ }
+@media (min-width: 993px) and (max-width: 1200px) {
+  .frame {
+    height: 220.5px;
+  }
+ }
+@media (min-width: 1201px) {
+  .frame {
+    height: 270px;
+  }
  }
 .list-cover {
 	height: 50%;
@@ -6016,11 +6033,15 @@ button.close {
 .frame {
 	display: block;
 	overflow: hidden;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding: 5px;
 	position: relative;
+}
+.frameMedia {
+  padding: 0;
+}
+.mediacard {
+  background-color: white;
+  overflow: hidden;
 }
 .list-title {
   background-color: rgba(204, 204, 204, 0.9);
@@ -6139,7 +6160,7 @@ button.close {
 	border-radius: 0px;
 }
 .plot {
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color: #555;
 	text-align: justify;
 }
 /* ajout flatui */
@@ -6187,9 +6208,12 @@ fieldset[disabled] .btn {
   top: 2px;
 }
 .btn-default {
-  color: #BDC3C7;
+  color: #888888;
   background-color: #FFF;
   border: 2px solid #F7F7F7;
+}
+.player .btn-default {
+  color: #BDC3C7;
 }
 .btn-default:hover,
 .btn-default:focus,
@@ -7493,7 +7517,14 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .marginbottom5 {margin-bottom: 5px;} .marginbottom10 {margin-bottom: 10px;} .marginbottom20 {margin-bottom: 20px;}
 .margintop5 {margin-top: 5px;} .margintop10 {margin-top: 10px;} .margintop20 {margin-top: 20px;}
 
-.logo24 { background: url('img/logo24.png') no-repeat top left; width: 24px; height: 24px;  } 
+.episodePicker .btn-sm {
+  padding: 6px 8px;
+  margin-right: 1px;
+  margin-bottom: 1px;
+}
+
+/* host sprite */
+.logo24 { background: url('/img/logo24.png') no-repeat top left; width: 24px; height: 24px;  } 
 .logo24.logo-amazon { background-position: 0px 0px;  } 
 .logo24.logo-bitshare { background-position: -24px 0px;  } 
 .logo24.logo-dailymotion { background-position: -48px 0px;  } 
@@ -7530,7 +7561,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo24.logo-youtube { background-position: -792px 0px;  } 
 .logo24.logo-youwatch { background-position: -816px 0px;  }
 
-.logo16 { background: url('img/logo16.png') no-repeat top left; width: 16px; height: 16px;  } 
+.logo16 { background: url('/img/logo16.png') no-repeat top left; width: 16px; height: 16px;  } 
 .logo16.logo-amazon { background-position: 0px 0px;  } 
 .logo16.logo-bitshare { background-position: -16px 0px;  } 
 .logo16.logo-dailymotion { background-position: -32px 0px;  } 
@@ -7567,7 +7598,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo16.logo-youtube { background-position: -528px 0px;  } 
 .logo16.logo-youwatch { background-position: -544px 0px;  } 
 
-.logo150 { background: url('img/logo150.png') no-repeat top left; width: 150px; height: 150px;  } 
+.logo150 { background: url('/img/logo150.png') no-repeat top left; width: 150px; height: 150px;  } 
 .logo150.logo-amazon { background-position: 0px 0px;  } 
 .logo150.logo-bitshare { background-position: -150px 0px;  } 
 .logo150.logo-dailymotion { background-position: -300px 0px;  } 

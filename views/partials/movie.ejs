@@ -1,18 +1,21 @@
-<div class="container">
-	<div class="col-md-2 hidden-xs hidden-sm frame">
-		<img class="poster margin-vertical" src="../img/Movie.jpg"></img>
-	</div>
-	<div class="col-xs-12 col-md-9 margin-top">
-		<h2 ng-bind="movie.title">TITLE</h2>
-		<h4 class="marginbottom5"><small>
-			<span ng-bind="movie.productionYear">2014</span> <b>&middot;</b> 
-			<span ng-bind="movie.runtime">90</span> min <b>&middot;</b> 
-			<span title="Coming soon..." style="cursor:pointer;">Spoilzr</span>
-		</small></h4>
-		<h4><small>By <a href="#">xiamix</a></small></h4>
-		<h4><small>With <a href="#">xiamix</a>, <a href="#">xiamix</a> and <a href="#">xiamix</a></small></h4>
-		<br />
-		<p class="plot" ng-bind="movie.synopsis">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son.</p>
+<div class="container margintop20">
+	<div class="row mediacard">
+		<div class="col-lg-2 col-sm-3 hidden-xs frameMedia">
+			<img class="poster" ng-src="{{movie.posterUrl}}" src="/img/Movie.jpg"></img>
+		</div>
+		<div class="col-xs-12 col-sm-9 col-lg-10 margin-top">
+			<button class="btn btn-primary pull-right">Add to list</button>
+			<h2 ng-bind="movie.langTitle || movie.title">TITLE</h2>
+			<h4 class="marginbottom5"><small>
+				<span ng-bind="movie.productionYear">2014</span> <b>&middot;</b> 
+				<span ng-bind="movie.runtime">90</span> min
+			</small></h4>
+			<h4 ng-show="movie.roles"><small>By <span ng-repeat="role in movie.roles" ng-if="role.roleActivity_id == 3"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="role.name" data-title="{{role.rolename}}" bs-tooltip></a></small></h4>
+			<h4 ng-show="movie.roles"><small>With <span ng-repeat="role in movie.roles|limitTo: 4" ng-if="role.roleActivity_id == 1"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="role.name" data-title="{{role.rolename}}" bs-tooltip></a></small></h4>
+			<p class="plot margintop10">
+				<span ng-bind="movie.synopsis"></span>
+			</p>
+		</div>
 	</div>
 </div>
 
@@ -23,77 +26,6 @@
 </div>
 
 <div id="movieAlertContainer"></div>
-
-<div class="container player">
-	<div class="center-block hidden-xs" style="width:560px;height:315px;" ng-if="currentLink">
-		<div class="player-loading">
-			<div class="alert alert-warning" translate="ALERT_LOADING">
-			  <strong>Loading!</strong> The movie will appear in a few seconds...
-			</div>
-		</div>
-		<iframe id="playerFrame" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
-	</div>
-	<div class="visible-xs col-xs-12 no-padding center-block container-player">
-		<img class="col-xs-12 no-padding" src="../img/18951_screen.jpg"></img>
-		<a href="#"><img class="btn-play" src="../img/Play - Inverse.png"></img></a>
-	</div>
-	<div class="alert alert-warning col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block margintop20 marginbottom20" ng-if="!currentLink" translate="ALERT_NOLINK">
-		<strong>No link!</strong> Please <a href="#" title="Add link" data-toggle="modal" data-target="#formlinkModal">add one</a> or come back later...
-	</div>
-	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path" ng-if="links">
-		<div class="col-xs-2" style="padding-left:0px;">
-			<a href="#" class="player-path-glyphicon glyphicon-info" title="Show all 12 links" ng-click="showAllLinks = !showAllLinks">
-				<i class="fa fa-caret-right fa-sm" ng-hide="showAllLinks"></i> 
-				<i class="fa fa-caret-down fa-sm" ng-show="showAllLinks"></i> 
-				<span translate="LINKS">Links</span>
-			</a>
-		</div>
-		<div class="col-xs-5">
-			<center>
-				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
-				<div class="player-path-hostname" data-placement="bottom" data-container="body" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}}</div>
-			</center>
-		</div>
-		<div class="col-xs-3" style="padding-right:0px;">
-			<div class="pull-right">
-				<a href="" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link" data-toggle="modal" data-target="#reportModal"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
-			</div>
-		</div>
-		<div class="col-xs-2" style="padding-right:0px;">
-			<div class="pull-right">
-				<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> <span translate="ADD">Add</span></a>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
-		<div ng-repeat="link in links" ng-if="showLink(link)">
-			<img class="flag flag-{{link.language}}"></img> <img class="flag flag-{{link.subtitles}}"></img> <a href="" ng-click="changeLink(link)">{{link.url}}</a>
-		</div>
-	</div>
-</div>
-
-<!-- Report modal -->
-<div class="modal" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="report" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Report this link</h4>
-			</div>
-			<form ng-submit="reportLink(reason)">
-				<div class="modal-body">
-					<div id="reportAlertContainer"></div>
-					<div class="form-group">
-						<input type="text" class="form-control" ng-model="reason" placeholder="What's wrong with this link?" />
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-danger">Send report</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 
 <linkform media="movies" media-id="{{movie.ID}}"></linkform>
 

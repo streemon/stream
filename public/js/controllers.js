@@ -178,57 +178,12 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 	}
 }]);
 
-controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$alert', function ($scope, $http, $route, $alert) {
+controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$alert', '$sce', function ($scope, $http, $route, $alert, $sce) {
 	$scope.languages = languagesAllowed;
 	$scope.sub_languages = languagesAllowed.slice();
-	console.log($scope.sub_languages);
-	$scope.formLinks = [];
+	$scope.showAllLinks = false;
 
-	$scope.addLinkRow = function (link) {
-		function linkModel(link) {
-			if (!link) var link = {};
-			this.url = '';
-			this.media = link.media || $route.current.params.media;
-			this.mediaId = link.mediaId || $route.current.params.id;
-			this.language = link.language|| '';
-			this.subtitles = link.subtitles || '';
-			return this;
-		}
-
-		if (link) {
-			console.log(link);
-			var index = $scope.formLinks.indexOf(link);
-			if (index + 1 == $scope.formLinks.length) {
-				var newLink = new linkModel(link);
-				$scope.formLinks.push(newLink);
-			}
-		}
-		else $scope.formLinks.push(new linkModel());
-	}
-
-	$scope.submitLinks = function(links) {
-		$http.post('/api/links', links)
-			.success(function(data) {
-				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#linkAlertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
-				//$scope.links.push(data);
-				$scope.formLinks = [];
-				$scope.addLinkRow();
-			})
-			.error(function (err) {
-				$alert({title: err.msg, placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
-				$scope.err = err;
-			});
-	}
-
-	$scope.$watch('mediaId', function () {
-		if ($scope.mediaId) $scope.addLinkRow({media: $scope.media, mediaId: $scope.mediaId});
-	});
-}]);
-
-controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', '$sce', '$localStorage', function ($scope, $route, $http, $alert, $sce, $localStorage) {
-	$scope.$storage = $localStorage;
-	$scope.$route = $route;
-
+	$scope.toggleLinks = function() { $scope.showAllLinks = !$scope.showAllLinks; }
 
 	$scope.trustSrc = function(src) {
 		return $sce.trustAsResourceUrl(src);
@@ -250,6 +205,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 	}
 	$scope.showLink = function (link) {
 		if (link != $scope.currentLink) {
+			return true; //tmp
 			//check if user has
 			if ($scope.$storage.user && $scope.$storage.user.settings && $scope.$storage.user.settings.subtitles && link.language) {
 				//three combos authorized (original language/ original language + allowed subs / user main language)
@@ -267,21 +223,69 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 		else return false;
 	}
 
-	$http.get('/api/movies/' + $route.current.params.id)
+	$scope.addLinkRow = function (link) {
+		function linkModel(link) {
+			if (!link) var link = {};
+			this.url = '';
+			this.media = link.media || $route.current.params.media;
+			this.mediaId = link.mediaId || $route.current.params.id;
+			this.language = link.language|| '';
+			this.subtitles = link.subtitles || '';
+			return this;
+		}
+
+		if (link) {
+			var index = $scope.formLinks.indexOf(link);
+			if (index + 1 == $scope.formLinks.length) {
+				var newLink = new linkModel(link);
+				$scope.formLinks.push(newLink);
+			}
+		}
+		else $scope.formLinks.push(new linkModel());
+	}
+
+	$scope.submitLinks = function(links) {
+		$http.post('/api/links', links)
+			.success(function(data) {
+				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#linkAlertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
+				$scope.links.push(data);
+				$scope.formLinks = [];
+				$scope.addLinkRow();
+			})
+			.error(function (err) {
+				$alert({title: err.msg, placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
+				$scope.err = err;
+			});
+	}
+
+	$scope.$watch('mediaId', function () {
+		if ($scope.mediaId) {
+			$scope.formLinks = [];
+			$scope.addLinkRow({media: $scope.media, mediaId: $scope.mediaId});
+
+			$http.get('/api/' + $scope.media + '/' + $scope.mediaId + '/links')
+				.success(function (data) {
+					$scope.links = data;
+					$scope.currentLink = $scope.links[0];
+				})
+				.error(function (err) {
+					$scope.err = err;
+				});
+		}
+	});
+
+}]);
+
+controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert', '$localStorage', function ($scope, $route, $http, $alert, $localStorage) {
+	$scope.$storage = $localStorage;
+	$scope.$route = $route;
+
+	$http.get('/api/movies/' + $route.current.params.id + '?roles=1')
 		.success(function(data) {
 			$scope.movie = $scope.media = data;
 			$route.current.title = $scope.movie.title;
 		})
 		.error(function(err) {
-			$scope.err = err;
-		});
-
-	$http.get('/api/movies/' + $route.current.params.id + '/links')
-		.success(function (data) {
-			$scope.links = data;
-			$scope.currentLink = $scope.links[0];
-		})
-		.error(function (err) {
 			$scope.err = err;
 		});
 }]);
@@ -323,36 +327,18 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 		}
 	}
 
-	$scope.submitLinks = function(links) {
-		$http.post('/api/links', links)
-			.success(function(data) {
-				$scope.form = {msg: data.length + " links have been added"};
-				$scope.links.push(data);
-			})
-			.error(function (err) {
-				$scope.err = err;
-			});
-	}
-
 	$scope.$watch('currentEpisode', function() {
 		if ($scope.currentEpisode.ID) {
-			
-			$scope.newLink = {media: 'episodes', mediaId: $scope.currentEpisode.ID};
 
 			//change url path
 			$location.path('/shows/' + $route.current.params.id + '/season/' + $scope.currentEpisode.season_nb + '/episode/' + $scope.currentEpisode.episode_nb);
 
 			//change title
 			$route.current.title = $scope.show.title + " S" + $scope.currentEpisode.season_nb + "E" + $scope.currentEpisode.episode_nb;
-
-			$http.get('/api/episodes/' + $scope.currentEpisode.ID + '/links')
-				.success(function (data) {
-					$scope.links = data;
-				})
 		}
 	});
 
-	$http.get('/api/shows/' + $route.current.params.id + '?episodes=1')
+	$http.get('/api/shows/' + $route.current.params.id + '?episodes=1&roles=1')
 		.success(function (data) {
 			$scope.show = $scope.media = data;
 
@@ -372,13 +358,6 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 			$scope.err = err;
 		});
 
-	$http.get('/api/episodes/' + $route.current.params.id + '/links')
-		.success(function (data) {
-			$scope.links = data;
-		})
-		.error(function (err) {
-			$scope.err = err;
-		});
 }]);
 
 controllers.controller('ProfileController', ['$scope', '$http', '$route', function ($scope, $http, $route) {
@@ -408,7 +387,6 @@ controllers.controller('SettingsController', ['$scope', '$http', '$localStorage'
 		$http.put('/api/account', $scope.form)
 			.success(function (data) {
 				$scope.$storage.language = $localStorage.user.settings.language;
-				console.log($scope.$storage);
 
 				$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
 			})

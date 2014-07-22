@@ -77,11 +77,15 @@ exports.login = function (req, res, next) {
 
 exports.search = function (req, res, next) {
 	var spoilzrClient = new spoilzr();
-
+	var url = 'search/' + req.params.media + '/' + req.params.q;
 	var form = {};
+	
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+	if (req.session && req.session.user && req.session.user.settings.language) req.query.lang = req.session.user.settings.language;
 
-	spoilzrClient.get('search/' + req.params.media + '/' + req.params.q, form, function (err, data, response) {
+	if (req.query) url += '?' + querystring.stringify(req.query);
+
+	spoilzrClient.get(url, form, function (err, data, response) {
 		if (err) next(err)
 
 		req.log = {action: 'search', media: req.params.media, query: req.params.q};
@@ -101,7 +105,11 @@ exports.returnMediaById = function (req, next) {
 	var form = {};
 	
 	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
+	if (req.session && req.session.user && req.session.user.settings.language) req.query.lang = req.session.user.settings.language;
+
 	if (req.query) url += '?' + querystring.stringify(req.query);
+
+	console.log(url);
 
 	spoilzrClient.get(url, form, function (err, data, response) {
 		if (err) next(err);

@@ -1,122 +1,48 @@
-<div class="container">
-	<div class="col-md-2 hidden-xs hidden-sm frame">
-		<img class="poster margin-vertical" src="/img/Show.jpg"></img>
-	</div>
-	<div class="col-xs-12 col-md-9 margin-top">
-		<h2>Man Of Steel<button class="btn btn-primary pull-right">S&eacute;lectioner</button></h2>
-		<h4 class="marginbottom5"><small>2014 <b>&middot;</b> 180 min <b>&middot;</b> <span title="Prochainement..." style="cursor:pointer;">Spoilzr</span></small></h4>
-		<h4><small>By <a href="#">xiamix</a></small></h4>
-		<h4><small>With <a href="#">xiamix</a>, <a href="#">xiamix</a> and <a href="#">xiamix</a></small></h4>
-		<p class="plot margintop10">The planet Krypton faces imminent destruction due to its unstable core, the result of depleting Krypton's natural resources. The ruling council is deposed by the planet's military commander General Zod and his followers during a coup d'état. Knowing that the use of artificial population control has ruined their civilization, scientist Jor-El and his wife Lara launch their newborn son Kal-El, the first naturally born Kryptonian child in centuries, on a spacecraft to Earth after infusing his cells with a genetic codex of the entire Kryptonian race. After Zod murders Jor-El, he and his followers are captured and exiled to the Phantom Zone. However, they are indirectly freed after Krypton explodes.</p>
-		<div class="col-xs-12 col-sm-6 select">
-			<div>Saison</div>
-			<select>
-				<option class="viewed">01</option>
-				<option class="viewed">02</option>
-				<option class="viewed">03</option>
-				<option class="viewed">04</option>
-				<option class="viewed" selected>05</option>
-				<option>06</option>
-				<option>07</option>
-				<option disabled>08</option>
-			</select>
-			<div>Épisode</div>
-			<select>
-				<option class="viewed">01</option>
-				<option class="viewed">02</option>
-				<option class="viewed">03</option>
-				<option class="viewed">04</option>
-				<option selected>05</option>
-				<option>06</option>
-				<option>07</option>
-				<option disabled>08</option>
-			</select>
+<div class="container margintop20">
+	<div class="row mediacard">
+		<div class="col-lg-2 col-sm-3 hidden-xs frameMedia">
+			<img class="poster" ng-src="{{show.posterUrl}}" src="/img/Movie.jpg"></img>
+		</div>
+		<div class="col-xs-12 col-sm-9 col-lg-10 margin-top">
+			<button class="btn btn-primary pull-right">Follow</button>
+			<h2 ng-bind="show.langTitle || show.title">TITLE</h2>
+			<h4 class="marginbottom5"><small>
+				<span ng-bind="show.yearEnd || show.yearStart">2014</span> <b>&middot;</b> 
+				<span ng-bind="show.runtime">90</span> min
+			</small></h4>
+			<h4 ng-show="show.roles"><small>By <span ng-repeat="role in show.roles" ng-if="role.roleActivity_id == 2"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="role.name" data-title="{{role.rolename}}" bs-tooltip></a></small></h4>
+			<h4 ng-show="show.roles"><small>With <span ng-repeat="role in show.roles|limitTo: 4" ng-if="role.roleActivity_id == 1"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="role.name" data-title="{{role.rolename}}" bs-tooltip></a></small></h4>
+			<p class="plot margintop10">
+				<span ng-bind="show.synopsis"></span>
+			</p>
 		</div>
 	</div>
-</div>
 
-<div class="container">
 	<div class="col-xs-12 col-sm-10 center-block">
 		<hr />
 	</div>
 </div>
 
+<div class="container">
+	<div class="col-xs-12 col-sm-10 col-sm-offset-1 episodePicker">
+		<button class="btn btn-primary btn-sm" style="width:80px;">Seasons</button>
+		<button class="btn btn-default btn-sm" ng-init="season.nb = show.seasons.indexOf(season)" ng-click="changeSeason(season.nb)" ng-repeat="season in show.seasons" ng-if="season" ng-class="{active: season.nb == currentEpisode.season_nb}">{{season.nb}}</button>
+		<br/>
+		<button class="btn btn-primary btn-sm" style="width:80px;">Episodes</button>
+		<span ng-repeat="season in show.seasons" ng-if="show.seasons.indexOf(season) == currentEpisode.season_nb">
+			<button class="btn btn-default btn-sm" ng-if="episode" ng-click="changeEpisode(episode)" ng-repeat="episode in season" ng-class="{active: episode.episode_nb == currentEpisode.episode_nb}">{{episode.episode_nb}}</button>
+		</span>
+	</div>
+</div>
 <div id="showAlertContainer"></div>
 
-<div class="container player">
-	<div class="center-block embed-responsive embed-responsive-16by9">
-		<div class="player-loading">
-			<div class="alert alert-warning" ng-if="currentLink" translate="ALERT_LOADING">
-			  <strong>Loading!</strong> The movie will appear in a few seconds...
-			</div>
-			<div class="alert alert-warning" ng-if="!currentLink" translate="ALERT_NOLINK">
-			  <strong>No link!</strong> Please add one or come back later...
-			</div>
-		</div>
-		<iframe id="embed-responsive-item" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
-	</div>
-	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path">
-		<div class="col-xs-3" style="padding-left:0px;">
-			<a href="#" class="player-path-glyphicon glyphicon-info" title="Add link" data-toggle="modal" data-target="#formlinkModal">
-				<i class="fa fa-plus fa-sm"></i> <span translate="ADD">Add</span>
-			</a>
-		</div>
-		<div class="col-xs-6" ng-if="!currentLink">
-			<center>
-				<img src="/img/Purevid.png" class="img-rounded img-xsmall hidden-xs"></img>
-				<div class="player-path-hostname" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}}</div>
-			</center>
-		</div>
-		<div class="col-xs-3" style="padding-right:0px;" ng-if="!currentLink">
-			<div class="pull-right">
-				<a href="#report" class="player-path-glyphicon glyphicon-error" data-toggle="modal" data-target="#reportModal" title="Notify a problem with this link"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
-		<div ng-repeat="link in links" ng-if="showLink(link)">
-			<img class="flag flag-{{link.language}}"></img> <img class="flag flag-{{link.subtitles}}"></img> <a href="" ng-click="changeLink(link)">{{link.url}}</a>
-		</div>
-	</div>
-</div>
-<br />
 <div class="container">
-<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block pre-scrollable">
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<td><b>#</b></td>
-				<td><b>H&eacute;bergeur</b></td>
-				<td><b>Qualit&eacute;</b></td>
-				<td><b>Langue</b></td>
-				<td><b>Sous-titrage</b></td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>1</td>
-				<td>Purevid</td>
-				<td>HD</td>
-				<td>flag-en</td>
-				<td>flag-fr</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>Purevid</td>
-				<td>HD</td>
-				<td>flag-en</td>
-				<td>flag-fr</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>Purevid</td>
-				<td>HD</td>
-				<td>flag-en</td>
-				<td>flag-fr</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="col-xs-12 col-sm-10 center-block">
+		<hr />
+	</div>
 </div>
+
+<linkform media="episodes" media-id="{{currentEpisode.ID}}" next-episode="nextEpisode" prev-episode="prevEpisode"></linkform>
 
 <div class="container">
 	<div class="col-xs-12 col-sm-10 center-block">
@@ -124,25 +50,4 @@
 	</div>
 </div>
 
-<!-- Report modal -->
-<div class="modal" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="report" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Signaller ce lien</h4>
-			</div>
-			<form ng-submit="reportLink()">
-				<div class="modal-body">
-					<textarea type="text" style="width:100%;height:100px;resize:none;" placeholder=" Quel est le problème avec ce lien?" maxlength="500"></textarea>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-danger">Signaller</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<linkform media="episodes" media-id="{{currentEpisode.ID}}"></linkform>
 <comments></comments>

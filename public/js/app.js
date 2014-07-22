@@ -28,7 +28,7 @@ var translation_en = {
 	LOGOUT: 'Log Out',
 	SIGNUP: 'Sign Up',
 	ALERT_NOLINK: '<strong>No link!</strong> Please <a href="#" title="Add link" data-toggle="modal" data-target="#formlinkModal">add one</a> or come back later...',
-	ALERT_LOADING: '<strong>Loading!</strong> The movie will appear in a few seconds...',
+	ALERT_LOADING: '<strong>Loading!</strong> The video will appear in a few seconds...',
 	ALERT_LOGINTOCOMMENT: '<strong>Log In</strong> to send a comment !',
 	FORM_USERNAME: 'Username',
 	FORM_PASSWORD: 'Password',

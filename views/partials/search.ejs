@@ -1,7 +1,7 @@
 <div class="container">
 	<p class="page-header-link">
 		<h3 class="page-header" translate="SEARCH_RESULTSCOUNT" translate-values="{count: search.count, query: search.query, media: $route.current.media}"></h3>
-		<a href="/movies/1" ng-href="/{{$route.current.media}}/{{result.ID}}" class="col-xs-4 col-sm-4 col-md-2 frame" ng-repeat="result in search.results" data-title="{{result.title}}" data-content="There goes the synopsis huhu"data-trigger="hover" data-placement="bottom" delay="delay"  bs-popover>
+		<a href="/movies/1" ng-href="/{{$route.current.media}}/{{result.ID}}" class="col-xs-4 col-sm-4 col-md-2 frame" ng-repeat="result in search.results" data-title="{{result.langTitle || result.title}}" data-content="{{result.synopsis}}" data-trigger="hover" data-placement="bottom" delay="300"  bs-popover>
 			<img class="poster" ng-src="{{result.posterUrl}}"></img>
 		</a>
 	</p>

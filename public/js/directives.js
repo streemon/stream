@@ -12,7 +12,9 @@ directives.directive('linkform', function () {
         restrict: 'E',
         scope: {
         	media: '@',
-        	mediaId: '@'
+        	mediaId: '@',
+            prevEpisode: '=',
+            nextEpisode: '='
         },
         controller: 'LinkFormController',
         templateUrl: '/partials/linkform'

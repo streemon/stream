@@ -4,12 +4,13 @@ var LIMIT = 50;
 var SKIP = 0;
 
 function passIframe (links, next) {
-	var hostsPatterns = {'purevid.com': /^(http:\/\/)(www\.)?purevid\.com\/v\/(\w+)\/?/, 'exashare.com': /^(http:\/\/)(www\.)?exashare\.com\/(\w+)/ };
-	var hostsReplace = {'purevid.com': "http://www.purevid.com/?m=embed&id=$3", 'exashare.com': "http://www.exashare.com/embed-$3-560x315.html"};
+	var hostsPatterns = {'purevid.com': /^(http:\/\/)(www\.)?purevid\.com\/v\/(\w+)\/?/, 'exashare.com': /^(http:\/\/)(www\.)?exashare\.com\/(\w+)/, 'vodlocker.com': /^(http:\/\/)(www\.)?vodlocker\.com\/(\w+)/, 'played.to': /^(http:\/\/)(www\.)?played\.to\/(\w+)/};
+	var hostsReplace = {'purevid.com': "http://www.purevid.com/?m=embed&id=$3", 'exashare.com': "http://www.exashare.com/embed-$3-560x315.html", 'vodlocker.com': "http://www.vodlocker.com/embed-$3-560x315.html", 'played.to': "http://www.played.to/embed-$3-560x315.html"};
 
 	async.each(links, function (link, callback) {
 		var linkHost = link.url.match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
 		link.host = linkHost[1];
+		link.hostname = linkHost[1].replace(/^(\w+)\.(.+)/, "$1");
 		link.iframe = link.url.replace(hostsPatterns[link.host], hostsReplace[link.host]);
 
 		return callback();

@@ -30,6 +30,7 @@ exports.updateSettings = function(req, res, next) {
 
 	if (req.session.user && req.session.auth) {
 		req.db.User.update({_id: req.session.user._id}, {$set: {settings: settings}}, function (err, numberAffected) {
+			req.session.user.settings = settings;
 			res.json(200, {msg: 'Settings updated !', affected: numberAffected})
 		})
 	}
