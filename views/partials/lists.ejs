@@ -1,9 +1,10 @@
-<div class="container" ng-repeat="list in lists">
-	<a ng-href="/lists/{{list.id}}/{{list.media}}" class="page-header-link">
-		<h3 class="page-header" translate="{{list.title}}" translate-values="{media: list.media}">
-			{{list.title}}
-		</h3>
-	</a>
-	<a ng-href="/{{list.media}}/{{media.ID}}" ng-repeat="media in list.medias" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="http://www.shostream.com/images/thumbs/films/big/default_big.png" ng-src="{{media.posterUrl}}"></img></a>
+<div class="container" infinite-scroll="addMoreLists()" infinite-scroll-distance="0">
+	<div class="row" ng-repeat="list in lists">
+		<a ng-href="/lists/{{list.ID || list.id}}/{{list.media}}" class="page-header-link">
+			<h3 class="page-header" translate="{{list.title}}" translate-values="{media: list.media}">
+				{{list.title}}
+			</h3>
+		</a>
+		<a ng-href="/{{media.type || list.media}}/{{media.ID}}" ng-repeat="media in list.medias" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" src="http://www.shostream.com/images/thumbs/films/big/default_big.png" ng-src="{{media.posterUrl}}"></img></a>
+	</div>
 </div>
-<pre>{{lists}}</pre>

@@ -109,8 +109,6 @@ exports.returnMediaById = function (req, next) {
 
 	if (req.query) url += '?' + querystring.stringify(req.query);
 
-	console.log(url);
-
 	spoilzrClient.get(url, form, function (err, data, response) {
 		if (err) next(err);
 

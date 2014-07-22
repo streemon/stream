@@ -28,6 +28,17 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 controllers.controller('IndexController', ['$scope', '$route', '$http', function($scope, $route, $http) {
 	var url = '/api/lists/';
 	if ($route.current.media) url += $route.current.media;
+	$scope.calledAddMore = false;
+
+	$scope.addMoreLists = function () {
+		if ($scope.lists && !$scope.calledAddMore) {
+			$scope.calledAddMore = true;
+			$http.get('/api/lists/random').success(function (data) {
+				$scope.lists = $scope.lists.concat(data);
+				$scope.calledAddMore = false;
+			})
+		}
+	}
 
 	$http.get(url).success(function(data) {
 		$scope.lists = data;

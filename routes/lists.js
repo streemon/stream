@@ -7,7 +7,7 @@ var _ = require("underscore");
 
 var defaultLists = [{id: "mostWatched", position: 10, args: {media: "movies", count: 12, ago: "week"}}, {id: "mostWatched", position: 20, args: {media: "shows", count: 6, ago: "day"}}, {id: "newReleases", postion: 30, args: {media: "movies", count: 6}}];
 var userLists = [{id: "watchedRecently", position: 0, args: {media: "shows", count: 6}}]
-var spoilzrLists = [{id: 1, position: 40}]; //[{id: "suggested"},{id: "toWatch"}];
+var spoilzrLists = [{id: 3, position: 40}]; //[{id: "suggested"},{id: "toWatch"}];
 
 exports.getListById = function (req, res, next) {
 	if (_.findWhere(defaultLists, {id: req.params.id}) && req.params.media) {
