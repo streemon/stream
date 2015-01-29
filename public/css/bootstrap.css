@@ -7576,6 +7576,8 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo24.logo-vk { background-position: -768px 0px;  } 
 .logo24.logo-youtube { background-position: -792px 0px;  } 
 .logo24.logo-youwatch { background-position: -816px 0px;  }
+.logo24.logo-vidbull { background-position: -830px 0px;  } 
+.logo24.logo-thefile { background-position: -854px 0px;  } 
 
 .logo16 { background: url('/img/logo16.png') no-repeat top left; width: 16px; height: 16px;  background-position: -288px 0px; } 
 .logo16.logo-amazon { background-position: 0px 0px;  } 
@@ -7613,6 +7615,8 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo16.logo-vk { background-position: -512px 0px;  } 
 .logo16.logo-youtube { background-position: -528px 0px;  } 
 .logo16.logo-youwatch { background-position: -544px 0px;  } 
+.logo16.logo-vidbull { background-position: -560px 0px;  } 
+.logo16.logo-thefile { background-position: -576px 0px;  } 
 
 .logo150 { background: url('/img/logo150.png') no-repeat top left; width: 150px; height: 150px;  } 
 .logo150.logo-amazon { background-position: 0px 0px;  } 
@@ -7650,3 +7654,5 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo150.logo-vk { background-position: -4800px 0px;  } 
 .logo150.logo-youtube { background-position: -4950px 0px;  } 
 .logo150.logo-youwatch { background-position: -5100px 0px;  } 
+.logo150.logo-vidbull { background-position: -5250px 0px;  } 
+.logo150.logo-thefile { background-position: -5400px 0px;  } 
