@@ -17,7 +17,7 @@ connection.once('open', function () {
 	console.info('connected to database')
 
 	
-	var stream = linksSolar.aggregate().match({tmdbId: 0}).group({_id: "$imdbId"}).skip(8000).limit(200).exec(function (err, docs) {
+	var stream = linksSolar.aggregate().match({tmdbId: 0}).group({_id: "$imdbId"}).skip(3500).limit(300).exec(function (err, docs) {
 		if (err) console.log(err);
 	  //this.pause();
 	  //var that = this;
