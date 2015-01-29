@@ -14,3 +14,21 @@
 		</form>
 	</div>
 </div>
+<div class="container login">
+	<div class="col-xs-12 col-md-5 center-block">
+		<form ng-submit="signup()">
+			<div class="form-group">
+				<input type="text" class="form-control" id="email" placeholder="{{'FORM_EMAIL' | translate}}" name="email" ng-model="email">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="username2" placeholder="{{'FORM_USERNAME' | translate}}" name="username2" ng-model="username2">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="password2" placeholder="{{'FORM_PASSWORD' | translate}}" name="password2" ng-model="password2">
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-sm btn-info" translate="SIGNUP">Sign Up</button>
+			</div>
+		</form>
+	</div>
+</div>

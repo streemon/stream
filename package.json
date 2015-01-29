@@ -16,6 +16,10 @@
     "async": "^0.9.0",
     "socket.io": "~1.0.6",
     "moment": "~2.7.0",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "moviedb": "~0.1.9",
+    "crypto": "0.0.3",
+    "grunt-cli": "~0.1.13",
+    "angular-gravatar": "~0.2.4"
   }
 }

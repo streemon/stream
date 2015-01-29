@@ -39,22 +39,26 @@
 			</div>
 			<div class="col-xs-3" style="padding-right:0px;">
 				<div class="pull-right">
-					<a href="#" class="player-path-glyphicon glyphicon-error" title="Notify a problem with this link" data-toggle="modal" data-target="#reportModal"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
+					<a href="#" class="player-path-glyphicon glyphicon-error" ng-if="!($storage.user && ($storage.user._id == currentLink._uploaderId || $storage.user.rights >= 2))" title="Notify us of a problem with this link" data-toggle="modal" data-target="#reportModal"><i class="fa fa-flag fa-sm"></i> <span translate="REPORT">Report</span></a>
+					<a href="#" class="player-path-glyphicon glyphicon-error" ng-if="$storage.user && ($storage.user._id == currentLink._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(currentLink, true)"><i class="fa fa-times fa-sm"></i> <span translate="DELETE">Delete</span></a>
 				</div>
 			</div>
 			<div class="col-xs-2" style="padding-right:0px;">
 				<div class="pull-right">
-					<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus fa-sm"></i> <span translate="ADD">Add</span></a>
+					<a href="#" class="player-path-glyphicon glyphicon-error" title="Add link" data-toggle="modal" data-target="#formlinkModal"><i class="fa fa-plus"></i> <span translate="ADD">Add</span></a>
 				</div>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
 			<table class="table table-striped">
 				<tr ng-repeat="link in links" ng-if="showLink(link)">
-					<td><img class="logo16 logo-{{link.hostname}}"/></td>
+					<td>
+						<img class="logo16 logo-{{link.hostname}}"/>
+						<a href="" ng-if="$storage.user && ($storage.user._id == link._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(link)" data-trigger="hover" data-title="Delete Link" data-placement="right" bs-tooltip><i class="fa fa-times"></i></a>
+					</td>
 					<td><a href="" ng-click="changeLink(link)">{{link.url}}</a></td>
-					<td><img class="flag flag-{{link.language}}"></img></td>
-					<td><img class="flag flag-{{link.subtitles}}"></img></td>
+					<td><img class="flag flag-{{link.language}}" alt="NA"></img></td>
+					<td><img class="flag flag-{{link.subtitles}}" alt="NA"></img></td>
 				</tr>
 			</table>
 		</div>
@@ -83,7 +87,7 @@
 		</div>
 	</div>
 </div>
-
+{{formLinks}}
 <!-- linkform modal -->
 <div class="modal" id="formlinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

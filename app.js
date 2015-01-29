@@ -72,11 +72,8 @@ app.get('/partials/:name', routes.partials);
 //Serve API
 //MAIN
 app.post('/api/login', db, routes.main.login);
+app.post('/api/signup', db, routes.main.signup);
 app.get('/api/logout', db, routes.main.logout);
-app.get('/api/search/:media(movies|shows)/:q', db, routes.main.search);
-app.get('/api/:media(movies)/:id', db, routes.main.getMovieById);
-app.get('/api/:media(shows)/!:hashtag', db, routes.main.getShowByHashtag);
-app.get('/api/:media(shows)/:id', db, routes.main.getShowById);
 app.get('/api/lists/:media(movies|shows)?', db, routes.lists.getLists);
 app.get('/api/lists/:id/:media(movies|shows)?', db, routes.lists.getListById);
 

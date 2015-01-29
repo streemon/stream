@@ -4,7 +4,7 @@ var LIMIT = 10;
 var SKIP = 0;
 
 function getUser (req, id, next) {
-	req.db.User.findById(id, '_id username avatar spoilzrId', function (err, obj) {
+	req.db.User.findById(id, '_id username avatar', function (err, obj) {
 		next(err, obj);
 	})
 }
@@ -24,7 +24,7 @@ exports.getComments = function(req, res, next) {
 			var coms = [];
 
 			async.each(comments, function (comment, callback) {
-				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId rights', function (err, author) {
+				req.db.User.findById(comment._authorId, '_id username avatar rights', function (err, author) {
 					if (err) callback(err);
 
 					var com = {comment: comment, author: author};
@@ -54,7 +54,7 @@ exports.getAllComments = function(req, res, next) {
 			var coms = [];
 
 			async.each(comments, function (comment, callback) {
-				req.db.User.findById(comment._authorId, '_id username avatar spoilzrId rights', function (err, author) {
+				req.db.User.findById(comment._authorId, '_id username avatar rights', function (err, author) {
 					if (err) callback(err);
 
 					var com = {comment: comment, author: author};

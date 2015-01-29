@@ -2,12 +2,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema ({
-	spoilzrId: {type: Number, required: true},
-	username: {type: String, required: true},
+	username: {type: String, index: { unique: true }, required: true},
+	email: {type: String, unique: true, required: true, validate: /[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,30}/},
+	password: {type: String, required: true},
 	avatar: String,
 	token: String,
 	settings: {
-		language: {type: String, default: 'en', enum: ['en', 'fr', 'de', 'nl'], required: true},
+		language: {type: String, default: 'en', enum: ['en', 'fr', 'de', 'nl', 'es'], required: true},
 		subtitles: [String]
 	},
 	subscriptions: [

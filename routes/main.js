@@ -1,6 +1,24 @@
-var spoilzr = require('spoilzr');
 var async = require('async');
 var querystring = require('querystring');
+var crypto = require('crypto');
+
+function hashPassword (password) {
+	if (password) {
+		//first md5
+		password = crypto.createHash("md5").update(password).digest("hex");
+		//then sha1
+		password = crypto.createHash("sha1").update("è!" + password, "utf8").digest("hex");
+		return password;
+	}
+	else return false;
+}
+
+function generateToken (next) {
+	crypto.randomBytes(48, function(ex, buf) {
+	  var token = buf.toString('hex');
+	  next(token);
+	});
+}
 
 exports.hasRights = function (rights) {
     return function(req, res, next) {
@@ -24,49 +42,33 @@ exports.addLog = function (req, next) {
 	});
 }
 
+function authorizeUser (req, res, user) {
+	exports.addLog(req, function (err) {
+		if (err) console.log(err);
+
+		req.session.auth = true;
+		req.session.user = user;
+		req.session.userPublic = {auth: req.session.auth, _id: user._id, username: user.username, avatar: user.avatar, settings: user.settings, rights: user.rights, lastActivity: user.lastActivity};
+
+		return res.json(200, {msg: "Authorized", user: req.session.userPublic});
+	})
+}
+
 exports.login = function (req, res, next) {
-	function authorizeUser (user) {
-		exports.addLog(req, function (err) {
-			if (err) next(err);
-
-			req.session.auth = true;
-			req.session.user = user;
-			req.session.userPublic = {auth: req.session.auth, _id: user._id, username: user.username, avatar: user.avatar, settings: user.settings, rights: user.rights, lastActivity: user.lastActivity};
-
-			return res.json(200, {msg: "Authorized", user: req.session.userPublic});
-		})
-	}
 
 	if (req.body.username) {
-		var spoilzrClient = new spoilzr();
-
 		if (req.body.password) {
-			spoilzrClient.post('login', {form: {username: req.body.username, password: req.body.password}}, function (err, data, response) {
-				if (err) return res.json(400, {msg: "Spoilzr error"});
+			req.db.User.findOneAndUpdate({username: req.body.username, password: hashPassword(req.body.password)}, {lastActivity: new Date()}, function (err, doc) {
+				if (err) next(err);
 
-				var userData = response.user;
-
-				req.db.User.findOneAndUpdate({spoilzrId: userData.spoilzrId}, {token: userData.token, avatar: userData.avatar, lastActivity: new Date(), subscriptions: userData.subscriptions}, function (err, doc) {
-					if (err) next(err);
-
-					if (doc) {
-						req.log = {action: 'login',  mediaId: doc.spoilzrId, media: 'user'};
-						authorizeUser(doc);
-					}
-					else { //if no account exists we create one
-						userData.settings = {};
-						userData.settings.language = req.headers["accept-language"].substring(0,2);
-						
-						req.db.User.create(userData, function(err, doc) {
-							if (err) next(err);
-
-							req.log = {action: 'signup', mediaId: doc.spoilzrId, media: 'user'};
-							authorizeUser(doc);
-						});
-					}
-				})
-				
-			});
+				if (doc) {
+					req.log = {action: 'login',  mediaId: doc._id, media: 'user'};
+					authorizeUser(req, res, doc);
+				}
+				else { 
+					return res.json(400, {msg: "Wrong credentials"});
+				}
+			})
 		}
 		else {
 			return res.json(400, {msg: "Password not provided"});
@@ -75,77 +77,30 @@ exports.login = function (req, res, next) {
 	else return res.json(400, {msg: "Username not provided"});
 };
 
-exports.search = function (req, res, next) {
-	var spoilzrClient = new spoilzr();
-	var url = 'search/' + req.params.media + '/' + req.params.q;
-	var form = {};
-	
-	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-	if (req.session && req.session.user && req.session.user.settings.language) req.query.lang = req.session.user.settings.language;
-
-	if (req.query) url += '?' + querystring.stringify(req.query);
-
-	spoilzrClient.get(url, form, function (err, data, response) {
-		if (err) next(err)
-
-		req.log = {action: 'search', media: req.params.media, query: req.params.q};
-
-		exports.addLog(req, function (err) {
-			if (err) next(err);
-
-			res.json(200, response);
-		});
-	})
-}
-
-exports.returnMediaById = function (req, next) {
-	var spoilzrClient = new spoilzr();
-	var mediaType = req.params.media || "movies";
-	var url = mediaType + '/' + req.params.id;
-	var form = {};
-	
-	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-	if (req.session && req.session.user && req.session.user.settings.language) req.query.lang = req.session.user.settings.language;
-
-	if (req.query) url += '?' + querystring.stringify(req.query);
-
-	spoilzrClient.get(url, form, function (err, data, response) {
-		if (err) next(err);
-
-		if (response && response.ID) {
-			req.log = {action: "view", media: mediaType, mediaId: response.ID};
-			exports.addLog(req, function (err) {
-				if (err) next(err);
-
-				next(err, response);
+exports.signup = function(req, res, next) {
+	if (req.body.username && req.body.email) {
+		if (req.body.password) {
+			var userData = {username: req.body.username, email: req.body.email, password: hashPassword(req.body.password), settings: {language: req.headers["accept-language"].substring(0,2)}};
+						
+			req.db.User.create(userData, function(err, doc) {
+				if (err) {
+					if (err.name == "ValidationError") res.json(400, {msg: "Wrong email"});
+					else if (err.code == 11000) res.json(400, {msg: "Email or username already in use"});
+					else res.json(400, err)
+				}
+				else if (doc) {
+					req.log = {action: 'signup', mediaId: doc._id, media: 'user'};
+					authorizeUser(req, res, doc);
+				}
 			});
 		}
-		else next(err, response);
-	})
-}
-
-exports.getShowById = exports.getMovieById = function (req, res, next) {
-	exports.returnMediaById(req, function (err, media) {
-		if (err) next(err)
-
-		return res.json(200, media);
-	});
-}
-
-
-exports.getShowByHashtag = function (req, res, next) {
-	var spoilzrClient = new spoilzr();
-
-	var form = {};
-	if (req.session.auth && req.session.user && req.session.token) form.token = req.session.token;
-
-	spoilzrClient.get('shows/!' + req.params.hashtag, form, function (err, data, response) {
-		if (err) next(err);
-
-		var media = response;
-		res.json(200, media);
-	})
-}
+		else {
+			return res.json(400, {msg: "Password not provided"});
+		}
+	}
+	else return res.json(400, {msg: "Username/email not provided"});
+					
+};
 
 exports.logout = function(req, res) {
 	if (req.session && req.session.user) {

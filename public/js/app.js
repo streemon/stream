@@ -4,6 +4,7 @@ var languagesAllowed = [{code: 'en', name: '<img class="flag flag-us"></img> Eng
 var translation_en = {
 	COMMENT_PLACEHOLDER: 'Comment..',
 	COMMENT_POSTEDON: 'Posted on',
+	MENU_PROFILE: 'Profile',
 	MENU_SETTINGS: 'Settings',
 	MENU_LINKS: 'My Links',
 	MENU_MODERATE: 'Moderate',
@@ -25,6 +26,7 @@ var translation_en = {
 	LINKS: 'Links',
 	REPORT: 'Report',
 	ADD: 'Add',
+	DELETE: 'Delete',
 	EDITOR: 'Editor',
 	LOGIN: 'Log In',
 	LOGOUT: 'Log Out',
@@ -36,8 +38,10 @@ var translation_en = {
 	ALERT_LOGINTOCOMMENT: '<strong>Log In</strong> to send a comment !',
 	ALERT_LANGSETTINGS: 'Only the links matching your settings will be displayed',
 	ALERT_SETTINGSUPDATED: 'Settings updated !',
+	ALERT_COMINGSOON: 'Coming Soon !',
 	FORM_USERNAME: 'Username',
 	FORM_PASSWORD: 'Password',
+	FORM_EMAIL: 'E-mail',
 	FORM_SUBTITLES: 'Subtitles',
 	FORM_SAVE: 'Save changes',
 	FORM_DELETE: 'DELETE',
@@ -49,12 +53,14 @@ var translation_en = {
 	LIST_MOSTWATCHED: "Most Watched {{media | uppercase | translate}}",
 	LIST_WATCHEDRECENTLY: "{{media | uppercase | translate}} You Watched Recently",
 	LIST_NEWRELEASES: "New Releases",
-	SEARCH_RESULTSCOUNT: "{{count}} results for '{{query}}' in {{media | uppercase | translate}}"
+	SEARCH_RESULTSCOUNT: "{{count}} results for '{{query}}' in {{media | uppercase | translate}}",
+	LINK_ADDED: "Added on"
 }
 
 var translation_fr = {
 	COMMENT_PLACEHOLDER: 'Commenter..',
 	COMMENT_POSTEDON: 'Publié le',
+	MENU_PROFILE: 'Profil',
 	MENU_SETTINGS: 'Préférences',
 	MENU_LINKS: 'Mes Liens',
 	MENU_MODERATE: 'Modérer',
@@ -73,6 +79,7 @@ var translation_fr = {
 	LINKS: 'Liens',
 	REPORT: 'Signaler',
 	ADD: 'Ajouter',
+	DELETE: 'Supprimer',
 	EDITOR: 'Editeur',
 	LOGIN: 'Connexion',
 	LOGOUT: 'Déconnexion',
@@ -86,6 +93,7 @@ var translation_fr = {
 	ALERT_SETTINGSUPDATED: 'Préférences mises à jour !',
 	FORM_USERNAME: "Nom d'utilisateur",
 	FORM_PASSWORD: "Mot de passe",
+	FORM_EMAIL: 'E-mail',
 	FORM_SUBTITLES: 'Sous-titres',
 	FORM_SAVE: 'Enregistrer',
 	FORM_DELETE: 'SUPP',
@@ -97,7 +105,8 @@ var translation_fr = {
 	LIST_MOSTWATCHED: "{{media | uppercase | translate}} Populaires",
 	LIST_WATCHEDRECENTLY: "{{media | uppercase | translate}} Regardés Récemment",
 	LIST_NEWRELEASES: "Nouvelles sorties",
-	SEARCH_RESULTSCOUNT: "{{count}} résultats pour '{{query}}' dans les {{media | uppercase | translate}}"
+	SEARCH_RESULTSCOUNT: "{{count}} résultats pour '{{query}}' dans les {{media | uppercase | translate}}",
+	LINK_ADDED: "Ajouté le"
 }
 
 app.config(function ($routeProvider, $locationProvider, $translateProvider) {
