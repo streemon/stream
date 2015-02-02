@@ -41,32 +41,83 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 	}
 }]);
 
-controllers.controller('IndexController', ['$scope', '$route', '$http', '$localStorage', function($scope, $route, $http, $localStorage) {
+controllers.controller('IndexController', ['$scope', '$route', '$http', '$localStorage', '$q', function($scope, $route, $http, $localStorage, $q) {
 	$scope.$storage = $localStorage;
-	var listIds = ["54ac554592514163430016c9", "54408e79929fb858d1000052", "509faf68760ee347d2000736"];
 	$scope.lists = [];
 	$scope.calledAddMore = false;
+
+	var listsIds = [{id: "54ac554592514163430016c9", source: "tmdb"}, {id: "54cee1a287394cd9048889fe"}, {id: "54408e79929fb858d1000052", source: "tmdb"}, {id: "509faf68760ee347d2000736", source: "tmdb"}];
 
 	//Add special lists (watchedRecently, lastAdded)
 	$scope.lists.push($scope.$storage.watchedRecently.shows);
 	$scope.lists.push($scope.$storage.watchedRecently.movies);
 
-	for (var i=0; i < listIds.length; i++) {
-		theMovieDb.lists.getById(
-			{"id": listIds[i], "language": $scope.$storage.language }, 
-			function (data) {
-				$scope.$apply(function () {
-					var list = JSON.parse(data);
-					//TODO add option for shuffle
-					list.items = shuffle(list.items);
-					$scope.lists.push(list);
-				})
-			},
-			function (err) {
-				console.log(err);
-			}
-		)
+	for (var i=0; i < listsIds.length; i++) {
+		if (listsIds[i].source == "tmdb") {
+			theMovieDb.lists.getById(
+				{"id": listsIds[i].id, "language": $scope.$storage.language }, 
+				function (data) {
+					$scope.$apply(function () {
+						var list = JSON.parse(data);
+						//TODO add option for shuffle
+						list.items = shuffle(list.items);
+						$scope.lists.push(list);
+					})
+				},
+				function (err) {
+					console.log(err);
+				}
+			)
+		}
+		else {
+			$http.get('/api/lists/' + listsIds[i].id)
+			.success(function (data) {
+				var items = [];
+				var hardLimit = 6;
+				for (var h = 0; h < data.items.length; h++) {
+					//hard limit of 6 items per list
+					if (h >= hardLimit) break;
+
+					var promise = addItems(data.items[h]);
+
+					promise.then(function(media) {
+						items.push(media)
+
+						//dirty check if last item has been processed
+						if (items.length == data.items.length || items.length == hardLimit) {
+							data.items = items;
+							$scope.lists.push(data);
+						}
+					}, function(err) {
+					  console.log('Failed: ' + err);
+					});
+
+				}
+			})
+		}
 	}
+	function addItems(item) {
+	  var deferred = $q.defer();
+
+		if (item.media == "shows") var tmdb = theMovieDb.tv;
+		else var tmdb = theMovieDb.movies;
+
+		tmdb.getById(
+			{"id": item.mediaId, "language": $scope.$storage.language}, 
+			function (doc) {
+				if (doc) {
+					var doc = JSON.parse(doc);
+					doc.media = item.media;
+					deferred.resolve(doc);
+				}
+			}, 
+			function (err) {console.log(err)}
+		);
+
+	  return deferred.promise;
+	}
+
+
 	$scope.addMoreLists = function () {
 		if ($scope.lists && !$scope.calledAddMore) {
 			$scope.calledAddMore = true;
@@ -82,20 +133,54 @@ controllers.controller('IndexController', ['$scope', '$route', '$http', '$localS
 
 controllers.controller('ListController', ['$scope', '$route', '$http', '$localStorage', function($scope, $route, $http, $localStorage) {
 	$scope.$storage = $localStorage;
+	$scope.list = {};
+	$scope.items = [];
 
-	theMovieDb.lists.getById(
-		{"id": $route.current.params.id, "language": $scope.$storage.language }, 
-		function (data) {
-			$scope.$apply(function () {
-				$scope.list = JSON.parse(data);
-				//TODO add option for shuffle
-				//list.items = shuffle(list.items);
-			})
-		},
-		function (err) {
-			console.log(err);
+	$http.get('/api/lists/' + $route.current.params.id)
+		.success(function (data) {
+			$scope.list = data;
+		})
+		.error(function (err) {
+			//if not found on our db, we look at tmdb
+			if (err.code == 1) {
+				theMovieDb.lists.getById(
+					{"id": $route.current.params.id, "language": $scope.$storage.language}, 
+					function (data) {
+						$scope.$apply(function () {
+							$scope.list = JSON.parse(data);
+							//TODO add option for shuffle
+						})
+					},
+					function (err) {
+						console.log(err);
+					}
+				)
+			}
+		})
+
+	$scope.$watch("list", function() {
+		if ($scope.list.items) {
+			for (var i = 0; i < $scope.list.items.length; i++) {
+				if ($scope.list.items[i].media == "shows") var tmdb = theMovieDb.tv;
+				else var tmdb = theMovieDb.movies;
+
+				tmdb.getById(
+					{"id": $scope.list.items[i].mediaId || $scope.list.items[i].id, "language": $scope.$storage.language, "append_to_response": "credits"}, 
+					function (data) {
+						$scope.$apply(function () {
+							data = JSON.parse(data);
+							//dirty fix to give media input
+							if (data.name) data.media = "shows";
+							else data.media = "movies";
+
+							$scope.items.push(data);
+						});
+					}, 
+					function (err) {console.log(err)}
+				);
+			}
 		}
-	)
+	})
 }]);
 
 controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '$location', '$alert', function($scope, $http, $localStorage, $location, $alert) {
@@ -274,7 +359,72 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 		}
 	}
 }]);
+controllers.controller('ListFormController', ['$scope', '$http', '$route', '$localStorage', '$alert', '$sce', function ($scope, $http, $route, $localStorage, $alert, $sce) {
+	$scope.$route = $route;
+	$scope.$storage = $localStorage;
+	$scope.inList = [];
+	$scope.userLists = [];
 
+	$scope.addNewList = function (listTitle) {
+		//creates new list
+		$http.post('/api/lists', {title: listTitle, media: $scope.media, mediaId: $scope.mediaId})
+			.success(function (data) {
+				$scope.newList = "";
+				$scope.userLists.push(data);
+			})
+			.error(function (data) {
+
+			})
+	}
+
+	$scope.toggleItemList = function (listIndex) {
+		//adds or remove item to/from list
+		if ($scope.inList[listIndex]) {
+			$http.delete('/api/lists/' + $scope.userLists[listIndex]._id + '/' + $scope.inList[listIndex])
+			.success (function (data) {
+				//$scope.$apply(function () {
+					$scope.userLists[listIndex] = data;
+				//})
+			})
+			.error(function (err) {
+				$alert({title: "Error !", content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
+			})
+		}
+		else {
+			//adds a media to a list
+			$http.put('/api/lists/' + $scope.userLists[listIndex]._id, {media: $scope.listMedia || $scope.media, mediaId: $scope.listMediaId || $scope.mediaId})
+			.success(function (data) {
+				$scope.userLists[listIndex] = data;
+			})
+			.error(function (err) {
+				$alert({title: "Error !", content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
+			})
+		}
+	}
+
+	$scope.$watch("userLists", function () {
+		for (var i=0; i < $scope.userLists.length; i++) {
+	        var val = false;
+	        angular.forEach($scope.userLists[i].items, function (item) {
+	        	if (item.media == $scope.media && item.mediaId == parseInt($scope.mediaId)) {
+	            	val = item._id;
+	            }
+	        });
+	        $scope.inList[i] = val;
+		}
+    }, true)
+
+	if ($scope.$storage.user) {
+		$http.get('/api/users/' + $scope.$storage.user._id + '/lists')
+			.success (function (data) {
+				$scope.userLists = data;
+			})
+			.error (function (err) {
+				$scope.err = err;
+			})
+	}
+	
+}])
 controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$localStorage', '$alert', '$sce', function ($scope, $http, $route, $localStorage, $alert, $sce) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
@@ -282,7 +432,6 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 	$scope.sub_languages = languagesAllowed.slice();
 	$scope.showAllLinks = false;
 	$scope.formLinks = [];
-
 	$scope.toggleLinks = function() { $scope.showAllLinks = !$scope.showAllLinks; }
 
 	$scope.trustSrc = function(src) {
@@ -486,7 +635,6 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 								$scope.seasons[seasonData.episodes[0].season_number] = seasonData;
 
 
-								console.log("a")
 								if ($scope.currentEpisode.episode_last) {
 									var e = $scope.seasons[$scope.currentEpisode.season_number].episodes.length - 1;
 									$scope.currentEpisode = $scope.seasons[$scope.currentEpisode.season_number].episodes[e];
@@ -551,7 +699,7 @@ controllers.controller('SettingsController', ['$scope', '$http', '$localStorage'
 }]);
 
 controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '$location', function ($scope, $http, $localStorage, $location) {
-	$scope.storage = $localStorage;
+	$scope.$storage = $localStorage;
 
 	$scope.deleteLink = function(link) {
 		$http.delete('/api/links/' + link._id).success(function (data) {
@@ -560,11 +708,33 @@ controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '
 	}
 
 	//if user is not identified
-	if (!$scope.storage.user || !$scope.storage.user.auth) return $location.path('/');
+	if (!$scope.$storage.user || !$scope.$storage.user.auth) return $location.path('/');
 
 	$http.get('/api/account/links')
 		.success(function (data) {
 			$scope.links = data;
+		})
+		.error(function (err) {
+			$scope.err = err;
+		})
+
+}]);
+
+controllers.controller('ListsController', ['$scope', '$http', '$localStorage', '$location', function ($scope, $http, $localStorage, $location) {
+	$scope.$storage = $localStorage;
+
+	$scope.deleteList = function(list) {
+		$http.delete('/api/lists/' + list._id).success(function (data) {
+			$scope.lists.splice($scope.lists.indexOf(list), 1);
+		});
+	}
+
+	//if user is not identified
+	if (!$scope.$storage.user || !$scope.$storage.user.auth) return $location.path('/');
+
+	$http.get('/api/users/' + $scope.$storage.user._id + '/lists')
+		.success(function (data) {
+			$scope.lists = data;
 		})
 		.error(function (err) {
 			$scope.err = err;

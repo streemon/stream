@@ -14,7 +14,6 @@ function passIframe (links, next) {
 			link.host = linkHost[1];
 			link.hostname = linkHost[1].replace(/^(\w+)\.(.+)/, "$1");
 			var isDirect = link.url.match(hostsPatterns[link.host]);
-			console.log(isDirect);
 			if (isDirect) {
 				link.iframe = link.url.replace(hostsPatterns[link.host], hostsReplace[link.host]);
 			}

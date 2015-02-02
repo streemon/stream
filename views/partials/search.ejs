@@ -3,7 +3,7 @@
 	<p class="page-header-link">
 		<h3 class="page-header" translate="SEARCH_RESULTSCOUNT" translate-values="{count: searchResults.total_results, query: searchResults.query, media: $route.current.media}" ng-if="searchResults"></h3>
 		<a href="/movies/1" ng-href="/{{$route.current.media}}/{{result.id}}" class="col-xs-4 col-sm-4 col-md-2 frame" ng-repeat="result in searchResults.results" data-title="{{result.title || result.original_title}}">
-			<img class="poster" ng-src="{{ result.poster_path ? 'http://image.tmdb.org/t/p/w185' + result.poster_path : 'http://placehold.it/193x270&text=no+poster'}}"></img>
+			<img class="poster" ng-src="{{ result.poster_path ? 'http://image.tmdb.org/t/p/w185' + result.poster_path : 'http://placehold.it/193x270&text=' + result.title + result.name}}"></img>
 		</a>
 	</p>
 </div>

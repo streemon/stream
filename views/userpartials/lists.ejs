@@ -1,0 +1,11 @@
+<table class="table table-striped">
+	<tr> <th>Title</th> <th>Views</th> <th># Items</th> <th>Actions</th> </tr>
+	<tr ng-repeat="list in lists">
+		<td><a ng-href="{{ 'lists/' + list._id}}" target="_blank">{{list.title}}</a></td>
+		<td>{{list.views}}</td>
+		<td>{{list.items.length}}</td>
+		<td><button class="btn btn-xs btn-danger" ng-click="deleteList(list)" translate="FORM_DELETE">DELETE</button></td>
+	</tr>
+</table>
+
+<pre>{{lists}}</pre>

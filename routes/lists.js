@@ -23,7 +23,11 @@ exports.getListById = function (req, res, next) {
 		})
 	}
 	else {
-		return res.json(404, {msg: "List not found"})
+		req.db.List.findOne({_id: req.params.id}, function (err, doc) {
+			if (err) next (err);
+			else if (doc) res.json(200, doc);
+			else return res.json(404, {msg: "List not found", code: 1})
+		})
 	}
 
 }
@@ -54,6 +58,80 @@ exports.getLists = function (req, res, next) {
 			res.json(200, lists);
 		}
 	);
+}
+
+exports.getUserLists = function (req, res, next) {
+	var listQuery = req.db.List.find({_authorId: req.params.id});
+
+	listQuery.exec(function(err, lists){
+		if (err) next(err);
+
+		res.json(200, lists);
+	})
+}
+
+exports.addList = function (req, res, next) {
+	if(req.session && req.session.auth && req.session.user) {
+		list = new req.db.List({
+			items: [{
+				media: req.body.media,
+				mediaId: req.body.mediaId
+			}],
+			title: req.body.title,
+			_authorId: req.session.user._id
+		});
+
+		list.save(function(err) {
+			if (err) return next(err)
+			else res.json(200, list);
+		})
+	}		
+}
+exports.removeList = function (req, res, next) {
+	if(req.session && req.session.auth && req.session.user && req.session.user.rights >= 2) {
+		req.db.List.findByIdAndRemove(req.params.id, function(err, obj) {
+			if (err) next(err);
+
+			if(obj) res.json(200, obj);
+			else res.json(404, {msg: "No list found"});
+		});
+	}
+	else if(req.session && req.session.auth && req.session.user) {
+		req.db.List.findOneAndRemove({ _id: req.params.id, _authorId: req.session.user._id}, function(err, obj) {
+			if (err) next(err);
+
+			if(obj) res.json(200, obj);
+			else res.json(404, {msg: "No list found"});
+		});
+	}
+}
+exports.addListItem = function (req, res, next) {
+	if(req.session && req.session.auth && req.session.user && req.body && req.body.media && req.body.mediaId) {
+		req.db.List.findOne({ _id: req.params.id, _authorId: req.session.user._id}, function(err, list) {
+			if (err) next(err);
+
+			if (list) {
+				var mediaObj = {media: req.body.media, mediaId: req.body.mediaId};
+				list.items.push(mediaObj);
+
+				list.save(function(err) {
+					if (err) return next(err)
+
+					else res.json(200, list);
+				})
+			}
+			else res.json(404, {msg: "No list found"});
+		});
+	}
+}
+exports.removeListItem = function (req, res, next) {
+	if(req.session && req.session.auth && req.session.user) {
+		req.db.List.findOneAndUpdate({ _id: req.params.id, _authorId: req.session.user._id}, {$pull: {"items": {_id: req.params.itemId}}}, {new: true}, function(err, list) {
+			if (err) next(err);
+
+			else res.json(200, list);
+		});
+	}
 }
 
 exports.watchedRecently = function (req, args, next) {

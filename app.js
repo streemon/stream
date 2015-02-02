@@ -54,7 +54,8 @@ function db (req, res, next) {
     Link: connection.model('Link', models.Link, 'links'),
     Log: connection.model('Log', models.Log, 'logs'),
     Comment: connection.model('Comment', models.Comment, 'comments'),
-    Notification: connection.model('Notification', models.Notification, 'notifications')
+    Notification: connection.model('Notification', models.Notification, 'notifications'),
+    List: connection.model('List', models.List, 'lists')
   };
   return next();
 }
@@ -74,8 +75,15 @@ app.get('/partials/:name', routes.partials);
 app.post('/api/login', db, routes.main.login);
 app.post('/api/signup', db, routes.main.signup);
 app.get('/api/logout', db, routes.main.logout);
+
+//LISTS
 app.get('/api/lists/:media(movies|shows)?', db, routes.lists.getLists);
 app.get('/api/lists/:id/:media(movies|shows)?', db, routes.lists.getListById);
+app.delete('/api/lists/:id', routes.main.hasRights(0), db, routes.lists.removeList);
+app.put('/api/lists/:id', routes.main.hasRights(0), db, routes.lists.addListItem);
+app.delete('/api/lists/:id/:itemId', routes.main.hasRights(0), db, routes.lists.removeListItem);
+app.get('/api/users/:id/lists', db, routes.lists.getUserLists);
+app.post('/api/lists', routes.main.hasRights(0), db, routes.lists.addList);
 
 //USERS
 //app.get('/api/users', db, routes.users.getUsers);
@@ -86,8 +94,8 @@ app.put('/api/account', routes.main.hasRights(0), db, routes.users.updateSetting
 //app.del('/api/users/:id', db, routes.users.del);
 
 //NOTIFICATIONS
-app.get('/api/account/notifications', routes.main.hasRights(0), db, routes.notifications.getNotifications);
-app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.notifications.viewedNotification);
+//app.get('/api/account/notifications', routes.main.hasRights(0), db, routes.notifications.getNotifications);
+//app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.notifications.viewedNotification);
 
 //COMMENTS
 app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);

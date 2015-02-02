@@ -11,12 +11,23 @@ directives.directive('linkform', function () {
     return {
         restrict: 'E',
         scope: {
-        	media: '@',
-        	mediaId: '@',
+            media: '@',
+            mediaId: '@',
             prevEpisode: '=',
             nextEpisode: '='
         },
         controller: 'LinkFormController',
         templateUrl: '/partials/linkform'
+    };
+});
+directives.directive('listform', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            media: '@',
+            mediaId: '@',
+        },
+        controller: 'ListFormController',
+        templateUrl: '/partials/listform'
     };
 });
