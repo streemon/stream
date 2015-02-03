@@ -1,6 +1,8 @@
 var async = require('async');
 var querystring = require('querystring');
 var crypto = require('crypto');
+var Mailjet = require('mailjet-sendemail');
+var mailjet = new Mailjet('8e916c64f97b1464b27cf6505fddb999', 'f4f105cdd3e9448e180fd412c7b30bae');
 
 function hashPassword (password) {
 	if (password) {
@@ -89,6 +91,11 @@ exports.signup = function(req, res, next) {
 					else res.json(400, err)
 				}
 				else if (doc) {
+					mailjet.sendContent('contact@shostream.com',
+				     [doc.email],
+				     'Welcome on ShoStream !',
+				     'text',
+				     'Hello '+ doc.username +" ! \n\n You just signed up on ShoStream and this is great :) \n\n Have fun !")
 					req.log = {action: 'signup', mediaId: doc._id, media: 'user'};
 					authorizeUser(req, res, doc);
 				}

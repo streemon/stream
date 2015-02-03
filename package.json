@@ -20,6 +20,7 @@
     "moviedb": "~0.1.9",
     "crypto": "0.0.3",
     "grunt-cli": "~0.1.13",
-    "angular-gravatar": "~0.2.4"
+    "angular-gravatar": "~0.2.4",
+    "mailjet-sendemail": "~1.1.4"
   }
 }
