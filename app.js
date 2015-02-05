@@ -22,8 +22,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json({limit: '4mb'}));
+app.use(bodyParser.urlencoded({limit: '4mb'}));
 app.use(cookieParser('1<1v2v1e@v1v221vv:ù^*K33'));
 app.use(session({ secret: 'kaplantoeflibtthirdedition', name: 'sid'}))
 app.use(express.static(path.join(__dirname, 'public')));
@@ -91,6 +91,7 @@ app.get('/api/users/@:username', db,routes.users.getUserByUsername);
 app.get('/api/users/:id', db,routes.users.getUserById);
 //app.put('/api/account/sync', routes.main.hasRights(0), db, routes.users.sync);
 app.put('/api/account', routes.main.hasRights(0), db, routes.users.updateSettings);
+app.post('/api/account/upload', routes.main.hasRights(0), db, routes.users.upload);
 //app.del('/api/users/:id', db, routes.users.del);
 
 //NOTIFICATIONS

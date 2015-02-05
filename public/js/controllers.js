@@ -33,12 +33,14 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 		$location.path('/search/' + $route.current.media + '/' + query);
 	}
 
+	/*
+	//Get notifications
 	if ($scope.$storage.user && $scope.$storage.user.auth) {
 		$http.get('/api/account/notifications')
 			.success(function (data) {
 				$scope.notifications = data;
 			})
-	}
+	} */
 }]);
 
 controllers.controller('IndexController', ['$scope', '$route', '$http', '$localStorage', '$q', function($scope, $route, $http, $localStorage, $q) {
@@ -677,12 +679,42 @@ controllers.controller('ProfileController', ['$scope', '$http', '$route', functi
 controllers.controller('SettingsController', ['$scope', '$http', '$localStorage', '$location', '$alert', function ($scope, $http, $localStorage, $location, $alert) {
 	$scope.$storage = $localStorage;
 	$scope.languages = languagesAllowed;
+    $scope.myImage= $scope.$storage.user.avatar || '';
+    $scope.myCroppedImage = '';
 	
 	//if user is not identified
 	if (!$scope.$storage.user || !$scope.$storage.user.auth) return $location.path('/');
 
 	$scope.form = {};
 	if ($scope.$storage.user.settings) $scope.form.settings = $scope.$storage.user.settings;
+
+
+    var handleFileSelect=function(evt) {
+      var file=evt.currentTarget.files[0];
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        $scope.$apply(function($scope){
+        	console.log(evt.target.result);
+
+         	$scope.myImage=evt.target.result;
+        });
+      };
+      reader.readAsDataURL(file);
+    };
+
+    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+
+    $scope.uploadImage = function () {
+    	$http.post('/api/account/upload', {avatar: $scope.myCroppedImage})
+    		.success( function (data) {
+    			console.log(data);
+
+    			$scope.$storage.user.avatar = data.src;
+
+     			$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
+		
+    		})
+    }
 
 	$scope.saveSettings = function () {
 		$http.put('/api/account', $scope.form)
