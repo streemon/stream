@@ -2,7 +2,7 @@
 	<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
 		<li ng-show="$storage.user.auth">
 			<a href="" class="avatar">
-				<img ng-src="{{$storage.user.avatar}}" src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+				<img ng-src="/{{$storage.user.avatar}}" src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
 			</a>
 			<div class="content">
 				<form ng-submit="postComment()">
@@ -17,7 +17,7 @@
 		</li>
 		<li ng-repeat="comment in comments">
 			<a ng-href="/users/@{{comment.author.username}}" class="avatar">
-				<img ng-src="{{comment.author.avatar}}" src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+				<img ng-src="/{{comment.author.avatar}}" src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
 			</a>
 			<div class="content">
 				<div class="title">
