@@ -27,7 +27,7 @@
 				<li>
 					<form class="navbar-form " ng-submit="search()" role="search">
 						<div class="form-group">
-							<input type="text" name="q" ng-model="q" class="form-control lens" placeholder="Skyfall, Mentalist, @xiamix, ...">
+							<input type="text" name="q" ng-model="q" class="form-control lens" placeholder="Terminator, Game of Thrones, ...">
 						</div>
 					</form>
 				</li>
@@ -40,7 +40,7 @@
 					</ul>
 				</li>
 				<li class="dropdown" ng-if="$storage.user.auth">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/1144_big.jpg" ng-src="{{$storage.user.avatar}}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/default_avatar.png" ng-src="/{{$storage.user.avatar || 'img/default_avatar.png' }}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
 					<ul class="dropdown-menu hidden-xs">
 						<li><a href="/settings" translate="MENU_SETTINGS">Settings</a></li>
 						<li><a href="/links" translate="MENU_LINKS">My Links</a></li>

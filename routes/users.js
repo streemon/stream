@@ -74,6 +74,7 @@ exports.upload = function(req, res, next) {
 					});
 
 					req.db.User.update({_id: req.session.user._id}, {$set: {avatar: path}}, function (err, numberAffected) {
+						req.session.user.avatar = req.session.userPublic.avatar = path;
 						res.json(200, {msg: 'Avatar uploaded !', src: path, affected: numberAffected});
 					})
 				}

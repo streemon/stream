@@ -92,7 +92,7 @@ exports.add = function(req, res, next) {
 			if (err.name == 'ValidationError') res.json(500, {msg: "Invalid comment"});
 			else next(err);
 		} 
-
+		console.log(req.session.userPublic);
 		res.json(200, {comment: comment, author: req.session.userPublic});
 	})
 }

@@ -77,7 +77,7 @@ app.post('/api/signup', db, routes.main.signup);
 app.get('/api/logout', db, routes.main.logout);
 
 //LISTS
-app.get('/api/lists/:media(movies|shows)?', db, routes.lists.getLists);
+//app.get('/api/lists/:media(movies|shows)?', db, routes.lists.getLists);
 app.get('/api/lists/:id/:media(movies|shows)?', db, routes.lists.getListById);
 app.delete('/api/lists/:id', routes.main.hasRights(0), db, routes.lists.removeList);
 app.put('/api/lists/:id', routes.main.hasRights(0), db, routes.lists.addListItem);

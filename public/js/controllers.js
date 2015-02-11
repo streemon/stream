@@ -45,59 +45,72 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 
 controllers.controller('IndexController', ['$scope', '$route', '$http', '$localStorage', '$q', function($scope, $route, $http, $localStorage, $q) {
 	$scope.$storage = $localStorage;
+	$scope.media = $route.current.media;
 	$scope.lists = [];
 	$scope.calledAddMore = false;
+	$scope.moreLists = [{id: "54ac554592514163430016c9", source: "tmdb"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"}]
+			
 
-	var listsIds = [{id: "54ac554592514163430016c9", source: "tmdb"}, {id: "54cee1a287394cd9048889fe"}, {id: "54408e79929fb858d1000052", source: "tmdb"}, {id: "509faf68760ee347d2000736", source: "tmdb"}];
+	var listsToLoadFirst = [{id: "newReleases", media: "movies"}, {id: "newReleases", media: "shows"}, {id: "54db383f007f9fd68b2754b6", media: "shows"}];
 
 	//Add special lists (watchedRecently, lastAdded)
-	$scope.lists.push($scope.$storage.watchedRecently.shows);
-	$scope.lists.push($scope.$storage.watchedRecently.movies);
+	if ($scope.$storage.watchedRecently.shows.items[0]) $scope.lists.push($scope.$storage.watchedRecently.shows);
+	if ($scope.$storage.watchedRecently.movies.items[0]) $scope.lists.push($scope.$storage.watchedRecently.movies);
 
-	for (var i=0; i < listsIds.length; i++) {
-		if (listsIds[i].source == "tmdb") {
-			theMovieDb.lists.getById(
-				{"id": listsIds[i].id, "language": $scope.$storage.language }, 
-				function (data) {
-					$scope.$apply(function () {
-						var list = JSON.parse(data);
-						//TODO add option for shuffle
-						list.items = shuffle(list.items);
-						$scope.lists.push(list);
-					})
-				},
-				function (err) {
-					console.log(err);
-				}
-			)
-		}
-		else {
-			$http.get('/api/lists/' + listsIds[i].id)
-			.success(function (data) {
-				var items = [];
-				var hardLimit = 6;
-				for (var h = 0; h < data.items.length; h++) {
-					//hard limit of 6 items per list
-					if (h >= hardLimit) break;
+	loadList(listsToLoadFirst);
 
-					var promise = addItems(data.items[h]);
+	function loadList (loadList) {
+		for (var i=0; i < loadList.length; i++) {
+			if (loadList[i].source == "tmdb") {
+				theMovieDb.lists.getById(
+					{"id": loadList[i].id, "language": $scope.$storage.language }, 
+					function (data) {
+						$scope.$apply(function () {
+							var list = JSON.parse(data);
+							list.media = "movies";
+							//TODO add option for shuffle
+							list.items = shuffle(list.items);
+							$scope.lists.push(list);
+						})
+					},
+					function (err) {
+						console.log(err);
+					}
+				)
+			}
+			else {
+				var url = '/api/lists/' + loadList[i].id;
+				if (loadList[i].media) url += '/' + loadList[i].media;
 
-					promise.then(function(media) {
-						items.push(media)
+				$http.get(url)
+				.success(function (data) {
+					var items = [];
+					var hardLimit = 6;
+					//TODO async foreach
+					for (var h = 0; h < data.items.length; h++) {
+						//hard limit of 6 items per list
+						if (h >= hardLimit) break;
 
-						//dirty check if last item has been processed
-						if (items.length == data.items.length || items.length == hardLimit) {
-							data.items = items;
-							$scope.lists.push(data);
-						}
-					}, function(err) {
-					  console.log('Failed: ' + err);
-					});
+						var promise = addItems(data.items[h]);
 
-				}
-			})
-		}
+						promise.then(function(media) {
+							items.push(media)
+
+							//dirty check if last item has been processed
+							if (items.length == data.items.length || items.length == hardLimit) {
+								data.items = items;
+								$scope.lists.push(data);
+							}
+						}, function(err) {
+						  console.log('Failed: ' + err);
+						});
+
+					}
+				})
+			}
+		}		
 	}
+
 	function addItems(item) {
 	  var deferred = $q.defer();
 
@@ -122,12 +135,12 @@ controllers.controller('IndexController', ['$scope', '$route', '$http', '$localS
 
 	$scope.addMoreLists = function () {
 		if ($scope.lists && !$scope.calledAddMore) {
-			$scope.calledAddMore = true;
-			/*
-			$http.get('/api/lists/random').success(function (data) {
-				$scope.lists = $scope.lists.concat(data);
-				$scope.calledAddMore = false;
-			}) */
+			if ($scope.moreLists[0]) {
+				$scope.calledAddMore = true;
+				$scope.moreLists = shuffle($scope.moreLists);
+				loadList($scope.moreLists.splice(0,3))
+			}
+			$scope.calledAddMore = false;
 		}
 	}
 }]);
@@ -186,6 +199,8 @@ controllers.controller('ListController', ['$scope', '$route', '$http', '$localSt
 }]);
 
 controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '$location', '$alert', function($scope, $http, $localStorage, $location, $alert) {
+	$scope.$storage = $localStorage;
+
 	$scope.login = function () {
 		var credentials = {
 			username: this.username,
@@ -214,7 +229,8 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 		var credentials = {
 			email: this.email,
 			username: this.username2,
-			password: this.password2
+			password: this.password2,
+			language: $scope.$storage.language
 		}
 
 		$http.post('/api/signup', credentials)
@@ -433,6 +449,7 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 	$scope.languages = languagesAllowed;
 	$scope.sub_languages = languagesAllowed.slice();
 	$scope.showAllLinks = false;
+	$scope.loaded = false;
 	$scope.formLinks = [];
 	$scope.toggleLinks = function() { $scope.showAllLinks = !$scope.showAllLinks; }
 
@@ -527,6 +544,7 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 				.success(function (data) {
 					$scope.links = data;
 					$scope.currentLink = $scope.links[0];
+					$scope.loaded = true;
 				})
 				.error(function (err) {
 					$scope.err = err;
@@ -705,15 +723,20 @@ controllers.controller('SettingsController', ['$scope', '$http', '$localStorage'
     angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
 
     $scope.uploadImage = function () {
-    	$http.post('/api/account/upload', {avatar: $scope.myCroppedImage})
-    		.success( function (data) {
-    			console.log(data);
+    	if ($scope.myCroppedImage) {
+	    	$http.post('/api/account/upload', {avatar: $scope.myCroppedImage})
+	    		.success( function (data) {
+	    			console.log(data);
 
-    			$scope.$storage.user.avatar = data.src;
+	    			$scope.$storage.user.avatar = data.src;
 
-     			$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
-		
-    		})
+	     			$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
+			
+	    		})
+	    }
+	    else {
+	    	alert("No image !");
+	    }
     }
 
 	$scope.saveSettings = function () {

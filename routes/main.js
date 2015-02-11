@@ -82,7 +82,7 @@ exports.login = function (req, res, next) {
 exports.signup = function(req, res, next) {
 	if (req.body.username && req.body.email) {
 		if (req.body.password) {
-			var userData = {username: req.body.username, email: req.body.email, password: hashPassword(req.body.password), settings: {language: req.headers["accept-language"].substring(0,2)}};
+			var userData = {username: req.body.username, email: req.body.email, password: hashPassword(req.body.password), settings: {language: req.body.language || req.headers["accept-language"].substring(0,2)}};
 						
 			req.db.User.create(userData, function(err, doc) {
 				if (err) {

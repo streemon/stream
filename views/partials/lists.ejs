@@ -1,7 +1,7 @@
 <div class="container" infinite-scroll="addMoreLists()" infinite-scroll-distance="0">
-	<div class="row marginbottom20" ng-repeat="list in lists track by $index" ng-if="list.items">
+	<div class="row marginbottom20" ng-repeat="list in lists track by $index" ng-if="list.items && (list.media == media || !list.media || !media)">
 		<a ng-href="/lists/{{list._id || list.id || list.url}}/{{list.media}}" class="page-header-link">
-			<h3 class="page-header" translate="{{list.name}}" translate-values="{media: list.media}">
+			<h3 class="page-header" translate="{{list.title}}" translate-values="{media: list.media}">
 				{{list.title || list.name}}
 			</h3>
 		</a>

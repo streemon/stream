@@ -1467,11 +1467,11 @@ th {
   padding: 8px;
   line-height: 1.42857143;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #F7F7F7;
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 2px solid #F7F7F7;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
@@ -1482,7 +1482,7 @@ th {
   border-top: 0;
 }
 .table > tbody + tbody {
-  border-top: 2px solid #dddddd;
+  border-top: 2px solid #F7F7F7;
 }
 .table .table {
   background-color: #fafafa;
@@ -3590,7 +3590,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a > img {
   max-width: none;
 }
-.nav-tabs {
+ul.nav-tabs {
   border-bottom: 1px solid #dddddd;
 }
 .nav-tabs > li {

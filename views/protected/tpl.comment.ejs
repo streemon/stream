@@ -1,12 +1,12 @@
-<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
+<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments margintop20">
 	<li ng-repeat="comment in comments">
 		<!-- to modify -->
-		<a href="/users/@xiamix" class="avatar">
-			<img src="/img/1144_big.jpg" class="img-rounded img-small-responsive">
+		<a ng-href="/users/{{comment.author.username}}" class="avatar">
+			<img src="/img/default_avatar.png" ng-src="/{{comment.author.avatar}}" class="img-rounded img-small-responsive">
 		</a>
 		<div class="content">
 			<div class="title">
-				<a href="/users/@xiamix" class="username">
+				<a ng-href="/users/{{comment.author.username}}" class="username">
 					{{comment.author.username}}
 					<small ng-if="comment.author.rights >= 2"><span class="label label-danger vertical-middle">Mod</span></small>
 					<small ng-if="comment.author.rights >= 4"><span class="label label-danger vertical-middle">Editor</span></small>
@@ -20,7 +20,7 @@
 				</p>
 			</div>
 			<div class="sub">
-				<small><nowrap>Posted on {{comment.comment.date | date:'medium'}} in {{comment.comment.media}}#{{comment.comment.mediaId}}</nowrap></small> 
+				<small><nowrap>Posted on {{comment.comment.date | date:'medium'}} in <a ng-href="/{{comment.comment.media}}/{{comment.comment.mediaId}}">{{comment.comment.media}}#{{comment.comment.mediaId}}</a></nowrap></small> 
 			</div>
 		</div>
 	</li>

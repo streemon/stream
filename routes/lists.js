@@ -9,23 +9,19 @@ var userLists = [{id: "watchedRecently", position: 0, args: {media: "shows", cou
 
 exports.getListById = function (req, res, next) {
 	if (_.findWhere(defaultLists, {id: req.params.id}) && req.params.media) {
-		exports[req.params.id](req, {media: req.params.media, count: 100}, function (err, returnList) {
-			if (err) next(err);
-
-			res.json(200, returnList);
-		})
+		exports[req.params.id](req, res)
 	}
 	else if (_.findWhere(userLists, {id: req.params.id}) && req.params.media && req.session && req.session.user && req.session.auth) {
-		exports[req.params.id](req, {media: req.params.media, count: 100}, function (err, returnList) {
-			if (err) next(err);
-
-			res.json(200, returnList);
-		})
+		exports[req.params.id](req, res)
 	}
 	else {
 		req.db.List.findOne({_id: req.params.id}, function (err, doc) {
 			if (err) next (err);
-			else if (doc) res.json(200, doc);
+			
+			if (doc) {
+				if (req.params.media) doc.media = req.params.media;
+				res.json(200, doc);
+			}
 			else return res.json(404, {msg: "List not found", code: 1})
 		})
 	}
@@ -164,10 +160,10 @@ exports.watchedRecently = function (req, args, next) {
 	})
 }
 
-exports.newReleases = function (req, args, next) {
-	var count = args.count || 6;
-	var title = args.title || "LIST_NEWRELEASES";
-	var list = {title: title, count: count, media: args.media, medias: []};
+exports.newReleases = function (req, res) {
+	var count = 6;
+	var title = "LIST_NEWRELEASES";
+	var list = {title: title, url: "newReleases", count: count, media: req.params.media, items: []};
 
 	req.db.Notification.aggregate([
 		{$match: {media: list.media, _receiverId: null}},
@@ -175,23 +171,11 @@ exports.newReleases = function (req, args, next) {
 		{$sort: {date: -1}},
 		{$limit: count}
 	], function (err, results) {
-		async.each(results, function (result, callback) {
-			req.params.id = result._id;
-			req.params.media = list.media;
-
-			main.returnMediaById(req, function (err, media) {
-				if (err == 404) callback();
-				else if (err) callback (err);
-				else {
-					list.medias[results.indexOf(result)] = media;
-					callback();
-				}
-			})
-		}, function (err) {
-			//removes empty from list
-			list.medias = list.medias.filter(function(e){return e}); 
-			next(err, list)
+		results.forEach(function (result) {
+			var item = {media: req.params.media, mediaId: result._id};
+			list.items.push(item);
 		})
+		res.json(200, list);
 	})
 }
 
