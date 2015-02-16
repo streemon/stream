@@ -198,7 +198,7 @@ controllers.controller('ListController', ['$scope', '$route', '$http', '$localSt
 	})
 }]);
 
-controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '$location', '$alert', function($scope, $http, $localStorage, $location, $alert) {
+controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '$location', '$alert', '$translate', function($scope, $http, $localStorage, $location, $alert, $translate) {
 	$scope.$storage = $localStorage;
 
 	$scope.login = function () {
@@ -221,7 +221,7 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 				return $location.path('/');
 			})
 			.error(function (data) {
-				$alert({title: data.msg, placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
+				$alert({title: $translate.instant(data.msg), placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
 			});
 	}
 
@@ -247,7 +247,7 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 				return $location.path('/');
 			})
 			.error(function (data) {
-				$alert({title: data.msg, placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
+				$alert({title: $translate.instant(data.msg), placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
 			})
 	}
 }]);
@@ -405,7 +405,7 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 				//})
 			})
 			.error(function (err) {
-				$alert({title: "Error !", content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
+				$alert({title: $translate.instant("ALERT_ERROR"), content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
 			})
 		}
 		else {
@@ -415,7 +415,7 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 				$scope.userLists[listIndex] = data;
 			})
 			.error(function (err) {
-				$alert({title: "Error !", content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
+				$alert({title: $translate.instant("ALERT_ERROR"), content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
 			})
 		}
 	}
@@ -443,7 +443,7 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 	}
 	
 }])
-controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$localStorage', '$alert', '$sce', function ($scope, $http, $route, $localStorage, $alert, $sce) {
+controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$localStorage', '$alert', '$sce', '$translate', function ($scope, $http, $route, $localStorage, $alert, $sce, $translate) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
 	$scope.languages = languagesAllowed;
@@ -453,6 +453,13 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 	$scope.formLinks = [];
 	$scope.toggleLinks = function() { $scope.showAllLinks = !$scope.showAllLinks; }
 
+	$scope.getCurrentLink = function () {
+		for (var i=0; i<$scope.links.length; i++) {
+			if ($scope.showLink($scope.links[i])) return $scope.links[i];
+		}
+		return false;
+	}
+
 	$scope.trustSrc = function(src) {
 		return $sce.trustAsResourceUrl(src);
 	}
@@ -461,10 +468,10 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 		if ($scope.currentLink) {
 			$http.put('/api/links/' + $scope.currentLink._id + '/flag', {reason: reason})
 				.success(function (data) {
-					$alert({title: "Thank you !", content: "The link has been reported", placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'info', show: true});
+					$alert({title: $translate.instant("ALERT_THANKYOU"), content: $translate.instant("ALERT_LINKREPORTED"), placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'info', show: true});
 				})
 				.error(function (data) {
-					$alert({title: "Error !", content: data.msg, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
+					$alert({title: $translate.instant("ALERT_ERROR"), content: data.msg, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
 				})
 		}
 	}
@@ -472,8 +479,6 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 		$scope.currentLink = link;
 	}
 	$scope.showLink = function (link) {
-		if (link != $scope.currentLink) {
-			return true; //tmp
 			//check if user has
 			if ($scope.$storage.user && $scope.$storage.user.settings && $scope.$storage.user.settings.subtitles && link.language) {
 				//three combos authorized (original language/ original language + allowed subs / user main language)
@@ -487,8 +492,6 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 				if ($scope.$storage.user.settings.subtitles.indexOf(link.subtitles) != -1) return true;
 			}
 			else return true;
-		}
-		else return false;
 	}
 
 	$scope.addLinkRow = function (link) {
@@ -515,13 +518,13 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 	$scope.submitLinks = function(links) {
 		$http.post('/api/links', links)
 			.success(function(data) {
-				$alert({title: data.length + " links", content: "have been added", container: "body", duration: 3, container: '#linkAlertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
+				$alert({title: data.length + $translate.instant("ALERT_LINKSADDED"), container: "body", duration: 3, container: '#linkAlertContainer',animation: "am-fade-and-slide-top", placement: 'top', type: 'success', show: true});
 				$scope.links.push(data);
 				$scope.formLinks = [];
 				$scope.addLinkRow();
 			})
 			.error(function (err) {
-				$alert({title: err.msg, placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
+				$alert({title: $translate.instant(err.msg), placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
 				$scope.err = err;
 			});
 	}
@@ -529,7 +532,7 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 	$scope.deleteLink = function (link, isCurrentLink) {
 		$http.delete('/api/links/' + link._id).success(function (data) {
 			$scope.links.splice($scope.links.indexOf(link), 1);
-			if (isCurrentLink && $scope.links[0]) {$scope.currentLink = $scope.links[0];
+			if (isCurrentLink && $scope.links[0]) {$scope.currentLink = $scope.getCurrentLink();
 			}
 			else $scope.currentLink = null;
 		});
@@ -543,7 +546,7 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 			$http.get('/api/' + $scope.media + '/' + $scope.mediaId + '/links')
 				.success(function (data) {
 					$scope.links = data;
-					$scope.currentLink = $scope.links[0];
+					$scope.currentLink = $scope.getCurrentLink();
 					$scope.loaded = true;
 				})
 				.error(function (err) {
@@ -694,7 +697,7 @@ controllers.controller('ProfileController', ['$scope', '$http', '$route', functi
 		});
 }]);
 
-controllers.controller('SettingsController', ['$scope', '$http', '$localStorage', '$location', '$alert', function ($scope, $http, $localStorage, $location, $alert) {
+controllers.controller('SettingsController', ['$scope', '$http', '$localStorage', '$location', '$alert', '$translate', function ($scope, $http, $localStorage, $location, $alert, $translate) {
 	$scope.$storage = $localStorage;
 	$scope.languages = languagesAllowed;
     $scope.myImage= $scope.$storage.user.avatar || '';
@@ -730,7 +733,7 @@ controllers.controller('SettingsController', ['$scope', '$http', '$localStorage'
 
 	    			$scope.$storage.user.avatar = data.src;
 
-	     			$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
+	     			$alert({title: $translate.instant(data.msg), placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
 			
 	    		})
 	    }
@@ -744,10 +747,10 @@ controllers.controller('SettingsController', ['$scope', '$http', '$localStorage'
 			.success(function (data) {
 				$scope.$storage.language = $localStorage.user.settings.language;
 
-				$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
+				$alert({title: $translate.instant(data.msg), placement: 'top', duration: 4, container: '#alertContainer', type: 'success', show: true});
 			})
 			.error (function (data) {
-				$alert({title: data.msg, placement: 'top', duration: 4, container: '#alertContainer', type: 'danger', show: true});
+				$alert({title: $translate.instant(data.msg), placement: 'top', duration: 4, container: '#alertContainer', type: 'danger', show: true});
 			})
 	}
 

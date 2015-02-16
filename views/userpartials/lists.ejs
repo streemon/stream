@@ -1,6 +1,6 @@
 <row class="col-md-12">
 	<table class="table table-striped">
-		<tr> <th>Title</th> <th>Views</th> <th># Items</th> <th>Actions</th> </tr>
+		<tr> <th translate="TITLE">Title</th> <th translate="VIEWS">Views</th> <th># Items</th> <th translate="ACTIONS">Actions</th> </tr>
 		<tr ng-repeat="list in lists">
 			<td><a ng-href="{{ 'lists/' + list._id}}" target="_blank">{{list.title}}</a></td>
 			<td>{{list.views}}</td>

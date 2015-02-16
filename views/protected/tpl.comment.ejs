@@ -2,7 +2,7 @@
 	<li ng-repeat="comment in comments">
 		<!-- to modify -->
 		<a ng-href="/users/{{comment.author.username}}" class="avatar">
-			<img src="/img/default_avatar.png" ng-src="/{{comment.author.avatar}}" class="img-rounded img-small-responsive">
+			<img src="/img/default_avatar.png" ng-src="/{{comment.author.avatar || 'img/default_avatar.png'}}" class="img-rounded img-small-responsive">
 		</a>
 		<div class="content">
 			<div class="title">

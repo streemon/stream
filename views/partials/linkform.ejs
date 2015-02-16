@@ -1,6 +1,6 @@
 <div class="container player">
 	<div class="row">
-		<div class="col-sm-1 col-lg-offset-2 col-md-offset-1 hidden-xs" style="margin-top: 50px">
+		<div class="col-sm-1 col-md-offset-1 hidden-xs" style="margin-top: 50px">
 			<button ng-if="prevEpisode" class="btn btn-default" ng-click="prevEpisode()"><span class="glyphicon glyphicon-chevron-left" style="font-size: 30px;"></span></button>
 		</div>
 		<div ng-if="!currentLink && loaded" class="col-lg-6 col-md-8 col-sm-10" style="height: 200px;" >
@@ -8,22 +8,22 @@
 			  <strong>No link!</strong> Please <a href="#" title="Add link" data-toggle="modal" data-target="#formlinkModal">add one</a> or come back later...
 			</div>
 		</div>
-		<div class="col-lg-6 col-md-8 col-sm-10" ng-if="currentLink" style="height: 315px">
+		<div class="col-md-8 col-sm-10" ng-if="currentLink" style="height: 360px">
 			<div class="player-loading">
 				<div class="alert alert-warning" translate="ALERT_LOADING">
 				  <strong>Loading!</strong> The video will appear in a few seconds...
 				</div>
 			</div>
 
-			<iframe id="playerFrame" ng-if="currentLink" width="100%" height="100%" style="height: 315px" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
+			<iframe id="playerFrame" ng-if="currentLink" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
 		</div>
 		<div class="col-sm-1 hidden-xs"  style="margin-top: 50px">
 			<button ng-if="nextEpisode" class="btn btn-default pull-right" ng-click="nextEpisode()"><span class="glyphicon glyphicon-chevron-right" style="font-size: 30px;"></span></button>
 		</div>
 	</div>
-
-	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-path" ng-if="links">
+	
+	<div class="row margintop5">
+		<div class="col-xs-12 col-sm-9 col-md-7 center-block player-path" ng-if="links">
 			<div class="col-xs-2" style="padding-left:0px;">
 				<a href="#" class="player-path-glyphicon glyphicon-info" title="Show all links" ng-click="toggleLinks()">
 					<i class="fa fa-caret-right fa-sm" ng-hide="showAllLinks"></i> 
@@ -34,7 +34,7 @@
 			<div class="col-xs-5">
 				<center>
 					<img class="logo24 logo-{{currentLink.hostname}} img-rounded img-xsmall hidden-xs"></img>
-					<div class="player-path-hostname" data-placement="bottom" data-container="body" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}}</div>
+					<div class="player-path-hostname" data-placement="bottom" data-container="body" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}} <img class="flag flag-{{currentLink.language}}" alt="NA"></img></div>
 				</center>
 			</div>
 			<div class="col-xs-3" style="padding-right:0px;">
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-9 col-md-7 col-lg-6 center-block player-links" ng-show="showAllLinks">
+		<div class="col-xs-12 col-sm-9 col-md-7 center-block player-links" ng-show="showAllLinks">
 			<table class="table table-striped">
 				<tr ng-repeat="link in links" ng-if="showLink(link)">
 					<td>

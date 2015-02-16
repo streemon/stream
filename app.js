@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({limit: '4mb'}));
 app.use(cookieParser('1<1v2v1e@v1v221vv:ù^*K33'));
 app.use(session({ secret: 'kaplantoeflibtthirdedition', name: 'sid'}))
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 // development only
 if (app.get('env') === 'development') {

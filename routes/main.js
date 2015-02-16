@@ -68,15 +68,15 @@ exports.login = function (req, res, next) {
 					authorizeUser(req, res, doc);
 				}
 				else { 
-					return res.json(400, {msg: "Wrong credentials"});
+					return res.json(400, {msg: "ALERT_WRONGCREDENTIALS"});
 				}
 			})
 		}
 		else {
-			return res.json(400, {msg: "Password not provided"});
+			return res.json(400, {msg: "ALERT_NOPASSWORD"});
 		}
 	}
-	else return res.json(400, {msg: "Username not provided"});
+	else return res.json(400, {msg: "ALERT_NOUSERNAME"});
 };
 
 exports.signup = function(req, res, next) {
@@ -86,8 +86,8 @@ exports.signup = function(req, res, next) {
 						
 			req.db.User.create(userData, function(err, doc) {
 				if (err) {
-					if (err.name == "ValidationError") res.json(400, {msg: "Wrong email"});
-					else if (err.code == 11000) res.json(400, {msg: "Email or username already in use"});
+					if (err.name == "ValidationError") res.json(400, {msg: "ALERT_INVALIDEMAIL"});
+					else if (err.code == 11000) res.json(400, {msg: "ALERT_ALREADYINUSE"});
 					else res.json(400, err)
 				}
 				else if (doc) {
@@ -102,10 +102,10 @@ exports.signup = function(req, res, next) {
 			});
 		}
 		else {
-			return res.json(400, {msg: "Password not provided"});
+			return res.json(400, {msg: "ALERT_NOPASSWORD"});
 		}
 	}
-	else return res.json(400, {msg: "Username/email not provided"});
+	else return res.json(400, {msg: "ALERT_NOUSERNAME"});
 					
 };
 
@@ -117,7 +117,7 @@ exports.logout = function(req, res) {
 		exports.addLog(req, function (err) {
 			if (err) next(err);
 
-			return res.json(200, {msg: 'Successfully logged out !', user: {auth: false}});
+			return res.json(200, {msg: 'ALERT_LOGGEDOUT', user: {auth: false}});
 		});
 	}
 	else res.json(400, {msg: 'Already logged out'});

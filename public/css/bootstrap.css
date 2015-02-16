@@ -5952,6 +5952,7 @@ button.close {
 .player-loading {
 	position: absolute;
 	top: 50px;
+  left: 20%;
 	z-index: -1;
 }
 .player {
@@ -7596,7 +7597,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo24.logo-vk { background-position: -768px 0px;  } 
 .logo24.logo-youtube { background-position: -792px 0px;  } 
 .logo24.logo-youwatch { background-position: -816px 0px;  }
-.logo24.logo-vidbull { background-position: -830px 0px;  } 
+.logo24.logo-vidbull { background-position: -839px 0px 0px;  } 
 .logo24.logo-thefile { background-position: -854px 0px;  } 
 
 .logo16 { background: url('/img/logo16.png') no-repeat top left; width: 16px; height: 16px;  background-position: -288px 0px; } 
