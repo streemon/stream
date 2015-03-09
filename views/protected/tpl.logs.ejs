@@ -1,0 +1,11 @@
+<div class="col-md-10 col-md-offset-1 margintop20">
+	<table class="table table-striped">
+		<tr> <th>Action</th> <th>Author</th> <th>Media</th> <th>Date</th></tr>
+		<tr ng-repeat="log in logs">
+			<td>{{log.action}}</td>
+			<td>{{log._authorId}}</td>
+			<td><a ng-href="/{{log.media}}/{{log.mediaId}}">{{log.media}} #{{log.mediaId}}</a></td>
+			<td>{{log.date}}</td>
+		</tr>
+	</table>
+</div>

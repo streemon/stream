@@ -171,10 +171,12 @@ exports.newReleases = function (req, res) {
 		{$sort: {date: -1}},
 		{$limit: count}
 	], function (err, results) {
-		results.forEach(function (result) {
-			var item = {media: req.params.media, mediaId: result._id};
-			list.items.push(item);
-		})
+		if (results) {
+			results.forEach(function (result) {
+				var item = {media: req.params.media, mediaId: result._id};
+				list.items.push(item);
+			})
+		}
 		res.json(200, list);
 	})
 }

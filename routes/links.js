@@ -52,13 +52,30 @@ exports.getUserLinks = function(req, res, next) {
 	else  {
 		var _uploaderId = req.session.user._id;
 	}
+	var page = req.query.p || 0;
+	var skip = page * LIMIT;
 
-	var skip = req.query.skip || SKIP;
+	req.db.Link
+		.find({_uploaderId: _uploaderId})
+		.limit(LIMIT)
+		.skip(skip)
+		.sort({date: -1})
+		.exec(function(err, links){
+			if (err) next(err);
 
-	req.db.Link.find({_uploaderId: _uploaderId}, null, {skip: skip, limit: LIMIT, sort: {_id: -1}}, function(err, links){
-		if (err) next(err);
-		res.json(200, links);
-	})
+			req.db.Link.count({_uploaderId: _uploaderId}, function(err, count) {
+				if (err) next(err);
+
+				var data = {}
+				data.page = page;
+				data.count = count;
+				data.limit = LIMIT;
+				data.links = links;
+				res.json(200, data);
+			})
+		})
+
+
 }
 
 exports.flag = function (req, res, next) {

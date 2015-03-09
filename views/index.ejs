@@ -2,7 +2,7 @@
 <html ng-app="myapp" ng-controller="MainController">
 	<head>
 		<% include partials/head %>
-		<title translate="{{$route.current.title}}">
+		<title ng-bind-template="{{$route.current.title | translate}}">
 			Stream
 		</title>
 	</head>

@@ -1,6 +1,6 @@
 <div class="container player">
 	<div class="row">
-		<div class="col-sm-1 col-md-offset-1 hidden-xs" style="margin-top: 50px">
+		<div class="col-sm-1 col-md-offset-1 col-lg-offset-2 hidden-xs" style="margin-top: 50px">
 			<button ng-if="prevEpisode" class="btn btn-default" ng-click="prevEpisode()"><span class="glyphicon glyphicon-chevron-left" style="font-size: 30px;"></span></button>
 		</div>
 		<div ng-if="!currentLink && loaded" class="col-lg-6 col-md-8 col-sm-10" style="height: 200px;" >
@@ -8,7 +8,7 @@
 			  <strong>No link!</strong> Please <a href="#" title="Add link" data-toggle="modal" data-target="#formlinkModal">add one</a> or come back later...
 			</div>
 		</div>
-		<div class="col-md-8 col-sm-10" ng-if="currentLink" style="height: 360px">
+		<div class="col-lg-6 col-md-8 col-sm-10" ng-if="currentLink" style="height: 360px">
 			<div class="player-loading">
 				<div class="alert alert-warning" translate="ALERT_LOADING">
 				  <strong>Loading!</strong> The video will appear in a few seconds...
