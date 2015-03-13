@@ -1,7 +1,7 @@
 <row class="col-md-12">
 	<table class="table table-striped">
 		<tr> <th>URL</th> <th translate="VIEWS">Views</th> <th translate="MEDIA">Media</th> <th translate="ACTIONS">Actions</th> </tr>
-		<tr ng-repeat="link in links">
+		<tr ng-repeat="link in links.items">
 			<td><a ng-href="{{link.url}}" target="_blank">{{link.url}}</a></td>
 			<td>{{link.views}}</td>
 			<td><a ng-href="/{{link.media}}/{{link.mediaId}}">{{link.media}} #{{link.mediaId}}</a></td>

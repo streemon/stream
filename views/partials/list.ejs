@@ -3,7 +3,7 @@
 	<div class="row mediacard margintop20" ng-repeat="item in items">
 		<div class="col-lg-2 col-sm-3 col-xs-3 frameMedia">
 			<a ng-href="/{{item.media || 'movies'}}/{{item.id}}">
-				<img class="poster" ng-src="{{ 'http://image.tmdb.org/t/p/w185' + item.poster_path || 'http://placehold.it/193x270&text=no+poster'}}"></img>
+				<img class="poster" ng-src="{{ 'https://image.tmdb.org/t/p/w185' + item.poster_path || 'http://placehold.it/193x270&text=no+poster'}}"></img>
 			</a>
 		</div>
 		<div class="col-xs-9 col-sm-9 col-lg-10 margin-top">
@@ -20,7 +20,7 @@
 			<h4 ng-if="item.created_by"><small>
 				<span translate="BY">By</span> 
 				<span ng-repeat="creator in item.created_by"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="creator.name"></a></span>
-			</small></h4>{{item}}
+			</small></h4>
 			<h4 ng-show="item.credits.cast"><small><span translate="WITH">With</span> <span ng-repeat="role in item.credits.cast|limitTo: 4" ><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="role.name" data-title="{{role.character}}" bs-tooltip></a></small></h4>
 			<p class="plot margintop10">
 				<span ng-bind="item.overview"></span>

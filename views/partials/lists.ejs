@@ -5,6 +5,6 @@
 				{{list.title || list.name}}
 			</h3>
 		</a>
-		<a ng-href="/{{item.media || list.media || 'movies'}}/{{item.id}}" ng-repeat="item in list.items | limitTo: 6" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" ng-src="{{ item.poster_path ? 'http://image.tmdb.org/t/p/w150' + item.poster_path : 'http://placehold.it/193x270&text=' + item.name}}"></img></a>
+		<a ng-href="/{{item.media || list.media || 'movies'}}/{{item.id}}" ng-repeat="item in list.items | limitTo: 6" class="col-xs-4 col-sm-4 col-md-2 frame"><img class="poster" ng-src="{{ item.poster_path ? 'https://image.tmdb.org/t/p/w150' + item.poster_path : 'http://placehold.it/193x270&text=' + item.name}}"></img></a>
 	</div>
 </div>

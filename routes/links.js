@@ -70,7 +70,7 @@ exports.getUserLinks = function(req, res, next) {
 				data.page = page;
 				data.count = count;
 				data.limit = LIMIT;
-				data.links = links;
+				data.items = links;
 				res.json(200, data);
 			})
 		})

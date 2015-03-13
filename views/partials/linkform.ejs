@@ -57,8 +57,8 @@
 						<a href="" ng-if="$storage.user && ($storage.user._id == link._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(link)" data-trigger="hover" data-title="Delete Link" data-placement="right" bs-tooltip><i class="fa fa-times"></i></a>
 					</td>
 					<td><a href="" ng-click="changeLink(link)">{{link.url}}</a></td>
-					<td><img class="flag flag-{{link.language}}" alt="NA"></img></td>
-					<td><img class="flag flag-{{link.subtitles}}" alt="NA"></img></td>
+					<td><img class="flag flag-{{link.language}}"></img></td>
+					<td><img class="flag flag-{{link.subtitles}}"></img></td>
 				</tr>
 			</table>
 		</div>

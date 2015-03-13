@@ -566,7 +566,7 @@ controllers.controller('MovieController', ['$scope', '$route', '$http', '$alert'
 		function (data) {
 			$scope.$apply(function () {
 				$scope.movie = JSON.parse(data);
-				if ($scope.movie.poster_path) $scope.movie.poster_path = 'http://image.tmdb.org/t/p/w342' + $scope.movie.poster_path;
+				if ($scope.movie.poster_path) $scope.movie.poster_path = 'https://image.tmdb.org/t/p/w342' + $scope.movie.poster_path;
 				$route.current.title = $scope.movie.title;
 
 				var index = $scope.$storage.watchedRecently.movies.itemsIds.indexOf($scope.movie.id);
@@ -595,7 +595,7 @@ controllers.controller('ShowController', ['$scope', '$route', '$http', '$locatio
 		function (data) {
 			$scope.$apply(function () {
 				$scope.show = JSON.parse(data);
-				$scope.show.poster_path = 'http://image.tmdb.org/t/p/w342' + $scope.show.poster_path;
+				$scope.show.poster_path = 'https://image.tmdb.org/t/p/w342' + $scope.show.poster_path;
 				$route.current.title = $scope.show.name;
 
 				var index = $scope.$storage.watchedRecently.shows.itemsIds.indexOf($scope.show.id);
@@ -761,7 +761,7 @@ controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '
 
 	$scope.deleteLink = function(link) {
 		$http.delete('/api/links/' + link._id).success(function (data) {
-			$scope.links.splice($scope.links.indexOf(link), 1);
+			$scope.links.items.splice($scope.links.items.indexOf(link), 1);
 		});
 	}
 
@@ -770,7 +770,8 @@ controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '
 
 	$http.get('/api/account/links')
 		.success(function (data) {
-			$scope.links = data;
+			$scope.abc = data;
+			console.log(data);
 		})
 		.error(function (err) {
 			$scope.err = err;
