@@ -770,7 +770,7 @@ controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '
 
 	$http.get('/api/account/links')
 		.success(function (data) {
-			$scope.abc = data;
+			$scope.links = data;
 			console.log(data);
 		})
 		.error(function (err) {
