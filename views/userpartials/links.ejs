@@ -1,6 +1,8 @@
 <row class="col-md-12">
+
 	<table class="table table-striped">
 		<tr> <th>URL</th> <th translate="VIEWS">Views</th> <th translate="MEDIA">Media</th> <th translate="ACTIONS">Actions</th> </tr>
+
 		<tr ng-repeat="link in links.items">
 			<td><a ng-href="{{link.url}}" target="_blank">{{link.url}}</a></td>
 			<td>{{link.views}}</td>
@@ -8,4 +10,24 @@
 			<td><button class="btn btn-xs btn-danger" ng-click="deleteLink(link)" translate="FORM_DELETE">DELETE</button></td>
 		</tr>
 	</table>
+
+	<div class="col-md-12 text-center">
+	
+		<div class="loadingDiv" ng-if="!links"></div>
+		<ul class="pagination" ng-if="nbOfPages > 1">    
+			<li>
+			  <a ng-href="links?page={{1*links.page - 1}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			<li ng-repeat="page in pages track by $index" ng-class="{active: links.page == $index}">
+				<a ng-href="links?page={{$index}}">{{$index + 1}}</a>
+			</li>
+			<li>
+			  <a ng-href="links?page={{1*links.page + 1}}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+		</ul>
+	</div>
 </row>

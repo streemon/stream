@@ -13,11 +13,11 @@
 				<span ng-bind="item.release_date || item.first_air_date | date: 'yyyy'">2014</span> 
 				<span class="hidden"> <b>&middot;</b><span ng-bind="item.runtime">90</span> min</span>
 			</small></h4>
-			<h4 ng-if="item.credits.crew"><small>
+			<h4 ng-if="item.credits.crew && item.title"><small>
 				<span translate="BY">By</span> 
 				<span ng-repeat="role in item.credits.crew |filter: {job:'Director'}:true"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="role.name"></a></span>
 			</small></h4>
-			<h4 ng-if="item.created_by"><small>
+			<h4 ng-if="item.created_by.length"><small>
 				<span translate="BY">By</span> 
 				<span ng-repeat="creator in item.created_by"><span ng-if="$index != 0"> &middot; </span><a href="#" ng-bind="creator.name"></a></span>
 			</small></h4>

@@ -12,16 +12,16 @@
 
 	$('form').submit(function(){
 		var msg = {txt: $('#m').val(), username: username};
-	socket.emit('chat message', msg);
-	$('#m').val('');
-	return false;
+		socket.emit('chat message', msg);
+		$('#m').val('');
+		return false;
 	});
 
 	socket.on('connected', function(username) {
 		$('#messages').append('<li class="newConnection"><em>' + username + ' is connected</em></li>');
 	})
 	socket.on('chat message', function(msg){
-	$('#messages').append("<li><strong>" + msg.username + "</strong>: " + msg.txt + "</li>");
+		$('#messages').append("<li><strong>" + msg.username + "</strong>: " + msg.txt + "</li>");
 	});
 </script>
 <style>

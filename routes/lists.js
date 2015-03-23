@@ -3,6 +3,8 @@ var async = require('async');
 var moment = require('moment');
 var querystring = require('querystring');
 var _ = require("underscore");
+var LIMIT = 20;
+var SKIP = 0;
 
 var defaultLists = [{id: "mostWatched", position: 10, args: {media: "movies", count: 12, ago: "week"}}, {id: "mostWatched", position: 20, args: {media: "shows", count: 6, ago: "day"}}, {id: "newReleases", postion: 30, args: {media: "movies", count: 6}}];
 var userLists = [{id: "watchedRecently", position: 0, args: {media: "shows", count: 6}}]
@@ -57,13 +59,29 @@ exports.getLists = function (req, res, next) {
 }
 
 exports.getUserLists = function (req, res, next) {
-	var listQuery = req.db.List.find({_authorId: req.params.id});
+	var _authorId = req.params.id || req.session.user._id;
+	var page = req.query.p || 0;
+	var skip = page * LIMIT;
 
-	listQuery.exec(function(err, lists){
-		if (err) next(err);
+	req.db.List
+		.find({_authorId: _authorId})
+		.limit(LIMIT)
+		.skip(skip)
+		.sort({date: -1})
+		.exec(function(err, lists){
+			if (err) next(err);
 
-		res.json(200, lists);
-	})
+			req.db.List.count({_authorId: _authorId}, function(err, count) {
+				if (err) next(err);
+
+				var data = {}
+				data.page = page;
+				data.count = count;
+				data.limit = LIMIT;
+				data.items = lists;
+				res.json(200, data);
+			})
+		})
 }
 
 exports.addList = function (req, res, next) {

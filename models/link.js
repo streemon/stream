@@ -13,7 +13,7 @@ var LinkSchema = new Schema ({
 	views: {type: Number, required: true, default: 1},
 	date: {type: Date, default: Date.now},
 	flags: [{_flaggerId: Schema.Types.ObjectId, reason: String}],
-	_uploaderId: Schema.Types.ObjectId
+	_uploaderId: {type: Schema.Types.ObjectId, index: true}
 });
 
 module.exports = mongoose.model('Link', LinkSchema);

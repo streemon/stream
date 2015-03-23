@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies
  */
@@ -82,6 +81,7 @@ app.get('/api/lists/:id/:media(movies|shows)?', db, routes.lists.getListById);
 app.delete('/api/lists/:id', routes.main.hasRights(0), db, routes.lists.removeList);
 app.put('/api/lists/:id', routes.main.hasRights(0), db, routes.lists.addListItem);
 app.delete('/api/lists/:id/:itemId', routes.main.hasRights(0), db, routes.lists.removeListItem);
+app.get('/api/account/lists', routes.main.hasRights(0), db, routes.lists.getUserLists);
 app.get('/api/users/:id/lists', db, routes.lists.getUserLists);
 app.post('/api/lists', routes.main.hasRights(0), db, routes.lists.addList);
 

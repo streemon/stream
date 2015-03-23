@@ -1,4 +1,4 @@
-var app = angular.module('myapp', ['pascalprecht.translate', 'mgcrea.ngStrap', 'ngSanitize', 'ngRoute', 'ngStorage', 'infinite-scroll', 'myapp.controllers', 'myapp.directives', 'ngImgCrop', 'ui.bootstrap.pagination']);
+var app = angular.module('myapp', ['pascalprecht.translate', 'mgcrea.ngStrap', 'ngSanitize', 'ngRoute', 'ngStorage', 'infinite-scroll', 'myapp.controllers', 'myapp.directives', 'ngImgCrop']);
 
 app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 	$routeProvider

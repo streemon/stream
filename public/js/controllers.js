@@ -381,14 +381,14 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
 	$scope.inList = [];
-	$scope.userLists = [];
+	$scope.userLists = {items: []};
 
 	$scope.addNewList = function (listTitle) {
 		//creates new list
-		$http.post('/api/lists', {title: listTitle, media: $scope.media, mediaId: $scope.mediaId})
+		$http.post('/api/lists', {title: listTitle, media: $scope.media, mediaId: $route.current.params.id})
 			.success(function (data) {
 				$scope.newList = "";
-				$scope.userLists.push(data);
+				$scope.userLists.items.push(data);
 			})
 			.error(function (data) {
 
@@ -398,10 +398,10 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 	$scope.toggleItemList = function (listIndex) {
 		//adds or remove item to/from list
 		if ($scope.inList[listIndex]) {
-			$http.delete('/api/lists/' + $scope.userLists[listIndex]._id + '/' + $scope.inList[listIndex])
+			$http.delete('/api/lists/' + $scope.userLists.items[listIndex]._id + '/' + $scope.inList[listIndex])
 			.success (function (data) {
 				//$scope.$apply(function () {
-					$scope.userLists[listIndex] = data;
+					$scope.userLists.items[listIndex] = data;
 				//})
 			})
 			.error(function (err) {
@@ -410,9 +410,9 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 		}
 		else {
 			//adds a media to a list
-			$http.put('/api/lists/' + $scope.userLists[listIndex]._id, {media: $scope.listMedia || $scope.media, mediaId: $scope.listMediaId || $scope.mediaId})
+			$http.put('/api/lists/' + $scope.userLists.items[listIndex]._id, {media: $scope.listMedia || $scope.media, mediaId: $scope.listMediaId || $scope.mediaId})
 			.success(function (data) {
-				$scope.userLists[listIndex] = data;
+				$scope.userLists.items[listIndex] = data;
 			})
 			.error(function (err) {
 				$alert({title: $translate.instant("ALERT_ERROR"), content: err, placement: 'top', duration: 5, container: '#reportAlertContainer', type: 'warning', show: true});
@@ -421,19 +421,22 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 	}
 
 	$scope.$watch("userLists", function () {
-		for (var i=0; i < $scope.userLists.length; i++) {
-	        var val = false;
-	        angular.forEach($scope.userLists[i].items, function (item) {
-	        	if (item.media == $scope.media && item.mediaId == parseInt($scope.mediaId)) {
-	            	val = item._id;
-	            }
-	        });
-	        $scope.inList[i] = val;
+		if ($scope.userLists.items) {
+			for (var i=0; i < $scope.userLists.items.length; i++) {
+		        var val = false;
+		        angular.forEach($scope.userLists.items[i].items, function (item) {
+		        	console.log(item, $scope.media, $scope.mediaId);
+		        	if (item.media == $scope.media && item.mediaId == parseInt($route.current.params.id)) {
+		            	val = item._id;
+		            }
+		        });
+		        $scope.inList[i] = val;
+			}
 		}
     }, true)
 
 	if ($scope.$storage.user) {
-		$http.get('/api/users/' + $scope.$storage.user._id + '/lists')
+		$http.get('/api/account/lists')
 			.success (function (data) {
 				$scope.userLists = data;
 			})
@@ -758,6 +761,8 @@ controllers.controller('SettingsController', ['$scope', '$http', '$localStorage'
 
 controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '$location', function ($scope, $http, $localStorage, $location) {
 	$scope.$storage = $localStorage;
+	var pagesBuffer = 3;
+	var url = '/api/account/links';
 
 	$scope.deleteLink = function(link) {
 		$http.delete('/api/links/' + link._id).success(function (data) {
@@ -768,10 +773,11 @@ controllers.controller('LinksController', ['$scope', '$http', '$localStorage', '
 	//if user is not identified
 	if (!$scope.$storage.user || !$scope.$storage.user.auth) return $location.path('/');
 
-	$http.get('/api/account/links')
+	$http.get(url, {params: {p: $location.search().page}})
 		.success(function (data) {
 			$scope.links = data;
-			console.log(data);
+			$scope.nbOfPages = Math.ceil(data.count / data.limit);
+			$scope.pages = new Array($scope.nbOfPages);
 		})
 		.error(function (err) {
 			$scope.err = err;
@@ -784,16 +790,18 @@ controllers.controller('ListsController', ['$scope', '$http', '$localStorage', '
 
 	$scope.deleteList = function(list) {
 		$http.delete('/api/lists/' + list._id).success(function (data) {
-			$scope.lists.splice($scope.lists.indexOf(list), 1);
+			$scope.lists.items.splice($scope.lists.items.indexOf(list), 1);
 		});
 	}
 
 	//if user is not identified
 	if (!$scope.$storage.user || !$scope.$storage.user.auth) return $location.path('/');
 
-	$http.get('/api/users/' + $scope.$storage.user._id + '/lists')
+	$http.get('/api/account/lists')
 		.success(function (data) {
 			$scope.lists = data;
+			$scope.nbOfPages = Math.ceil(data.count / data.limit);
+			$scope.pages = new Array($scope.nbOfPages);
 		})
 		.error(function (err) {
 			$scope.err = err;

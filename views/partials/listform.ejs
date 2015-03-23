@@ -1,4 +1,4 @@
-<!-- listform modal -->
+<!-- listform modal -->{{inList}} - {{userLists}}
 <div class="modal" id="listModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 	<div class="modal-content">
@@ -9,7 +9,7 @@
 		<div class="modal-body">
 			<div id="listAlertContainer"></div>
 			<div class="form-group">
-				<div ng-repeat="list in userLists" class="marginbottom10" ng-class="{'has-success': inList[$index], 'has-info': mouseOver}">
+				<div ng-repeat="list in userLists.items" class="marginbottom10" ng-class="{'has-success': inList[$index], 'has-info': mouseOver}">
 					<div  class="form-control form-list" ng-mouseover="mouseOver = true" ng-mouseleave="mouseOver = false" ng-click="toggleItemList($index)">
 						{{list.title}} <i class="fa fa-check-circle fa-lg pull-right" ng-show="inList[$index] || mouseOver"></i>
 					</div>

@@ -4332,6 +4332,7 @@ ul.nav-tabs {
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
 }
+
 .pager {
   padding-left: 0;
   margin: 20px 0;
@@ -5964,7 +5965,6 @@ button.close {
 	padding: 8px 8px;
 	background-color: transparent;
 	border-radius: 0px;
-	overflow: visible;
 }
 .player-path-hostname {
 	color: #8d8d8d;
@@ -7535,6 +7535,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .form-list {
   padding: 5px 12px;
   cursor: pointer;
+  transition: none;
 }
 .form-list .fa {
   margin-top: 3px;
@@ -7549,20 +7550,13 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .loadingDiv {
   display: block;
   margin: 32px auto;
-  height: 30px;
-  width: 30px;
-  -webkit-animation: rotation .7s infinite linear;
-  -moz-animation: rotation .7s infinite linear;
-  -o-animation: rotation .7s infinite linear;
-  animation: rotation .7s infinite linear;
-  border-left: 8px solid rgba(0, 0, 0, 0.2);
-  border-right: 8px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 8px solid rgba(0, 0, 0, 0.2);
-  border-top: 8px solid #2180C0;
-  border-radius: 100%;
+  height: 64px;
+  width: 64px;
+  background: url('/img/loading-spin.svg') no-repeat;
+  background-size: 100%;
 }
 /* host sprite */
-.logo24 { background: url('/img/logo24.png') no-repeat top left; width: 24px; height: 24px; background-position: -432px 0px; } 
+.logo24 { background: url('/img/logo24.png') no-repeat top left; width: 24px; height: 24px;} 
 .logo24.logo-amazon { background-position: 0px 0px;  } 
 .logo24.logo-bitshare { background-position: -24px 0px;  } 
 .logo24.logo-dailymotion { background-position: -48px 0px;  } 
@@ -7598,8 +7592,8 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .logo24.logo-vk { background-position: -768px 0px;  } 
 .logo24.logo-youtube { background-position: -792px 0px;  } 
 .logo24.logo-youwatch { background-position: -816px 0px;  }
-.logo24.logo-vidbull { background-position: -839px 0px 0px;  } 
-.logo24.logo-thefile { background-position: -854px 0px;  } 
+.logo24.logo-vidbull { background-position: -840px 0px;  } 
+.logo24.logo-thefile { background-position: -863px 0px;  } 
 
 .logo16 { background: url('/img/logo16.png') no-repeat top left; width: 16px; height: 16px;  background-position: -288px 0px; } 
 .logo16.logo-amazon { background-position: 0px 0px;  } 

@@ -1,11 +1,31 @@
 <row class="col-md-12">
 	<table class="table table-striped">
 		<tr> <th translate="TITLE">Title</th> <th translate="VIEWS">Views</th> <th># Items</th> <th translate="ACTIONS">Actions</th> </tr>
-		<tr ng-repeat="list in lists">
+		<tr ng-repeat="list in lists.items">
 			<td><a ng-href="{{ 'lists/' + list._id}}" target="_blank">{{list.title}}</a></td>
 			<td>{{list.views}}</td>
 			<td>{{list.items.length}}</td>
 			<td><button class="btn btn-xs btn-danger" ng-click="deleteList(list)" translate="FORM_DELETE">DELETE</button></td>
 		</tr>
 	</table>
+
+	<div class="col-md-12 text-center">
+	
+		<div class="loadingDiv" ng-if="!lists"></div>
+		<ul class="pagination" ng-if="nbOfPages > 1">    
+			<li>
+			  <a ng-href="lists?page={{1*lists.page - 1}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			<li ng-repeat="page in pages track by $index" ng-class="{active: lists.page == $index}">
+				<a ng-href="lists?page={{$index}}">{{$index + 1}}</a>
+			</li>
+			<li>
+			  <a ng-href="lists?page={{1*lists.page + 1}}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+		</ul>
+	</div>
 </row>
