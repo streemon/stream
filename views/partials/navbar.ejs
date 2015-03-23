@@ -33,7 +33,7 @@
 				</li>
 				<li class="dropdown" ng-if="!$storage.user.auth">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img class="flag flag-{{$storage.language}}" ></img>
+						<span class="flag flag-{{$storage.language}}" ></span>
 					</a>
 					<ul class="dropdown-menu hidden-xs">
 						<li ng-repeat="language in languages"><a href="#" ng-click="$storage.language = language.code" ng-show="$storage.language != language.code" translate="FLAG_{{language.code}}"></a></li>

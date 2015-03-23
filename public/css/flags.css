@@ -2,6 +2,7 @@
 	width: 16px;
 	height: 11px;
 	background:url(/img/flags.png) no-repeat #EEE;
+	display: inline-block;
 }
 
 .flag.flag-ad {background-position: -16px 0}

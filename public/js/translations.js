@@ -1,4 +1,4 @@
-var languagesAllowed = [{code: 'en', name: '<img class="flag flag-us"></img> English'}, {code: 'es', name: '<img class="flag flag-es"></img> Spanish'}, {code: 'fr', name: '<img class="flag flag-fr"></img> French'}, {code: 'de', name: '<img class="flag flag-de"></img> German'}, {code: 'nl', name: '<img class="flag flag-nl"></img> Dutch'}];
+var languagesAllowed = [{code: 'en', name: '<span class="flag flag-us"></span> English'}, {code: 'es', name: '<span class="flag flag-es"></span> Spanish'}, {code: 'fr', name: '<span class="flag flag-fr"></span> French'}, {code: 'de', name: '<span class="flag flag-de"></span> German'}, {code: 'nl', name: '<span class="flag flag-nl"></span> Dutch'}];
 	
 var translation_en = {
 	COMMENT_PLACEHOLDER: 'Comment..',
@@ -10,11 +10,11 @@ var translation_en = {
 	MENU_LISTS: 'My Lists',
 	MENU_MODERATE: 'Moderate',
 
-	FLAG_en: '<img class="flag flag-us"></img> English',
-	FLAG_fr: '<img class="flag flag-fr"></img> French',
-	FLAG_de: '<img class="flag flag-de"></img> German',
-	FLAG_nl: '<img class="flag flag-nl"></img> Dutch',
-	FLAG_es: '<img class="flag flag-es"></img> Spanish',
+	FLAG_en: '<span class="flag flag-us"></span> English',
+	FLAG_fr: '<span class="flag flag-fr"></span> French',
+	FLAG_de: '<span class="flag flag-de"></span> German',
+	FLAG_nl: '<span class="flag flag-nl"></span> Dutch',
+	FLAG_es: '<span class="flag flag-es"></span> Spanish',
 
 	ADDLINKS_TITLE: 'Add Links',
 	TITLE_HOME: 'Stream - Home',
@@ -91,11 +91,11 @@ var translation_fr = {
 	MENU_LISTS: 'Mes Listes',
 	MENU_MODERATE: 'Modérer',
 
-	FLAG_en: '<img class="flag flag-us"></img> Anglais',
-	FLAG_fr: '<img class="flag flag-fr"></img> Français',
-	FLAG_de: '<img class="flag flag-de"></img> Allemand',
-	FLAG_nl: '<img class="flag flag-nl"></img> Néerlandais',
-	FLAG_es: '<img class="flag flag-es"></img> Espagnol',
+	FLAG_en: '<span class="flag flag-us"></span> Anglais',
+	FLAG_fr: '<span class="flag flag-fr"></span> Français',
+	FLAG_de: '<span class="flag flag-de"></span> Allemand',
+	FLAG_nl: '<span class="flag flag-nl"></span> Néerlandais',
+	FLAG_es: '<span class="flag flag-es"></span> Espagnol',
 
 	ADDLINKS_TITLE: 'Ajouter des liens',
 	TITLE_HOME: 'Stream - Home',
