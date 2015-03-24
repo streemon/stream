@@ -69,6 +69,7 @@ app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 		.when('/users/@:username', {
 			templateUrl: '/partials/profile',
 			controller: 'ProfileController',
+			media: 'users',
 			title: 'TITLE_PROFILE'
 		})
 		.when('/links', {

@@ -712,6 +712,7 @@ controllers.controller('ProfileController', ['$scope', '$http', '$route', functi
 	$http.get('/api/users/@' + $route.current.params.username)
 		.success(function (data) {
 			$scope.profile = data;
+			$route.current.id = data.id;
 		})
 		.error(function (err) {
 			$scope.err = err;

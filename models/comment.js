@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema ({
 	media: String,
-	mediaId: Number,
+	mediaId: Schema.Types.Mixed,
 	_authorId: {type: Schema.Types.ObjectId, required: true},
 	date: {type: Date, default: Date.now},
 	comment: {type: String, required: true}
