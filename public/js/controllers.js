@@ -173,20 +173,36 @@ controllers.controller('ListController', ['$scope', '$route', '$http', '$localSt
 			}
 		})
 
+	$scope.removeFromList = function (item) {
+		if ($scope.list._authorId == $scope.$storage.user._id) {
+
+			$http.delete("/api/lists/" + $scope.list._id + "/" + item._itemId)
+				.success (function (data) {
+					$scope.items.splice($scope.items.indexOf(item), 1);
+
+				})
+				.error( function(err) {
+
+				})
+		}
+	}
+
 	$scope.$watch("list", function() {
 		if ($scope.list.items) {
 			for (var i = 0; i < $scope.list.items.length; i++) {
 				if ($scope.list.items[i].media == "shows") var tmdb = theMovieDb.tv;
 				else var tmdb = theMovieDb.movies;
 
+				var itemId = $scope.list.items[i]._id;
+				var media = $scope.list.items[i].media;
+
 				tmdb.getById(
 					{"id": $scope.list.items[i].mediaId || $scope.list.items[i].id, "language": $scope.$storage.language, "append_to_response": "credits"}, 
 					function (data) {
 						$scope.$apply(function () {
 							data = JSON.parse(data);
-							//dirty fix to give media input
-							if (data.name) data.media = "shows";
-							else data.media = "movies";
+							data.media = media;
+							data._itemId = itemId;
 
 							$scope.items.push(data);
 						});
@@ -262,7 +278,7 @@ controllers.controller('LogoutController', ['$scope', '$http', '$localStorage', 
 	});
 }]);
 
-controllers.controller('SearchController', ['$scope', '$route', '$http', '$localStorage', '$location', function ($scope, $route, $http, $localStorage, $location) {
+controllers.controller('SearchController', ['$scope', '$route', '$http', '$localStorage', '$location', '$alert', function ($scope, $route, $http, $localStorage, $location, $alert) {
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
 
@@ -285,7 +301,10 @@ controllers.controller('SearchController', ['$scope', '$route', '$http', '$local
 						$scope.searchResults.query = $route.current.params.q;
 					});
 				}, 
-				function (err) {console.log(err)}
+				function (err) {
+					$scope.err = err;
+					$alert({title: "Query error", content: err.status_message, placement: 'top', duration: 20, container: '#searchAlertContainer', type: 'danger', show: true});
+				}
 			);
 		}
 	}
@@ -425,7 +444,6 @@ controllers.controller('ListFormController', ['$scope', '$http', '$route', '$loc
 			for (var i=0; i < $scope.userLists.items.length; i++) {
 		        var val = false;
 		        angular.forEach($scope.userLists.items[i].items, function (item) {
-		        	console.log(item, $scope.media, $scope.mediaId);
 		        	if (item.media == $scope.media && item.mediaId == parseInt($route.current.params.id)) {
 		            	val = item._id;
 		            }

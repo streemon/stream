@@ -141,6 +141,8 @@ exports.addListItem = function (req, res, next) {
 exports.removeListItem = function (req, res, next) {
 	if(req.session && req.session.auth && req.session.user) {
 		req.db.List.findOneAndUpdate({ _id: req.params.id, _authorId: req.session.user._id}, {$pull: {"items": {_id: req.params.itemId}}}, {new: true}, function(err, list) {
+			console.log(err, list);
+			
 			if (err) next(err);
 
 			else res.json(200, list);

@@ -1,5 +1,6 @@
 <div class="container">
-	<div class="loadingDiv" ng-if="!searchResults"></div>
+	<div id="searchAlertContainer"></div>
+	<div class="loadingDiv" ng-if="!searchResults && !err"></div>
 	<p class="page-header-link">
 		<h3 class="page-header" translate="SEARCH_RESULTSCOUNT" translate-values="{count: searchResults.total_results, query: searchResults.query, media: $route.current.media}" ng-if="searchResults"></h3>
 		<a href="/movies/1" ng-href="/{{$route.current.media}}/{{result.id}}" class="col-xs-4 col-sm-4 col-md-2 frame" ng-repeat="result in searchResults.results" data-title="{{result.title || result.original_title}}">

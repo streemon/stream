@@ -70,6 +70,7 @@ var translation_en = {
 	FORM_REPORTLINK: "Report this link",
 	FORM_MAINLANGUAGE: 'Main Language',
 	FORM_ADDTOLIST: 'Add to List',
+	FORM_REMOVE: 'Remove',
 	FORM_ORIGINAL: 'Original',
 	FORM_PREVIEW: 'Preview',
 
@@ -149,6 +150,7 @@ var translation_fr = {
 	FORM_CLEAR: 'RAS',
 	FORM_MAINLANGUAGE: 'Langue principale',
 	FORM_ADDTOLIST: 'Ajouter à',
+	FORM_REMOVE: 'Retirer',
 	FORM_FOLLOW: "Suivre",
 	FORM_REPORTLINK: "Signaler ce lien",
 	FORM_ORIGINAL: 'Original',

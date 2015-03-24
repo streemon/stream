@@ -33,7 +33,7 @@
 			</div>
 			<div class="col-xs-5">
 				<center>
-					<div class="player-path-hostname" data-placement="bottom" data-container="body" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}} <img class="flag flag-{{currentLink.language}}"></img></div>
+					<div class="player-path-hostname" data-placement="bottom" data-container="body" data-trigger="hover" data-title="{{'LINK_ADDED' | translate}} {{currentLink.date | date:'medium'}}" bs-tooltip>{{currentLink.host}} <span class="flag flag-{{currentLink.language}}"></span></div>
 				</center>
 			</div>
 			<div class="col-xs-3" style="padding-right:0px;">
@@ -53,11 +53,11 @@
 				<tr ng-repeat="link in links" ng-if="showLink(link)">
 					<td>
 						<div class="logo24 logo-{{link.hostname}}"></div>
-						<a href="" ng-if="$storage.user && ($storage.user._id == link._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(link)" data-trigger="hover" data-title="Delete Link" data-placement="right" bs-tooltip><i class="fa fa-times"></i></a>
 					</td>
-					<td><a href="" ng-click="changeLink(link)">{{link.url}}</a></td>
-					<td><img class="flag flag-{{link.language}}"></img></td>
-					<td><img class="flag flag-{{link.subtitles}}"></img></td>
+					<td><a href="" ng-click="changeLink(link)">{{link.url}}</a>
+						<a href="" ng-if="$storage.user && ($storage.user._id == link._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(link)" data-trigger="hover" data-title="Delete Link" data-placement="right" bs-tooltip><i class="fa fa-times"></i></a></td>
+					<td><span class="flag flag-{{link.language}}"></span></td>
+					<td><span class="flag flag-{{link.subtitles}}"></span></td>
 				</tr>
 			</table>
 		</div>
