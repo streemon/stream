@@ -3407,6 +3407,7 @@ input[type="button"].btn-block {
 }
 .lens {
 	background: url("../img/lens.png") #f7f7f7 no-repeat 95%;
+  padding-right: 34px;
 }
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
