@@ -8,6 +8,10 @@ exports.index = function(req, res){
 	res.render('index', {moderator: moderator});
 };
 
+exports.teaser = function(req, res){
+	res.render('teaser');
+};
+
 exports.protected = function(req, res){
 	var name = req.params.name;
 	res.render('protected/' + name, {session: req.session});

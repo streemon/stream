@@ -64,7 +64,7 @@ function db (req, res, next) {
  */
 
 //Serve App
-app.get('/', routes.index);
+/*app.get('/', routes.index);
 app.get('/protected/:name', routes.main.hasRights(2), routes.protected);
 app.get('/userpartials/:name', routes.main.hasRights(0), routes.userpartials);
 app.get('/partials/:name', routes.partials);
@@ -121,7 +121,8 @@ app.delete('/api/links/:id', db, routes.links.del);
 //Return 404 for wrong api call
 app.get('/api/*', function (req, res) { res.send(404) });
 //Redirect lost user to homepage
-app.get('*', routes.index);
+app.get('*', routes.index); */
+app.get('*', routes.teaser);
 
 
 /**
