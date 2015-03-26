@@ -19,8 +19,11 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 	}
 
 	$scope.$watch("$storage.language", function () {
-		if (!$scope.$storage.language) $scope.$storage.language = window.navigator.language;
-		$translate.use($scope.$storage.language);
+		if ($scope.$storage) {
+			//alert($scope.$storage.language + " " + window.navigator.language)
+			if (!$scope.$storage.language) $scope.$storage.language = window.navigator.language.substring(0,2);
+			$translate.use($scope.$storage.language);
+		}
 	})
 
 	$scope.search = function () {

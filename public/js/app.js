@@ -98,5 +98,5 @@ app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 	$locationProvider.html5Mode(true);
 
 	$translateProvider.translations('en', translation_en).translations('fr', translation_fr).fallbackLanguage("en");
-	$translateProvider.preferredLanguage(window.localStorage['ngStorage-language'] || window.navigator.language || "en");
+	$translateProvider.preferredLanguage(window.localStorage['ngStorage-language'] || window.navigator.language.substring(0,2) || "en");
 });
