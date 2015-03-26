@@ -99,7 +99,7 @@ app.post('/api/account/upload', routes.main.hasRights(0), db, routes.users.uploa
 //app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.notifications.viewedNotification);
 
 //COMMENTS
-app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
+app.get('/api/:media(movies|shows|users)/:id/comments', db, routes.comments.getComments);
 app.get('/api/comments', routes.main.hasRights(2), db,routes.comments.getAllComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);
 app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);

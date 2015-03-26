@@ -48,7 +48,7 @@ controllers.controller('IndexController', ['$scope', '$route', '$http', '$localS
 	$scope.media = $route.current.media;
 	$scope.lists = [];
 	$scope.calledAddMore = false;
-	$scope.moreLists = [{id: "54ac554592514163430016c9", source: "tmdb"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"}]
+	$scope.moreLists = [{id: "54ac554592514163430016c9", source: "tmdb"}, {id: "5509cad5b3014e412c171246", media:"shows"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"}]
 			
 
 	var listsToLoadFirst = [{id: "newReleases", media: "movies"}, {id: "newReleases", media: "shows"}, {id: "54db383f007f9fd68b2754b6", media: "shows"}];
@@ -337,13 +337,17 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 	    }
 	});
 
-	$http.get('/api/'+ $route.current.media +'/' + $route.current.params.id + '/comments')
-		.success(function(data) {
-			$scope.comments = data;
-		})
-		.error(function(err) {
-			$scope.err = err;
-		})
+	$scope.$watch("mediaId", function () {	
+		if($scope.mediaId) {
+			$http.get('/api/'+ $scope.media +'/' + $scope.mediaId + '/comments')
+			.success(function(data) {
+				$scope.comments = data;
+			})
+			.error(function(err) {
+				$scope.err = err;
+			})
+		}
+	})
 
 	$scope.parseComment = function (comment) {
 		var patterns = ['(<([^>]+)>)', '\#([-\.\\w]+)','\@([-\.\\w]+)', 'SPOILER ?:?(.*)', '\n'];
@@ -375,8 +379,8 @@ controllers.controller('CommentsController', ['$scope', '$route', '$http', '$loc
 	$scope.postComment = function () {
 		var comment = {
 			comment: this.comment,
-			media: $route.current.media,
-			mediaId: $route.current.params.id
+			media: $scope.media,
+			mediaId: $scope.mediaId
 		}
 
 		if ($scope.$storage.user && $scope.$storage.user.auth) {
@@ -505,12 +509,13 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 				//three combos authorized (original language/ original language + allowed subs / user main language)
 
 				//check original language
+				//if ($scope.originalLanguage == link.language) return true;
 
 				//check user main language
 				if ($scope.$storage.user.settings.language == link.language) return true;
 
 				//check allowed subs
-				if ($scope.$storage.user.settings.subtitles.indexOf(link.subtitles) != -1) return true;
+				if ($scope.$storage.user.settings.subtitles.indexOf(link.subtitles) != -1 && $scope.originalLanguage == link.language) return true;
 			}
 			else return true;
 	}
@@ -545,8 +550,10 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 				$scope.addLinkRow();
 			})
 			.error(function (err) {
-				$alert({title: $translate.instant(err.msg), placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
-				$scope.err = err;
+				console.log(err);
+				err.errors.forEach(function (error) {
+					$alert({title: $translate.instant(error.err), placement: 'top', duration: 3, container: '#linkAlertContainer', type: 'danger', show: true});
+				})
 			});
 	}
 

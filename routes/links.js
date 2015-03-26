@@ -163,7 +163,8 @@ exports.add = function(req, res, next) {
 
 	function checkLink (link, next) {
 		//check if link is empty
-		if (link.url == '') return next(new Error('Empty link'));
+		if (link.url == '') return next();
+		if (!/\w{2}/.test(link.language)) return next(new Error("Language is required"))
 
 		//check if link exists (TODO: make changes to url w/ regex)
 		req.db.Link.findOne({url: link.url}, function (err, doc) {

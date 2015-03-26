@@ -26,8 +26,7 @@
 </div>
 
 <div id="movieAlertContainer"></div>
-
-<linkform media="movies" media-id="{{movie.id}}"></linkform>
+<linkform media="movies" media-id="{{movie.id}}" original-language="{{movie.original_language}}"></linkform>
 <listform media="movies" media-id="{{movie.id}}"></listform>
 
 <div class="container">
@@ -36,4 +35,4 @@
 	</div>
 </div>
 
-<comments></comments>
+<comments media="movies" media-id="{{movie.id}}"></comments>
