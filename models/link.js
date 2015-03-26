@@ -6,7 +6,7 @@ var LinkSchema = new Schema ({
 	mediaId: {type: Number, required: true},
 	url: {type: String, validate: /^([a-z][a-z0-9\*\-\.]*):\/\/(?:(?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*(?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@)?(?:(?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?](?:[\w#!:\.\?\+=&@!$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?$/i },
 	iframe: String,
-	language: String,
+	language: {type: String, required: true},
 	subtitles: String,
 	host: String,
 	hostname: String,

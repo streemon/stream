@@ -4,7 +4,11 @@ directives.directive('comments', function () {
     return {
         restrict: 'E',
         controller: 'CommentsController',
-        templateUrl: '/partials/comments'
+        templateUrl: '/partials/comments',
+        scope: {
+            media: '@',
+            mediaId: '@'
+        }
     };
 });
 directives.directive('linkform', function () {
@@ -13,6 +17,7 @@ directives.directive('linkform', function () {
         scope: {
             media: '@',
             mediaId: '@',
+            originalLanguage: '@',
             prevEpisode: '=',
             nextEpisode: '='
         },

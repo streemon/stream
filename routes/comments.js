@@ -111,7 +111,7 @@ exports.del = function (req, res, next) {
 		});
 	}
 	else if(req.session && req.session.auth && req.session.user) {
-		req.db.Comment.findOneAndRemove({ _id: req.params.id, _authorId: req.session.user._id}, function(err, obj) {
+		req.db.Comment.findOneAndRemove({ _id: req.params.id, $or: [{_authorId: req.session.user._id}, {mediaId: req.session.user._id, media: "users"}]}, function(err, obj) {
 			if (err) next(err);
 
 			if(obj) res.json(200, obj);

@@ -1,14 +1,14 @@
 <div class="container player">
 	<div class="row">
-		<div class="col-sm-1 col-md-offset-1 col-lg-offset-2 hidden-xs" style="margin-top: 50px">
+		<div class="col-md-1 hidden-sm hidden-xs" style="margin-top: 10%">
 			<button ng-if="prevEpisode" class="btn btn-default" ng-click="prevEpisode()"><span class="glyphicon glyphicon-chevron-left" style="font-size: 30px;"></span></button>
 		</div>
-		<div ng-if="!currentLink && loaded" class="col-lg-6 col-md-8 col-sm-10" style="height: 200px;" >
-			<div class="alert alert-warning" translate="ALERT_NOLINK" style="margin-top: 60px;">
+		<div ng-if="!currentLink && loaded" class="col-md-10 col-sm-12" style="height: 200px;" >
+			<div class="alert alert-warning text-center" translate="ALERT_NOLINK" style="margin-top: 60px;">
 			  <strong>No link!</strong> Please <a href="#" title="Add link" data-toggle="modal" data-target="#formlinkModal">add one</a> or come back later...
 			</div>
 		</div>
-		<div class="col-lg-6 col-md-8 col-sm-10" ng-if="currentLink" style="height: 360px">
+		<div class="col-md-10 col-sm-12" ng-if="currentLink" style="height: 360px">
 			<div class="player-loading">
 				<div class="alert alert-warning" translate="ALERT_LOADING">
 				  <strong>Loading!</strong> The video will appear in a few seconds...
@@ -17,7 +17,7 @@
 
 			<iframe id="playerFrame" ng-if="currentLink" width="100%" height="100%" ng-src="{{trustSrc(currentLink.iframe)}}" frameborder="0" allowfullscreen="" SCROLLING="NO"></iframe>
 		</div>
-		<div class="col-sm-1 hidden-xs"  style="margin-top: 50px">
+		<div class="col-md-1 hidden-sm hidden-xs"  style="margin-top: 10%">
 			<button ng-if="nextEpisode" class="btn btn-default pull-right" ng-click="nextEpisode()"><span class="glyphicon glyphicon-chevron-right" style="font-size: 30px;"></span></button>
 		</div>
 	</div>

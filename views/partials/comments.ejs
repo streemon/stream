@@ -1,9 +1,9 @@
 <div class="container">
 	<ul class="col-xs-12 col-sm-10 col-md-8 center-block comments">
 		<li ng-show="$storage.user.auth">
-			<a href="" class="avatar">
+			<span class="avatar">
 				<img ng-src="/{{$storage.user.avatar || 'img/default_avatar.png'}}" src="/img/default_avatar.png" class="img-rounded img-small-responsive">
-			</a>
+			</span>
 			<div class="content">
 				<form ng-submit="postComment()">
 					<textarea rows="1" placeholder="{{ 'COMMENT_PLACEHOLDER' | translate }}" class="form-control" ng-model="comment" id="commentInput"></textarea>
@@ -16,17 +16,17 @@
 			</div>
 		</li>
 		<li ng-repeat="comment in comments">
-			<a ng-href="/users/{{comment.author.username}}" class="avatar">
+			<a ng-href="/users/@{{comment.author.username}}" class="avatar">
 				<img ng-src="/{{comment.author.avatar || 'img/default_avatar.png'}}" src="/img/default_avatar.png" class="img-rounded img-small-responsive">
 			</a>
 			<div class="content">
 				<div class="title">
-					<a ng-href="/users/{{comment.author.username}}" class="username">
+					<a ng-href="/users/@{{comment.author.username}}" class="username">
 						{{comment.author.username}}
 						<small ng-if="comment.author.rights >= 2 && comment.author.rights < 4"><span class="label label-danger vertical-middle">Mod</span></small>
 						<small ng-if="comment.author.rights >= 4"><span class="label label-info vertical-middle" translate="EDITOR">Editor</span></small>
 					</a>
-					<a ng-if="comment.author._id == $storage.user._id || $storage.user.rights >= comment.author.rights + 2" ng-click="deleteComment(comment)" href="" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a>
+					<a ng-if="comment.author._id == $storage.user._id || $storage.user.rights >= comment.author.rights + 2 || $storage.user._id == comment.comment.mediaId" ng-click="deleteComment(comment)" href="" class="glyphicon glyphicon-error pull-right"><i class="fa fa-sm fa-times glyphicon-error pull-right"></i></a>
 					<!--For author -->
 					<a ng-if="comment.author._id != $storage.user._id" ng-click="replyTo(comment.author.username)" href="" class="glyphicon glyphicon-info pull-right"><i class="fa fa-sm fa-reply glyphicon-info pull-right"></i></a>
 				</div>

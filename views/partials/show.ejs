@@ -40,8 +40,7 @@
 		<hr />
 	</div>
 </div>
-
-<linkform media="episodes" media-id="{{currentEpisode.id}}" list-media="shows" list-media-id="{{show.id}}" next-episode="nextEpisode" prev-episode="prevEpisode"></linkform>
+<linkform media="episodes" media-id="{{currentEpisode.id}}" original-language="{{show.original_language}}" list-media="shows" list-media-id="{{show.id}}" next-episode="nextEpisode" prev-episode="prevEpisode"></linkform>
 <listform media="shows" media-id="{{show.id}}"></listform>
 
 <div class="container">
@@ -50,4 +49,4 @@
 	</div>
 </div>
 
-<comments></comments>
+<comments media="shows" media-id="{{show.id}}"></comments>
