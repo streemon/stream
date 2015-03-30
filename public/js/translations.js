@@ -56,6 +56,8 @@ var translation_en = {
 	ALERT_NOPASSWORD: "No password provided",
 	ALERT_NOUSERNAME: "No Username provided",
 	ALERT_INVALIDEMAIL: "Invalid email address",
+	ALERT_USERNAME: "Username must be lowercase, alphanumeric, 3-20 characters long",
+	ALERT_PASSWORD: "Password must be 4 to 30 characters long",
 	ALERT_ALREADYINUSE: "Email or username already in use",
 	ALERT_LOGGEDOUT: "Successfully logged out !",
 

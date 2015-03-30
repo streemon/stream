@@ -266,7 +266,12 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 				return $location.path('/');
 			})
 			.error(function (data) {
-				$alert({title: $translate.instant(data.msg), placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
+				console.log(data);
+				["username", "email", "password"].forEach(function (field) {
+					if (data.errors && data.errors[field]) {
+						$alert({title: $translate.instant(data.errors[field].message), placement: 'top', duration: 3, container: '#alertContainer', type: 'danger', show: true});
+					}
+				})
 			})
 	}
 }]);
@@ -503,7 +508,8 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 				})
 		}
 	}
-	$scope.changeLink = function (link) {
+	$scope.changeLink = function (link, $event) {
+		$event.preventDefault()
 		$scope.currentLink = link;
 	}
 	$scope.showLink = function (link) {

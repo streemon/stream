@@ -86,8 +86,7 @@ exports.signup = function(req, res, next) {
 						
 			req.db.User.create(userData, function(err, doc) {
 				if (err) {
-					if (err.name == "ValidationError") res.json(400, {msg: "ALERT_INVALIDEMAIL"});
-					else if (err.code == 11000) res.json(400, {msg: "ALERT_ALREADYINUSE"});
+					if (err.code == 11000) res.json(400, {errors: {email: {message: "ALERT_ALREADYINUSE"}}});
 					else res.json(400, err)
 				}
 				else if (doc) {

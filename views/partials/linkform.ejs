@@ -54,8 +54,8 @@
 					<td>
 						<div class="logo24 logo-{{link.hostname}}"></div>
 					</td>
-					<td><a href="" ng-click="changeLink(link)">{{link.url}}</a>
-						<a href="" ng-if="$storage.user && ($storage.user._id == link._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(link)" data-trigger="hover" data-title="Delete Link" data-placement="right" bs-tooltip><i class="fa fa-times"></i></a></td>
+					<td><a href="#" ng-href="{{link.url}}" ng-click="changeLink(link, $event)">{{link.url}}</a>
+						<a href="#" ng-if="$storage.user && ($storage.user._id == link._uploaderId || $storage.user.rights >= 2)" ng-click="deleteLink(link)" data-trigger="hover" data-title="Delete Link" data-placement="right" bs-tooltip><i class="fa fa-times"></i></a></td>
 					<td><span class="flag flag-{{link.language}}"></span></td>
 					<td><span class="flag flag-{{link.subtitles}}"></span></td>
 				</tr>
