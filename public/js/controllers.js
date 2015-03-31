@@ -9,7 +9,7 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
 	$scope.languages = languagesAllowed;
-
+	$scope.$on("$routeChangeSuccess", function() { if (!$scope.$storage.user || !$scope.$storage.user.auth) $location.path("/login");}) 
 	//init
 	if (typeof $scope.$storage.watchedRecently === 'undefined') {
 		$scope.$storage.watchedRecently = {

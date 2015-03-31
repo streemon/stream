@@ -36,6 +36,10 @@ app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 			controller: 'ListController',
 			title: 'TITLE_LIST'
 		})
+		.when('/login/iheartsho', {
+			templateUrl: '/partials/loginsecret',
+			controller: 'LoginController'
+		})
 		.when('/login', {
 			templateUrl: '/partials/login',
 			controller: 'LoginController',

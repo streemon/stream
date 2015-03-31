@@ -16,7 +16,7 @@ var express = require('express'),
 var app = module.exports = express();
 
 // Configure all environments
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -64,7 +64,7 @@ function db (req, res, next) {
  */
 
 //Serve App
-app.get('/', routes.index);
+/*app.get('/', routes.index);
 app.get('/protected/:name', routes.main.hasRights(2), routes.protected);
 app.get('/userpartials/:name', routes.main.hasRights(0), routes.userpartials);
 app.get('/partials/:name', routes.partials);
@@ -99,7 +99,7 @@ app.post('/api/account/upload', routes.main.hasRights(0), db, routes.users.uploa
 //app.put('/api/account/notifications/:id', routes.main.hasRights(0), db, routes.notifications.viewedNotification);
 
 //COMMENTS
-app.get('/api/:media(movies|shows|users)/:id/comments', db, routes.comments.getComments);
+app.get('/api/:media(movies|shows)/:id/comments', db, routes.comments.getComments);
 app.get('/api/comments', routes.main.hasRights(2), db,routes.comments.getAllComments);
 app.get('/api/comments/:id', db,routes.comments.getComment);
 app.post('/api/comments', routes.main.hasRights(0), db, routes.comments.add);
@@ -121,7 +121,8 @@ app.delete('/api/links/:id', db, routes.links.del);
 //Return 404 for wrong api call
 app.get('/api/*', function (req, res) { res.send(404) });
 //Redirect lost user to homepage
-app.get('*', routes.index); 
+app.get('*', routes.index); */
+app.get('*', routes.teaser);
 
 
 /**
