@@ -16,7 +16,7 @@ var express = require('express'),
 var app = module.exports = express();
 
 // Configure all environments
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
