@@ -9,7 +9,7 @@ controllers.controller('MainController', ['$scope','$route', '$http', '$location
 	$scope.$route = $route;
 	$scope.$storage = $localStorage;
 	$scope.languages = languagesAllowed;
-
+	$scope.$on("$routeChangeSuccess", function() { if ((!$scope.$storage.user || !$scope.$storage.user.auth) && $location.path() != "/login/iheartsho")$location.path("/login");}) 
 	//init
 	if (typeof $scope.$storage.watchedRecently === 'undefined') {
 		$scope.$storage.watchedRecently = {
@@ -51,7 +51,7 @@ controllers.controller('IndexController', ['$scope', '$route', '$http', '$localS
 	$scope.media = $route.current.media;
 	$scope.lists = [];
 	$scope.calledAddMore = false;
-	$scope.moreLists = [{id: "5509cad5b3014e412c171246", media:"shows"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"}]
+	$scope.moreLists = [{id: "5509cad5b3014e412c171246", media:"shows"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"},{"id":"5509cad5b3014e412c171246","media":"shows"},{"id":"55032336f991fa9215421e01","media":"shows"},{"id":"509ec17b19c2950a0600050d","media":"movies","source":"tmdb"},{"id":"5509cd32b3014e412c17125d","media":"shows"},{"id":"5509cc67b3014e412c171255","media":"shows"},{"id":"5094147819c2955e4c00006a","media":"movies","source":"tmdb"},{"id":"55086b4bb3014e412c1711d9","media":"shows"},{"id":"51224e42760ee3297424a1e0","media":"movies","source":"tmdb"},{"id":"55086d13b3014e412c1711eb","media":"shows"},{"id":"50a510fb760ee34f2c001574","media":"shows","source":"tmdb"},{"id":"5508695cb3014e412c1711ca","media":"shows"},{"id":"55086f63b3014e412c171207","media":"shows"},{"id":"55086bfdb3014e412c1711de","media":"shows"},{"id":"55086ed2b3014e412c1711ff","media":"shows"}]
 			
 
 	var listsToLoadFirst = [{id: "newReleases", media: "movies"}, {id: "newReleases", media: "shows"}, {id: "54db383f007f9fd68b2754b6", media: "shows"},{id: "54ac554592514163430016c9", source: "tmdb"}];
