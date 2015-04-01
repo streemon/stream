@@ -6166,6 +6166,8 @@ button.close {
 	border-radius: 0px;
 	box-shadow: none;
 	padding: 20px 10px;
+	display: block;
+	width: 100%;
 }
 .login .form-control:focus {
   border: 0px solid transparent;
