@@ -51,10 +51,10 @@ controllers.controller('IndexController', ['$scope', '$route', '$http', '$localS
 	$scope.media = $route.current.media;
 	$scope.lists = [];
 	$scope.calledAddMore = false;
-	$scope.moreLists = [{id: "54ac554592514163430016c9", source: "tmdb"}, {id: "5509cad5b3014e412c171246", media:"shows"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"}]
+	$scope.moreLists = [{id: "5509cad5b3014e412c171246", media:"shows"}, {id: "51dcfe13760ee376102ae388", source: "tmdb"}, {id: "5399f3e50e0a260c0400030c", source: "tmdb"}, {id: "54cee1a287394cd9048889fe", media: "movies"}, {id: "509faf68760ee347d2000736", source: "tmdb"}, {id: "54408e79929fb858d1000052", source: "tmdb"}]
 			
 
-	var listsToLoadFirst = [{id: "newReleases", media: "movies"}, {id: "newReleases", media: "shows"}, {id: "54db383f007f9fd68b2754b6", media: "shows"}];
+	var listsToLoadFirst = [{id: "newReleases", media: "movies"}, {id: "newReleases", media: "shows"}, {id: "54db383f007f9fd68b2754b6", media: "shows"},{id: "54ac554592514163430016c9", source: "tmdb"}];
 
 	//Add special lists (watchedRecently, lastAdded)
 	if ($scope.$storage.watchedRecently.shows.items[0]) $scope.lists.push($scope.$storage.watchedRecently.shows);
@@ -518,7 +518,7 @@ controllers.controller('LinkFormController', ['$scope', '$http', '$route', '$loc
 				//three combos authorized (original language/ original language + allowed subs / user main language)
 
 				//check original language
-				//if ($scope.originalLanguage == link.language) return true;
+				if ($scope.originalLanguage == link.language) return true;
 
 				//check user main language
 				if ($scope.$storage.user.settings.language == link.language) return true;
