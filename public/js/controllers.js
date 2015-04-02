@@ -217,8 +217,11 @@ controllers.controller('ListController', ['$scope', '$route', '$http', '$localSt
 	})
 }]);
 
-controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '$location', '$alert', '$translate', function($scope, $http, $localStorage, $location, $alert, $translate) {
+controllers.controller('LoginController', ['$scope', '$http', '$route', '$localStorage', '$location', '$alert', '$translate', function($scope, $http, $route, $localStorage, $location, $alert, $translate) {
 	$scope.$storage = $localStorage;
+	$scope.$route = $route;
+
+	if ($scope.$route.current.params && $scope.$route.current.params.token) $scope.token = $scope.$route.current.params.token;
 
 	$scope.login = function () {
 		var credentials = {
@@ -273,6 +276,29 @@ controllers.controller('LoginController', ['$scope', '$http', '$localStorage', '
 					}
 				})
 			})
+	}
+
+	$scope.resetPassword = function () {
+		if ($scope.token && this.newPassword) {
+			$http.post('/api/tokens', {token: $scope.token, newPassword: this.newPassword})
+				.success (function (data)  {
+					$alert({title: $translate.instant(data.msg), placement: 'top', duration: 10, container: '#alertContainer', type: 'success', show: true});
+				})
+				.error (function (err) {
+					$alert({title: $translate.instant(err.msg), placement: 'top', duration: 6, container: '#alertContainer', type: 'danger', show: true});
+				})
+		}
+	}
+	$scope.generateToken = function () {
+		if (this.email) {
+			$http.get('/api/tokens/' + this.email)
+				.success (function (data) {
+					$alert({title: $translate.instant(data.msg), placement: 'top', duration: 6, container: '#alertContainer', type: 'info', show: true});
+				})
+				.error (function (err) {
+					$alert({title: $translate.instant(err.msg), placement: 'top', duration: 6, container: '#alertContainer', type: 'danger', show: true});
+				})
+		}
 	}
 }]);
 
@@ -735,8 +761,9 @@ controllers.controller('ProfileController', ['$scope', '$http', '$route', functi
 		});
 }]);
 
-controllers.controller('SettingsController', ['$scope', '$http', '$localStorage', '$location', '$alert', '$translate', function ($scope, $http, $localStorage, $location, $alert, $translate) {
+controllers.controller('SettingsController', ['$scope', '$http', '$route', '$localStorage', '$location', '$alert', '$translate', function ($scope, $http, $route, $localStorage, $location, $alert, $translate) {
 	$scope.$storage = $localStorage;
+	$scope.$route = $route;
 	$scope.languages = languagesAllowed;
     $scope.myImage= $scope.$storage.user.avatar || '';
     $scope.myCroppedImage = '';

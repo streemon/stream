@@ -54,7 +54,8 @@ function db (req, res, next) {
     Log: connection.model('Log', models.Log, 'logs'),
     Comment: connection.model('Comment', models.Comment, 'comments'),
     Notification: connection.model('Notification', models.Notification, 'notifications'),
-    List: connection.model('List', models.List, 'lists')
+    List: connection.model('List', models.List, 'lists'),
+    Token: connection.model('Token', models.Token, 'tokens')
   };
   return next();
 }
@@ -93,6 +94,10 @@ app.get('/api/users/:id', db,routes.users.getUserById);
 app.put('/api/account', routes.main.hasRights(0), db, routes.users.updateSettings);
 app.post('/api/account/upload', routes.main.hasRights(0), db, routes.users.upload);
 //app.del('/api/users/:id', db, routes.users.del);
+
+//TOKENS
+app.get('/api/tokens/:email', db, routes.main.resetPassword);
+app.post('/api/tokens', db, routes.main.resetPassword);
 
 //NOTIFICATIONS
 //app.get('/api/account/notifications', routes.main.hasRights(0), db, routes.notifications.getNotifications);

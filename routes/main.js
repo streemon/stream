@@ -56,6 +56,68 @@ function authorizeUser (req, res, user) {
 	})
 }
 
+exports.resetPassword = function (req, res, next) {
+	if (req.body.token && req.body.newPassword) {
+		//check token && expiry date
+		req.db.Token.findOne({token: req.body.token, expiry: {$gt: Date.now()}}, function (err, doc) {
+			if (err) return next(err)
+
+			if (doc) {
+				//save new password
+				var password = hashPassword (req.body.newPassword);
+
+				//removes token
+				doc.remove(function() {
+					req.db.User.findOneAndUpdate({email: doc.email}, {$set: {password: password}}, function (err, user) {
+						if (err) return next(err);
+
+						if (user) {
+							//email confirmation		
+							mailjet.sendContent('contact@shostream.com',
+							[doc.email],
+							'ShoStream - Your password has been reset !',
+							'html',
+							'Hello ! <br/><br/> Your password has been reset <br/><br/> Contact us at contact@shostream.com, if you think this is a mistake!")'
+							)
+
+							return res.json(200, {msg: "ALERT_PASSWORDRESET"})
+						}
+						else return next("ALERT_USERNOTFOUND");
+					})
+				})
+			}
+			else {
+				return next("ALERT_TOKENEXPIRED")
+			}
+		})
+
+
+
+	}
+	else if(req.params.email) {
+		//generate token
+		generateToken(function (token) {
+			console.log(token)
+
+			//save token in db
+			new req.db.Token({token: token, email: req.params.email}).save(function (err, doc) {
+				if (err) return next(err);
+
+				//email token url
+				mailjet.sendContent('contact@shostream.com',
+					[req.params.email],
+					'ShoStream - Reset your password !',
+					'html',
+					'Hello ! <br/><br/> Reset your password at  <a href="http://shostream.com/settings/resetpassword/' + token + '">http://shostream.com/settings/resetpassword/' + token + '</a> <br/><br/> Do not click anything if you did not request this !'
+				)
+
+				res.json(200, {msg: "ALERT_TOKENSENT"})
+			})
+		})
+
+	}
+}
+
 exports.login = function (req, res, next) {
 
 	if (req.body.username) {

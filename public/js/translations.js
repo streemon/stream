@@ -60,6 +60,10 @@ var translation_en = {
 	ALERT_PASSWORD: "Password must be 4 to 30 characters long",
 	ALERT_ALREADYINUSE: "Email or username already in use",
 	ALERT_LOGGEDOUT: "Successfully logged out !",
+	ALERT_TOKENEXPIRED: "Your token has expired",
+	ALERT_TOKENSENT: "A reset link has been sent to your email address",
+	ALERT_USERNOTFOUND: "No User Found",
+	ALERT_PASSWORDRESERT: "Password successfully reset !",
 
 	FORM_USERNAME: 'Username',
 	FORM_PASSWORD: 'Password',
@@ -75,6 +79,8 @@ var translation_en = {
 	FORM_REMOVE: 'Remove',
 	FORM_ORIGINAL: 'Original',
 	FORM_PREVIEW: 'Preview',
+	FORM_RESET: 'Reset',
+	FORM_FORGOTTENPASSWORD: 'Forgot your password ?',
 
 	LIST_MOSTWATCHED: "Most Watched {{media | uppercase | translate}}",
 	LIST_WATCHEDRECENTLY: "{{media | uppercase | translate}} You Watched Recently",

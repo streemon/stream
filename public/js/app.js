@@ -38,7 +38,8 @@ app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 		})
 		.when('/login/iheartsho', {
 			templateUrl: '/partials/loginsecret',
-			controller: 'LoginController'
+			controller: 'LoginController',
+			title: 'LOGIN'
 		})
 		.when('/login', {
 			templateUrl: '/partials/login',
@@ -85,6 +86,11 @@ app.config(function ($routeProvider, $locationProvider, $translateProvider) {
 			templateUrl: '/userpartials/lists',
 			controller: 'ListsController',
 			title: 'MENU_LISTS'
+		})
+		.when('/settings/resetpassword/:token?', {
+			templateUrl: '/partials/resetpassword',
+			controller: 'LoginController',
+			title: 'MENU_SETTINGS'
 		})
 		.when('/settings', {
 			templateUrl: '/userpartials/settings',
