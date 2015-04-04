@@ -1,0 +1,52 @@
+<div class="container">
+
+	<div id="alertContainer" class="marginbottom20"></div>
+
+	<h3 class="page-header" translate="MENU_PROFILE">
+		Profile
+	</h3>
+	<div class="row marginbottom20 margintop20">
+
+		<div class="col-sm-5 marginbottom20">
+		  <h4 class="marginbottom20" translate="FORM_ORIGINAL">Original</h4>
+		  <div class="cropArea">
+		    <img-crop image="myImage" area-type="square" result-image="myCroppedImage" result-image-size="200"></img-crop>
+		  </div>
+		</div>
+		<div class="col-sm-5">
+		  <h4 class="marginbottom20" translate="FORM_PREVIEW">Preview</h4>
+		  <div><img ng-src="{{myCroppedImage}}" /></div>
+		</div>
+		<div class="col-sm-2">
+			<button ng-click="uploadImage()" class="btn btn-lg btn-primary" translate="FORM_SAVE">Save changes</button>
+    		<div class="margintop20">
+    			<input type="file" id="fileInput" />
+    		</div>
+		</div>
+	</div>
+
+	<h3 class="page-header" translate="MENU_SETTINGS">
+		Settings
+	</h3>
+
+	<div class="alert alert-info" translate="ALERT_LANGSETTINGS"></div>
+
+	<form ng-submit="saveSettings()">
+		<div class="form-group">
+			<label class="control-label" translate="FORM_MAINLANGUAGE">Main Language</label>
+			<button type="button" class="btn btn-default" ng-model="form.settings.language" data-html="1" ng-options="language.code as language.name for language in languages" bs-select>
+			  Action <span class="caret"></span>
+			</button>
+		</div>
+		<hr>
+		<div class="form-group">
+			<label translate="FORM_SUBTITLES">Subtitles</label>
+			<button type="button" class="btn btn-default" ng-model="form.settings.subtitles" data-html="1" data-multiple="1" ng-options="language.code as language.name for language in languages" bs-select>
+			  Action <span class="caret"></span>
+			</button>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-lg btn-primary" translate="FORM_SAVE">Save changes</button>
+		</div>
+	</form>
+</div>

@@ -1,5 +1,11 @@
 *
 !README.MD
-!.gitignore
+!*.gitignore
 !public/
 !public/*
+!views
+!views/partials
+!views/partials/*
+!views/userpartials
+!views/userpartials/*
+*.DS_Store

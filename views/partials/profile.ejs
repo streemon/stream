@@ -1,0 +1,10 @@
+<div class="row marginbottom20">
+	<div class="col-md-2 col-md-offset-2">
+		<img ng-src="/{{profile.avatar || 'img/default_avatar.png' }}" />
+	</div>
+	<div class="col-md-6">
+		<h1>{{profile.username}}</h1>
+	</div>
+</div>
+{{profile}}
+<comments media="users" media-id="{{profile._id}}"></comments>

@@ -1,0 +1,59 @@
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">
+					Toggle navigation
+				</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/"> <img src="/img/logo.png" class="brand-logo"></img></a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li ng-class="{active: $route.current.media == 'movies'}">
+					<a href="/movies" ng-href="{{$route.current.params.q ? '/search/movies/' + $route.current.params.q : '/movies' }}" translate="MOVIES">Movies</a>
+				</li>
+				<li ng-class="{active: $route.current.media == 'shows'}">
+					<a href="/shows" ng-href="{{$route.current.params.q ? '/search/shows/' + $route.current.params.q : '/shows' }}" translate="SHOWS">TV Shows</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<!--<li><span data-template="/partials/notifications.ejs" data-placement="bottom" class="glyphicon glyphicon-globe" bs-popover></span></li>-->
+				<li>
+					<form class="navbar-form " ng-submit="search()" role="search">
+						<div class="form-group">
+							<input type="text" name="q" ng-model="q" class="form-control lens" placeholder="Terminator, Game of Thrones, ...">
+						</div>
+					</form>
+				</li>
+				<li class="dropdown" ng-if="!$storage.user.auth">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="flag {{'flag-' + $storage.language}}"></span>
+					</a>
+					<ul class="dropdown-menu hidden-xs">
+						<li ng-repeat="language in languages"><a href="#" ng-click="$storage.language = language.code" ng-show="$storage.language != language.code" translate="FLAG_{{language.code}}"></a></li>
+					</ul>
+				</li>
+				<li class="dropdown" ng-if="$storage.user.auth">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/default_avatar.png" ng-src="/{{$storage.user.avatar || 'img/default_avatar.png' }}" class="img-rounded img-small pull-left"><div class="navbar-username">{{$storage.user.username}}</div><div class="navbar-new"></div><div class="navbar-caret hidden-xs hidden-sm"></div></a>
+					<ul class="dropdown-menu hidden-xs">
+						<li><a href="/settings" translate="MENU_SETTINGS">Settings</a></li>
+						<li><a href="/links" translate="MENU_LINKS">My Links</a></li>
+						<li><a href="/lists" translate="MENU_LISTS">My Lists</a></li>
+						<li ng-if="$storage.user.rights >= 2"><a href="/moderate" translate="MENU_MODERATE">Moderate</a></li>
+						<li class="divider"></li>
+						<li><a href="/logout" translate="LOGOUT">Log out</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="/login" ng-if="!$storage.user.auth"><i class="fa fa-sign-in"></i> <span translate="LOGIN">Log In</span></a>
+				</li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
