@@ -1,1 +1,0 @@
-{ "options" : { "create" : "linksSolar" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "stream.linksSolar", "name" : "_id_" }, { "v" : 1, "key" : { "url" : 1 }, "unique" : true, "ns" : "stream.linksSolar", "name" : "url_1", "dropDups" : true } ] }
