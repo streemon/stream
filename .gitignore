@@ -1,5 +1,5 @@
 *
 !README.MD
 !.gitignore
-!public/js/*
-public/img/profiles/*
+!public/
+!public/*
